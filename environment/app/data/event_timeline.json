@@ -1,0 +1,5402 @@
+[
+  {
+    "account": "user-026",
+    "action": "process_start",
+    "event_id": "EV-000001",
+    "host": "host-059",
+    "observed_ts": 262482,
+    "pid": 40195,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-022",
+    "action": "logon_failed",
+    "event_id": "EV-000002",
+    "host": "host-043",
+    "observed_ts": 405960,
+    "pid": 27241,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-036",
+    "action": "file_write",
+    "event_id": "EV-000003",
+    "host": "host-048",
+    "observed_ts": 204168,
+    "pid": 38104,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-025",
+    "action": "logon_failed",
+    "event_id": "EV-000004",
+    "host": "host-022",
+    "observed_ts": 72174,
+    "pid": 52084,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-030",
+    "action": "logon_failed",
+    "event_id": "EV-000005",
+    "host": "host-034",
+    "observed_ts": 453871,
+    "pid": 3047,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-014",
+    "action": "process_start",
+    "event_id": "EV-000006",
+    "host": "host-038",
+    "observed_ts": 550436,
+    "pid": 20448,
+    "sensor": "auth"
+  },
+  {
+    "account": "svc-index",
+    "action": "priv_escalate",
+    "event_id": "EV-000007",
+    "host": "host-019",
+    "observed_ts": 307446,
+    "pid": 20743,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-022",
+    "action": "logon",
+    "event_id": "EV-000008",
+    "host": "host-018",
+    "observed_ts": 194276,
+    "pid": 10081,
+    "sensor": "netflow"
+  },
+  {
+    "account": "svc-deploy",
+    "action": "logon",
+    "event_id": "EV-000009",
+    "host": "host-059",
+    "observed_ts": 307647,
+    "pid": 54791,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-002",
+    "action": "logon_failed",
+    "event_id": "EV-000010",
+    "host": "host-027",
+    "observed_ts": 12118,
+    "pid": 46018,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-index",
+    "action": "file_write",
+    "event_id": "EV-000011",
+    "host": "host-051",
+    "observed_ts": 47727,
+    "pid": 47385,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-027",
+    "action": "process_start",
+    "event_id": "EV-000012",
+    "host": "host-001",
+    "observed_ts": 24004,
+    "pid": 48477,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-030",
+    "action": "logon_failed",
+    "event_id": "EV-000013",
+    "host": "host-047",
+    "observed_ts": 207689,
+    "pid": 34332,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-backup",
+    "action": "logon_failed",
+    "event_id": "EV-000014",
+    "host": "host-032",
+    "observed_ts": 575039,
+    "pid": 51244,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-034",
+    "action": "logon_failed",
+    "event_id": "EV-000015",
+    "host": "host-045",
+    "observed_ts": 274914,
+    "pid": 34495,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-032",
+    "action": "file_write",
+    "event_id": "EV-000016",
+    "host": "host-033",
+    "observed_ts": 458995,
+    "pid": 365,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-038",
+    "action": "logon",
+    "event_id": "EV-000017",
+    "host": "host-036",
+    "observed_ts": 359759,
+    "pid": 58652,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-021",
+    "action": "file_write",
+    "event_id": "EV-000018",
+    "host": "host-048",
+    "observed_ts": 266250,
+    "pid": 43414,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-033",
+    "action": "logon",
+    "event_id": "EV-000019",
+    "host": "host-029",
+    "observed_ts": 423222,
+    "pid": 4896,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-036",
+    "action": "net_connect",
+    "event_id": "EV-000020",
+    "host": "host-048",
+    "observed_ts": 445714,
+    "pid": 8898,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-013",
+    "action": "logon",
+    "event_id": "EV-000021",
+    "host": "host-012",
+    "observed_ts": 282613,
+    "pid": 4246,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-038",
+    "action": "logon_failed",
+    "event_id": "EV-000022",
+    "host": "host-047",
+    "observed_ts": 406632,
+    "pid": 27960,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-003",
+    "action": "logon",
+    "event_id": "EV-000023",
+    "host": "host-043",
+    "observed_ts": 451242,
+    "pid": 25068,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-019",
+    "action": "process_start",
+    "event_id": "EV-000024",
+    "host": "host-042",
+    "observed_ts": 374738,
+    "pid": 57457,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-030",
+    "action": "process_start",
+    "event_id": "EV-000025",
+    "host": "host-002",
+    "observed_ts": 356866,
+    "pid": 15644,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-015",
+    "action": "logon_failed",
+    "event_id": "EV-000026",
+    "host": "host-028",
+    "observed_ts": 117573,
+    "pid": 2494,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-001",
+    "action": "logon_failed",
+    "event_id": "EV-000027",
+    "host": "host-014",
+    "observed_ts": 371777,
+    "pid": 43461,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-013",
+    "action": "logon",
+    "event_id": "EV-000028",
+    "host": "host-057",
+    "observed_ts": 303896,
+    "pid": 12955,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-009",
+    "action": "net_connect",
+    "event_id": "EV-000029",
+    "host": "host-044",
+    "observed_ts": 601011,
+    "pid": 52960,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-003",
+    "action": "net_connect",
+    "event_id": "EV-000030",
+    "host": "host-032",
+    "observed_ts": 317794,
+    "pid": 56045,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-008",
+    "action": "logon_failed",
+    "event_id": "EV-000031",
+    "host": "host-015",
+    "observed_ts": 389636,
+    "pid": 45131,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-019",
+    "action": "logon",
+    "event_id": "EV-000032",
+    "host": "host-035",
+    "observed_ts": 196289,
+    "pid": 47147,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-025",
+    "action": "logon",
+    "event_id": "EV-000033",
+    "host": "host-009",
+    "observed_ts": 17857,
+    "pid": 13357,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-008",
+    "action": "log_cleared",
+    "event_id": "EV-000034",
+    "host": "host-056",
+    "observed_ts": 180700,
+    "pid": 23233,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-024",
+    "action": "logon_failed",
+    "event_id": "EV-000035",
+    "host": "host-011",
+    "observed_ts": 119324,
+    "pid": 5410,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-011",
+    "action": "process_start",
+    "event_id": "EV-000036",
+    "host": "host-007",
+    "observed_ts": 354508,
+    "pid": 10933,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-009",
+    "action": "logon_failed",
+    "event_id": "EV-000037",
+    "host": "host-045",
+    "observed_ts": 380793,
+    "pid": 1013,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-028",
+    "action": "logon_failed",
+    "event_id": "EV-000038",
+    "host": "host-058",
+    "observed_ts": 560011,
+    "pid": 16047,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-023",
+    "action": "logon_failed",
+    "event_id": "EV-000039",
+    "host": "host-054",
+    "observed_ts": 211227,
+    "pid": 27445,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-023",
+    "action": "priv_escalate",
+    "event_id": "EV-000040",
+    "host": "host-025",
+    "observed_ts": 415431,
+    "pid": 22999,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-009",
+    "action": "logon_failed",
+    "event_id": "EV-000041",
+    "host": "host-029",
+    "observed_ts": 434898,
+    "pid": 30446,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-038",
+    "action": "process_start",
+    "event_id": "EV-000042",
+    "host": "host-045",
+    "observed_ts": 439734,
+    "pid": 52306,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-002",
+    "action": "file_write",
+    "event_id": "EV-000043",
+    "host": "host-047",
+    "observed_ts": 438149,
+    "pid": 45881,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-001",
+    "action": "net_connect",
+    "event_id": "EV-000044",
+    "host": "host-039",
+    "observed_ts": 465172,
+    "pid": 34837,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-039",
+    "action": "logon",
+    "event_id": "EV-000045",
+    "host": "host-038",
+    "observed_ts": 72510,
+    "pid": 3286,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-030",
+    "action": "process_start",
+    "event_id": "EV-000046",
+    "host": "host-023",
+    "observed_ts": 207635,
+    "pid": 8085,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-017",
+    "action": "net_connect",
+    "event_id": "EV-000047",
+    "host": "host-008",
+    "observed_ts": 527139,
+    "pid": 48672,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-005",
+    "action": "logon_failed",
+    "event_id": "EV-000048",
+    "host": "host-004",
+    "observed_ts": 408646,
+    "pid": 29656,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-011",
+    "action": "share_mount",
+    "event_id": "EV-000049",
+    "host": "host-011",
+    "observed_ts": 24938,
+    "pid": 18204,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-029",
+    "action": "file_write",
+    "event_id": "EV-000050",
+    "host": "host-037",
+    "observed_ts": 330445,
+    "pid": 54039,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-019",
+    "action": "process_start",
+    "event_id": "EV-000051",
+    "host": "host-022",
+    "observed_ts": 311702,
+    "pid": 54969,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-024",
+    "action": "logon",
+    "event_id": "EV-000052",
+    "host": "host-052",
+    "observed_ts": 46147,
+    "pid": 39965,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-index",
+    "action": "process_start",
+    "event_id": "EV-000053",
+    "host": "host-034",
+    "observed_ts": 593145,
+    "pid": 14003,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-035",
+    "action": "logon",
+    "event_id": "EV-000054",
+    "host": "host-017",
+    "observed_ts": 25546,
+    "pid": 9980,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-036",
+    "action": "file_write",
+    "event_id": "EV-000055",
+    "host": "host-014",
+    "observed_ts": 451298,
+    "pid": 3970,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-028",
+    "action": "logon_failed",
+    "event_id": "EV-000056",
+    "host": "host-045",
+    "observed_ts": 412450,
+    "pid": 51791,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-001",
+    "action": "process_start",
+    "event_id": "EV-000057",
+    "host": "host-042",
+    "observed_ts": 159210,
+    "pid": 16434,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-025",
+    "action": "file_write",
+    "event_id": "EV-000058",
+    "host": "host-022",
+    "observed_ts": 570476,
+    "pid": 18599,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-020",
+    "action": "logon",
+    "event_id": "EV-000059",
+    "host": "host-049",
+    "observed_ts": 131696,
+    "pid": 31286,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-019",
+    "action": "logon",
+    "event_id": "EV-000060",
+    "host": "host-050",
+    "observed_ts": 521366,
+    "pid": 50728,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-002",
+    "action": "logon",
+    "event_id": "EV-000061",
+    "host": "host-037",
+    "observed_ts": 509669,
+    "pid": 52593,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-003",
+    "action": "logon",
+    "event_id": "EV-000062",
+    "host": "host-058",
+    "observed_ts": 421620,
+    "pid": 25487,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-013",
+    "action": "logon_failed",
+    "event_id": "EV-000063",
+    "host": "host-023",
+    "observed_ts": 2187,
+    "pid": 13009,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-index",
+    "action": "logon",
+    "event_id": "EV-000064",
+    "host": "host-018",
+    "observed_ts": 229635,
+    "pid": 4348,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-040",
+    "action": "process_start",
+    "event_id": "EV-000065",
+    "host": "host-048",
+    "observed_ts": 435830,
+    "pid": 13201,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-001",
+    "action": "file_write",
+    "event_id": "EV-000066",
+    "host": "host-041",
+    "observed_ts": 43841,
+    "pid": 1446,
+    "sensor": "netflow"
+  },
+  {
+    "account": "svc-build",
+    "action": "logon",
+    "event_id": "EV-000067",
+    "host": "host-009",
+    "observed_ts": 9447,
+    "pid": 31979,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-015",
+    "action": "net_connect",
+    "event_id": "EV-000068",
+    "host": "host-024",
+    "observed_ts": 407526,
+    "pid": 11319,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-009",
+    "action": "process_start",
+    "event_id": "EV-000069",
+    "host": "host-053",
+    "observed_ts": 442381,
+    "pid": 34444,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-038",
+    "action": "file_write",
+    "event_id": "EV-000070",
+    "host": "host-017",
+    "observed_ts": 490894,
+    "pid": 43529,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-007",
+    "action": "share_mount",
+    "event_id": "EV-000071",
+    "host": "host-030",
+    "observed_ts": 302283,
+    "pid": 32437,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-030",
+    "action": "net_connect",
+    "event_id": "EV-000072",
+    "host": "host-050",
+    "observed_ts": 22856,
+    "pid": 25962,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-024",
+    "action": "process_start",
+    "event_id": "EV-000073",
+    "host": "host-030",
+    "observed_ts": 64669,
+    "pid": 12228,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-021",
+    "action": "logon",
+    "event_id": "EV-000074",
+    "host": "host-048",
+    "observed_ts": 538877,
+    "pid": 54878,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-index",
+    "action": "share_mount",
+    "event_id": "EV-000075",
+    "host": "host-049",
+    "observed_ts": 377248,
+    "pid": 39168,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-034",
+    "action": "file_write",
+    "event_id": "EV-000076",
+    "host": "host-051",
+    "observed_ts": 92562,
+    "pid": 39061,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-010",
+    "action": "logon",
+    "event_id": "EV-000077",
+    "host": "host-025",
+    "observed_ts": 57668,
+    "pid": 18169,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-002",
+    "action": "share_mount",
+    "event_id": "EV-000078",
+    "host": "host-010",
+    "observed_ts": 29513,
+    "pid": 34800,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-040",
+    "action": "logon",
+    "event_id": "EV-000079",
+    "host": "host-020",
+    "observed_ts": 261305,
+    "pid": 159,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-027",
+    "action": "file_write",
+    "event_id": "EV-000080",
+    "host": "host-057",
+    "observed_ts": 503731,
+    "pid": 30203,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-003",
+    "action": "process_start",
+    "event_id": "EV-000081",
+    "host": "host-054",
+    "observed_ts": 7090,
+    "pid": 37617,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-040",
+    "action": "logon",
+    "event_id": "EV-000082",
+    "host": "host-015",
+    "observed_ts": 467714,
+    "pid": 18464,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-025",
+    "action": "logon",
+    "event_id": "EV-000083",
+    "host": "host-048",
+    "observed_ts": 428340,
+    "pid": 52322,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-038",
+    "action": "file_write",
+    "event_id": "EV-000084",
+    "host": "host-037",
+    "observed_ts": 391423,
+    "pid": 31727,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-026",
+    "action": "share_mount",
+    "event_id": "EV-000085",
+    "host": "host-032",
+    "observed_ts": 271090,
+    "pid": 44276,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-034",
+    "action": "net_connect",
+    "event_id": "EV-000086",
+    "host": "host-042",
+    "observed_ts": 567285,
+    "pid": 58555,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-029",
+    "action": "logon_failed",
+    "event_id": "EV-000087",
+    "host": "host-014",
+    "observed_ts": 535161,
+    "pid": 21666,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-032",
+    "action": "logon_failed",
+    "event_id": "EV-000088",
+    "host": "host-048",
+    "observed_ts": 224251,
+    "pid": 54669,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-build",
+    "action": "process_start",
+    "event_id": "EV-000089",
+    "host": "host-058",
+    "observed_ts": 73541,
+    "pid": 42304,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-016",
+    "action": "logon",
+    "event_id": "EV-000090",
+    "host": "host-013",
+    "observed_ts": 326226,
+    "pid": 17719,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-011",
+    "action": "logon_failed",
+    "event_id": "EV-000091",
+    "host": "host-051",
+    "observed_ts": 590288,
+    "pid": 25507,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-037",
+    "action": "logon",
+    "event_id": "EV-000092",
+    "host": "host-058",
+    "observed_ts": 378302,
+    "pid": 11215,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-037",
+    "action": "logon",
+    "event_id": "EV-000093",
+    "host": "host-056",
+    "observed_ts": 8163,
+    "pid": 33340,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-031",
+    "action": "logon",
+    "event_id": "EV-000094",
+    "host": "host-046",
+    "observed_ts": 535196,
+    "pid": 59529,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-relay",
+    "action": "logon",
+    "event_id": "EV-000095",
+    "host": "host-047",
+    "observed_ts": 506874,
+    "pid": 30663,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-023",
+    "action": "priv_escalate",
+    "event_id": "EV-000096",
+    "host": "host-029",
+    "observed_ts": 203040,
+    "pid": 42892,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-012",
+    "action": "logon",
+    "event_id": "EV-000097",
+    "host": "host-050",
+    "observed_ts": 549597,
+    "pid": 4254,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-009",
+    "action": "logon_failed",
+    "event_id": "EV-000098",
+    "host": "host-031",
+    "observed_ts": 36374,
+    "pid": 7484,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-006",
+    "action": "logon_failed",
+    "event_id": "EV-000099",
+    "host": "host-046",
+    "observed_ts": 302081,
+    "pid": 3041,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-023",
+    "action": "logon_failed",
+    "event_id": "EV-000100",
+    "host": "host-018",
+    "observed_ts": 525071,
+    "pid": 34394,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-003",
+    "action": "logon_failed",
+    "event_id": "EV-000101",
+    "host": "host-021",
+    "observed_ts": 526669,
+    "pid": 56314,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-015",
+    "action": "file_write",
+    "event_id": "EV-000102",
+    "host": "host-023",
+    "observed_ts": 85174,
+    "pid": 20609,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-015",
+    "action": "logon",
+    "event_id": "EV-000103",
+    "host": "host-003",
+    "observed_ts": 465066,
+    "pid": 18378,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-013",
+    "action": "logon",
+    "event_id": "EV-000104",
+    "host": "host-024",
+    "observed_ts": 156369,
+    "pid": 7991,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-019",
+    "action": "logon_failed",
+    "event_id": "EV-000105",
+    "host": "host-045",
+    "observed_ts": 111855,
+    "pid": 15300,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-002",
+    "action": "logon",
+    "event_id": "EV-000106",
+    "host": "host-027",
+    "observed_ts": 458978,
+    "pid": 27211,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-028",
+    "action": "logon_failed",
+    "event_id": "EV-000107",
+    "host": "host-040",
+    "observed_ts": 264770,
+    "pid": 39262,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-038",
+    "action": "logon",
+    "event_id": "EV-000108",
+    "host": "host-036",
+    "observed_ts": 119900,
+    "pid": 39991,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-024",
+    "action": "net_connect",
+    "event_id": "EV-000109",
+    "host": "host-020",
+    "observed_ts": 149361,
+    "pid": 37660,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-026",
+    "action": "process_start",
+    "event_id": "EV-000110",
+    "host": "host-051",
+    "observed_ts": 289457,
+    "pid": 53983,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-003",
+    "action": "process_start",
+    "event_id": "EV-000111",
+    "host": "host-028",
+    "observed_ts": 377105,
+    "pid": 16861,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-019",
+    "action": "share_mount",
+    "event_id": "EV-000112",
+    "host": "host-015",
+    "observed_ts": 31237,
+    "pid": 57367,
+    "sensor": "netflow"
+  },
+  {
+    "account": "svc-build",
+    "action": "file_write",
+    "event_id": "EV-000113",
+    "host": "host-043",
+    "observed_ts": 83322,
+    "pid": 52382,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-025",
+    "action": "process_start",
+    "event_id": "EV-000114",
+    "host": "host-001",
+    "observed_ts": 529005,
+    "pid": 52943,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-014",
+    "action": "logon",
+    "event_id": "EV-000115",
+    "host": "host-011",
+    "observed_ts": 492455,
+    "pid": 7046,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-014",
+    "action": "logon",
+    "event_id": "EV-000116",
+    "host": "host-045",
+    "observed_ts": 530848,
+    "pid": 41873,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-040",
+    "action": "net_connect",
+    "event_id": "EV-000117",
+    "host": "host-044",
+    "observed_ts": 439917,
+    "pid": 54147,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-024",
+    "action": "logon_failed",
+    "event_id": "EV-000118",
+    "host": "host-032",
+    "observed_ts": 594716,
+    "pid": 50009,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-014",
+    "action": "net_connect",
+    "event_id": "EV-000119",
+    "host": "host-024",
+    "observed_ts": 600562,
+    "pid": 39080,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-011",
+    "action": "process_start",
+    "event_id": "EV-000120",
+    "host": "host-010",
+    "observed_ts": 226541,
+    "pid": 37186,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-031",
+    "action": "logon",
+    "event_id": "EV-000121",
+    "host": "host-016",
+    "observed_ts": 543644,
+    "pid": 29982,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-018",
+    "action": "process_start",
+    "event_id": "EV-000122",
+    "host": "host-054",
+    "observed_ts": 274069,
+    "pid": 38757,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-009",
+    "action": "share_mount",
+    "event_id": "EV-000123",
+    "host": "host-043",
+    "observed_ts": 482418,
+    "pid": 4383,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-016",
+    "action": "net_connect",
+    "event_id": "EV-000124",
+    "host": "host-047",
+    "observed_ts": 349657,
+    "pid": 25141,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-020",
+    "action": "logon",
+    "event_id": "EV-000125",
+    "host": "host-060",
+    "observed_ts": 515660,
+    "pid": 42387,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-001",
+    "action": "log_cleared",
+    "event_id": "EV-000126",
+    "host": "host-042",
+    "observed_ts": 495017,
+    "pid": 2844,
+    "sensor": "netflow"
+  },
+  {
+    "account": "svc-build",
+    "action": "logon",
+    "event_id": "EV-000127",
+    "host": "host-015",
+    "observed_ts": 460000,
+    "pid": 42845,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-relay",
+    "action": "logon_failed",
+    "event_id": "EV-000128",
+    "host": "host-057",
+    "observed_ts": 598101,
+    "pid": 46991,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-037",
+    "action": "logon",
+    "event_id": "EV-000129",
+    "host": "host-015",
+    "observed_ts": 570022,
+    "pid": 28519,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-036",
+    "action": "file_write",
+    "event_id": "EV-000130",
+    "host": "host-021",
+    "observed_ts": 448061,
+    "pid": 59113,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-016",
+    "action": "file_write",
+    "event_id": "EV-000131",
+    "host": "host-056",
+    "observed_ts": 184570,
+    "pid": 45990,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-014",
+    "action": "process_start",
+    "event_id": "EV-000132",
+    "host": "host-009",
+    "observed_ts": 148635,
+    "pid": 16155,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-006",
+    "action": "process_start",
+    "event_id": "EV-000133",
+    "host": "host-042",
+    "observed_ts": 263217,
+    "pid": 31020,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-030",
+    "action": "process_start",
+    "event_id": "EV-000134",
+    "host": "host-028",
+    "observed_ts": 464344,
+    "pid": 26836,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-009",
+    "action": "process_start",
+    "event_id": "EV-000135",
+    "host": "host-053",
+    "observed_ts": 319640,
+    "pid": 24800,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-013",
+    "action": "logon",
+    "event_id": "EV-000136",
+    "host": "host-034",
+    "observed_ts": 504444,
+    "pid": 24792,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-030",
+    "action": "logon",
+    "event_id": "EV-000137",
+    "host": "host-005",
+    "observed_ts": 149716,
+    "pid": 1738,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-007",
+    "action": "net_connect",
+    "event_id": "EV-000138",
+    "host": "host-008",
+    "observed_ts": 129157,
+    "pid": 36994,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-033",
+    "action": "logon_failed",
+    "event_id": "EV-000139",
+    "host": "host-001",
+    "observed_ts": 239479,
+    "pid": 9072,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-023",
+    "action": "net_connect",
+    "event_id": "EV-000140",
+    "host": "host-003",
+    "observed_ts": 285398,
+    "pid": 26456,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-003",
+    "action": "logon",
+    "event_id": "EV-000141",
+    "host": "host-060",
+    "observed_ts": 134791,
+    "pid": 8465,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-017",
+    "action": "logon_failed",
+    "event_id": "EV-000142",
+    "host": "host-024",
+    "observed_ts": 43919,
+    "pid": 31989,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-038",
+    "action": "process_start",
+    "event_id": "EV-000143",
+    "host": "host-041",
+    "observed_ts": 367694,
+    "pid": 6526,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-022",
+    "action": "logon_failed",
+    "event_id": "EV-000144",
+    "host": "host-027",
+    "observed_ts": 290523,
+    "pid": 5704,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-014",
+    "action": "logon",
+    "event_id": "EV-000145",
+    "host": "host-019",
+    "observed_ts": 191218,
+    "pid": 31877,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-039",
+    "action": "logon",
+    "event_id": "EV-000146",
+    "host": "host-001",
+    "observed_ts": 593848,
+    "pid": 54619,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-build",
+    "action": "process_start",
+    "event_id": "EV-000147",
+    "host": "host-017",
+    "observed_ts": 372804,
+    "pid": 10771,
+    "sensor": "netflow"
+  },
+  {
+    "account": "svc-relay",
+    "action": "process_start",
+    "event_id": "EV-000148",
+    "host": "host-014",
+    "observed_ts": 312093,
+    "pid": 6639,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-011",
+    "action": "logon",
+    "event_id": "EV-000149",
+    "host": "host-043",
+    "observed_ts": 140052,
+    "pid": 58916,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-029",
+    "action": "net_connect",
+    "event_id": "EV-000150",
+    "host": "host-018",
+    "observed_ts": 508462,
+    "pid": 49168,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-018",
+    "action": "net_connect",
+    "event_id": "EV-000151",
+    "host": "host-036",
+    "observed_ts": 78167,
+    "pid": 7769,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-037",
+    "action": "process_start",
+    "event_id": "EV-000152",
+    "host": "host-053",
+    "observed_ts": 88587,
+    "pid": 993,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-021",
+    "action": "process_start",
+    "event_id": "EV-000153",
+    "host": "host-038",
+    "observed_ts": 557031,
+    "pid": 51426,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-029",
+    "action": "file_write",
+    "event_id": "EV-000154",
+    "host": "host-013",
+    "observed_ts": 107835,
+    "pid": 51439,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-build",
+    "action": "logon_failed",
+    "event_id": "EV-000155",
+    "host": "host-008",
+    "observed_ts": 97417,
+    "pid": 13021,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-014",
+    "action": "share_mount",
+    "event_id": "EV-000156",
+    "host": "host-030",
+    "observed_ts": 376514,
+    "pid": 44980,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-019",
+    "action": "logon",
+    "event_id": "EV-000157",
+    "host": "host-024",
+    "observed_ts": 16918,
+    "pid": 10434,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-022",
+    "action": "logon",
+    "event_id": "EV-000158",
+    "host": "host-044",
+    "observed_ts": 602827,
+    "pid": 22301,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-backup",
+    "action": "logon",
+    "event_id": "EV-000159",
+    "host": "host-024",
+    "observed_ts": 277817,
+    "pid": 10541,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-040",
+    "action": "file_write",
+    "event_id": "EV-000160",
+    "host": "host-012",
+    "observed_ts": 381123,
+    "pid": 17271,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-017",
+    "action": "log_cleared",
+    "event_id": "EV-000161",
+    "host": "host-031",
+    "observed_ts": 223729,
+    "pid": 36050,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-026",
+    "action": "logon",
+    "event_id": "EV-000162",
+    "host": "host-002",
+    "observed_ts": 397350,
+    "pid": 4623,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-036",
+    "action": "net_connect",
+    "event_id": "EV-000163",
+    "host": "host-032",
+    "observed_ts": 367559,
+    "pid": 41363,
+    "sensor": "auth"
+  },
+  {
+    "account": "svc-index",
+    "action": "logon",
+    "event_id": "EV-000164",
+    "host": "host-060",
+    "observed_ts": 223100,
+    "pid": 51207,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-016",
+    "action": "file_write",
+    "event_id": "EV-000165",
+    "host": "host-040",
+    "observed_ts": 231631,
+    "pid": 21822,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-035",
+    "action": "process_start",
+    "event_id": "EV-000166",
+    "host": "host-036",
+    "observed_ts": 36463,
+    "pid": 26749,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-025",
+    "action": "process_start",
+    "event_id": "EV-000167",
+    "host": "host-051",
+    "observed_ts": 292850,
+    "pid": 21881,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-032",
+    "action": "logon",
+    "event_id": "EV-000168",
+    "host": "host-021",
+    "observed_ts": 19836,
+    "pid": 53711,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-012",
+    "action": "file_write",
+    "event_id": "EV-000169",
+    "host": "host-054",
+    "observed_ts": 384591,
+    "pid": 36987,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-017",
+    "action": "logon_failed",
+    "event_id": "EV-000170",
+    "host": "host-044",
+    "observed_ts": 143260,
+    "pid": 19317,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-020",
+    "action": "process_start",
+    "event_id": "EV-000171",
+    "host": "host-057",
+    "observed_ts": 161851,
+    "pid": 37288,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-022",
+    "action": "logon",
+    "event_id": "EV-000172",
+    "host": "host-006",
+    "observed_ts": 423687,
+    "pid": 48087,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-024",
+    "action": "log_cleared",
+    "event_id": "EV-000173",
+    "host": "host-060",
+    "observed_ts": 335087,
+    "pid": 23355,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-002",
+    "action": "share_mount",
+    "event_id": "EV-000174",
+    "host": "host-025",
+    "observed_ts": 208566,
+    "pid": 7662,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-010",
+    "action": "logon",
+    "event_id": "EV-000175",
+    "host": "host-017",
+    "observed_ts": 323486,
+    "pid": 11024,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-016",
+    "action": "logon",
+    "event_id": "EV-000176",
+    "host": "host-028",
+    "observed_ts": 374834,
+    "pid": 59646,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-016",
+    "action": "logon",
+    "event_id": "EV-000177",
+    "host": "host-015",
+    "observed_ts": 152966,
+    "pid": 22162,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-027",
+    "action": "logon",
+    "event_id": "EV-000178",
+    "host": "host-009",
+    "observed_ts": 512722,
+    "pid": 12306,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-025",
+    "action": "net_connect",
+    "event_id": "EV-000179",
+    "host": "host-047",
+    "observed_ts": 53354,
+    "pid": 11183,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-010",
+    "action": "logon_failed",
+    "event_id": "EV-000180",
+    "host": "host-038",
+    "observed_ts": 221422,
+    "pid": 35765,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-019",
+    "action": "process_start",
+    "event_id": "EV-000181",
+    "host": "host-021",
+    "observed_ts": 592855,
+    "pid": 3097,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-018",
+    "action": "logon",
+    "event_id": "EV-000182",
+    "host": "host-060",
+    "observed_ts": 408769,
+    "pid": 36476,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-023",
+    "action": "logon_failed",
+    "event_id": "EV-000183",
+    "host": "host-007",
+    "observed_ts": 461937,
+    "pid": 8481,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-018",
+    "action": "process_start",
+    "event_id": "EV-000184",
+    "host": "host-002",
+    "observed_ts": 80435,
+    "pid": 34562,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-006",
+    "action": "net_connect",
+    "event_id": "EV-000185",
+    "host": "host-033",
+    "observed_ts": 34275,
+    "pid": 45587,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-008",
+    "action": "net_connect",
+    "event_id": "EV-000186",
+    "host": "host-030",
+    "observed_ts": 24969,
+    "pid": 26978,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-034",
+    "action": "logon",
+    "event_id": "EV-000187",
+    "host": "host-019",
+    "observed_ts": 231926,
+    "pid": 53881,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-016",
+    "action": "net_connect",
+    "event_id": "EV-000188",
+    "host": "host-016",
+    "observed_ts": 166453,
+    "pid": 56504,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-036",
+    "action": "process_start",
+    "event_id": "EV-000189",
+    "host": "host-013",
+    "observed_ts": 478182,
+    "pid": 58361,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-034",
+    "action": "process_start",
+    "event_id": "EV-000190",
+    "host": "host-017",
+    "observed_ts": 339604,
+    "pid": 12843,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-005",
+    "action": "net_connect",
+    "event_id": "EV-000191",
+    "host": "host-023",
+    "observed_ts": 37090,
+    "pid": 55527,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-018",
+    "action": "share_mount",
+    "event_id": "EV-000192",
+    "host": "host-029",
+    "observed_ts": 505443,
+    "pid": 7379,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-021",
+    "action": "process_start",
+    "event_id": "EV-000193",
+    "host": "host-057",
+    "observed_ts": 409942,
+    "pid": 45279,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-004",
+    "action": "logon",
+    "event_id": "EV-000194",
+    "host": "host-027",
+    "observed_ts": 78233,
+    "pid": 3140,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-003",
+    "action": "file_write",
+    "event_id": "EV-000195",
+    "host": "host-040",
+    "observed_ts": 41001,
+    "pid": 35605,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-030",
+    "action": "logon",
+    "event_id": "EV-000196",
+    "host": "host-052",
+    "observed_ts": 155965,
+    "pid": 24071,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-017",
+    "action": "logon",
+    "event_id": "EV-000197",
+    "host": "host-008",
+    "observed_ts": 396926,
+    "pid": 14589,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-040",
+    "action": "net_connect",
+    "event_id": "EV-000198",
+    "host": "host-054",
+    "observed_ts": 523358,
+    "pid": 19040,
+    "sensor": "netflow"
+  },
+  {
+    "account": "svc-relay",
+    "action": "priv_escalate",
+    "event_id": "EV-000199",
+    "host": "host-059",
+    "observed_ts": 600818,
+    "pid": 39154,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-036",
+    "action": "logon_failed",
+    "event_id": "EV-000200",
+    "host": "host-038",
+    "observed_ts": 560881,
+    "pid": 13686,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-031",
+    "action": "net_connect",
+    "event_id": "EV-000201",
+    "host": "host-022",
+    "observed_ts": 25547,
+    "pid": 32632,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-004",
+    "action": "net_connect",
+    "event_id": "EV-000202",
+    "host": "host-018",
+    "observed_ts": 291205,
+    "pid": 12154,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-001",
+    "action": "share_mount",
+    "event_id": "EV-000203",
+    "host": "host-059",
+    "observed_ts": 281120,
+    "pid": 1839,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-005",
+    "action": "process_start",
+    "event_id": "EV-000204",
+    "host": "host-005",
+    "observed_ts": 362361,
+    "pid": 34391,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-028",
+    "action": "process_start",
+    "event_id": "EV-000205",
+    "host": "host-011",
+    "observed_ts": 367883,
+    "pid": 26482,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-013",
+    "action": "logon",
+    "event_id": "EV-000206",
+    "host": "host-047",
+    "observed_ts": 394535,
+    "pid": 10254,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-015",
+    "action": "logon",
+    "event_id": "EV-000207",
+    "host": "host-014",
+    "observed_ts": 350595,
+    "pid": 23692,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-report",
+    "action": "logon",
+    "event_id": "EV-000208",
+    "host": "host-004",
+    "observed_ts": 106293,
+    "pid": 14020,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-002",
+    "action": "process_start",
+    "event_id": "EV-000209",
+    "host": "host-021",
+    "observed_ts": 213832,
+    "pid": 22630,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-022",
+    "action": "net_connect",
+    "event_id": "EV-000210",
+    "host": "host-040",
+    "observed_ts": 452263,
+    "pid": 14614,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-040",
+    "action": "process_start",
+    "event_id": "EV-000211",
+    "host": "host-023",
+    "observed_ts": 504035,
+    "pid": 6421,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-026",
+    "action": "file_write",
+    "event_id": "EV-000212",
+    "host": "host-033",
+    "observed_ts": 341908,
+    "pid": 16163,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-007",
+    "action": "file_write",
+    "event_id": "EV-000213",
+    "host": "host-002",
+    "observed_ts": 49005,
+    "pid": 53357,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-031",
+    "action": "file_write",
+    "event_id": "EV-000214",
+    "host": "host-025",
+    "observed_ts": 48983,
+    "pid": 55432,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-036",
+    "action": "logon",
+    "event_id": "EV-000215",
+    "host": "host-011",
+    "observed_ts": 215097,
+    "pid": 1467,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-040",
+    "action": "process_start",
+    "event_id": "EV-000216",
+    "host": "host-035",
+    "observed_ts": 368654,
+    "pid": 24417,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-015",
+    "action": "process_start",
+    "event_id": "EV-000217",
+    "host": "host-018",
+    "observed_ts": 52133,
+    "pid": 50216,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-004",
+    "action": "logon_failed",
+    "event_id": "EV-000218",
+    "host": "host-052",
+    "observed_ts": 212628,
+    "pid": 12515,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-032",
+    "action": "file_write",
+    "event_id": "EV-000219",
+    "host": "host-040",
+    "observed_ts": 518445,
+    "pid": 5617,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-033",
+    "action": "logon_failed",
+    "event_id": "EV-000220",
+    "host": "host-010",
+    "observed_ts": 182377,
+    "pid": 25349,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-024",
+    "action": "logon_failed",
+    "event_id": "EV-000221",
+    "host": "host-019",
+    "observed_ts": 145162,
+    "pid": 31439,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-deploy",
+    "action": "process_start",
+    "event_id": "EV-000222",
+    "host": "host-046",
+    "observed_ts": 282728,
+    "pid": 5240,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-018",
+    "action": "logon_failed",
+    "event_id": "EV-000223",
+    "host": "host-014",
+    "observed_ts": 295227,
+    "pid": 53449,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-002",
+    "action": "share_mount",
+    "event_id": "EV-000224",
+    "host": "host-036",
+    "observed_ts": 45430,
+    "pid": 42166,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-021",
+    "action": "logon",
+    "event_id": "EV-000225",
+    "host": "host-013",
+    "observed_ts": 366397,
+    "pid": 11012,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-004",
+    "action": "file_write",
+    "event_id": "EV-000226",
+    "host": "host-043",
+    "observed_ts": 161054,
+    "pid": 22982,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-033",
+    "action": "process_start",
+    "event_id": "EV-000227",
+    "host": "host-011",
+    "observed_ts": 76008,
+    "pid": 10477,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-018",
+    "action": "share_mount",
+    "event_id": "EV-000228",
+    "host": "host-060",
+    "observed_ts": 105183,
+    "pid": 9328,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-030",
+    "action": "logon",
+    "event_id": "EV-000229",
+    "host": "host-022",
+    "observed_ts": 586752,
+    "pid": 51938,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-029",
+    "action": "logon_failed",
+    "event_id": "EV-000230",
+    "host": "host-050",
+    "observed_ts": 380752,
+    "pid": 10609,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-028",
+    "action": "net_connect",
+    "event_id": "EV-000231",
+    "host": "host-013",
+    "observed_ts": 583664,
+    "pid": 28206,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-031",
+    "action": "file_write",
+    "event_id": "EV-000232",
+    "host": "host-013",
+    "observed_ts": 3214,
+    "pid": 50970,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-006",
+    "action": "logon_failed",
+    "event_id": "EV-000233",
+    "host": "host-051",
+    "observed_ts": 593748,
+    "pid": 4347,
+    "sensor": "auth"
+  },
+  {
+    "account": "svc-backup",
+    "action": "logon_failed",
+    "event_id": "EV-000234",
+    "host": "host-007",
+    "observed_ts": 507167,
+    "pid": 26937,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-024",
+    "action": "process_start",
+    "event_id": "EV-000235",
+    "host": "host-054",
+    "observed_ts": 518311,
+    "pid": 13922,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-010",
+    "action": "logon_failed",
+    "event_id": "EV-000236",
+    "host": "host-052",
+    "observed_ts": 239584,
+    "pid": 51398,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-039",
+    "action": "logon_failed",
+    "event_id": "EV-000237",
+    "host": "host-023",
+    "observed_ts": 23412,
+    "pid": 29206,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-013",
+    "action": "logon",
+    "event_id": "EV-000238",
+    "host": "host-034",
+    "observed_ts": 437419,
+    "pid": 11819,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-008",
+    "action": "process_start",
+    "event_id": "EV-000239",
+    "host": "host-035",
+    "observed_ts": 417693,
+    "pid": 51685,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-006",
+    "action": "logon",
+    "event_id": "EV-000240",
+    "host": "host-055",
+    "observed_ts": 312689,
+    "pid": 45462,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-040",
+    "action": "net_connect",
+    "event_id": "EV-000241",
+    "host": "host-007",
+    "observed_ts": 538828,
+    "pid": 6307,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-008",
+    "action": "file_write",
+    "event_id": "EV-000242",
+    "host": "host-047",
+    "observed_ts": 264462,
+    "pid": 30188,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-021",
+    "action": "logon_failed",
+    "event_id": "EV-000243",
+    "host": "host-001",
+    "observed_ts": 361553,
+    "pid": 6335,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-008",
+    "action": "logon",
+    "event_id": "EV-000244",
+    "host": "host-011",
+    "observed_ts": 331201,
+    "pid": 37762,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-036",
+    "action": "logon",
+    "event_id": "EV-000245",
+    "host": "host-027",
+    "observed_ts": 345611,
+    "pid": 54067,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-036",
+    "action": "net_connect",
+    "event_id": "EV-000246",
+    "host": "host-022",
+    "observed_ts": 157474,
+    "pid": 49575,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-relay",
+    "action": "file_write",
+    "event_id": "EV-000247",
+    "host": "host-033",
+    "observed_ts": 542720,
+    "pid": 26619,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-023",
+    "action": "priv_escalate",
+    "event_id": "EV-000248",
+    "host": "host-052",
+    "observed_ts": 245190,
+    "pid": 22778,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-034",
+    "action": "file_write",
+    "event_id": "EV-000249",
+    "host": "host-018",
+    "observed_ts": 543575,
+    "pid": 54245,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-017",
+    "action": "logon_failed",
+    "event_id": "EV-000250",
+    "host": "host-049",
+    "observed_ts": 22765,
+    "pid": 31751,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-backup",
+    "action": "logon",
+    "event_id": "EV-000251",
+    "host": "host-026",
+    "observed_ts": 602177,
+    "pid": 59208,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-013",
+    "action": "logon",
+    "event_id": "EV-000252",
+    "host": "host-028",
+    "observed_ts": 292698,
+    "pid": 55709,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-036",
+    "action": "file_write",
+    "event_id": "EV-000253",
+    "host": "host-028",
+    "observed_ts": 581613,
+    "pid": 16422,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-017",
+    "action": "process_start",
+    "event_id": "EV-000254",
+    "host": "host-039",
+    "observed_ts": 343281,
+    "pid": 23949,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-034",
+    "action": "process_start",
+    "event_id": "EV-000255",
+    "host": "host-007",
+    "observed_ts": 580582,
+    "pid": 10822,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-031",
+    "action": "logon",
+    "event_id": "EV-000256",
+    "host": "host-020",
+    "observed_ts": 430389,
+    "pid": 27194,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-report",
+    "action": "share_mount",
+    "event_id": "EV-000257",
+    "host": "host-060",
+    "observed_ts": 423356,
+    "pid": 38829,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-014",
+    "action": "logon",
+    "event_id": "EV-000258",
+    "host": "host-035",
+    "observed_ts": 522857,
+    "pid": 44130,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-018",
+    "action": "logon",
+    "event_id": "EV-000259",
+    "host": "host-043",
+    "observed_ts": 484200,
+    "pid": 21889,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-035",
+    "action": "net_connect",
+    "event_id": "EV-000260",
+    "host": "host-015",
+    "observed_ts": 34659,
+    "pid": 37736,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-040",
+    "action": "share_mount",
+    "event_id": "EV-000261",
+    "host": "host-035",
+    "observed_ts": 487945,
+    "pid": 25961,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-015",
+    "action": "logon_failed",
+    "event_id": "EV-000262",
+    "host": "host-012",
+    "observed_ts": 482684,
+    "pid": 57075,
+    "sensor": "auth"
+  },
+  {
+    "account": "svc-build",
+    "action": "net_connect",
+    "event_id": "EV-000263",
+    "host": "host-045",
+    "observed_ts": 587764,
+    "pid": 31241,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-017",
+    "action": "logon",
+    "event_id": "EV-000264",
+    "host": "host-037",
+    "observed_ts": 381855,
+    "pid": 49020,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-011",
+    "action": "file_write",
+    "event_id": "EV-000265",
+    "host": "host-018",
+    "observed_ts": 315395,
+    "pid": 6075,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-038",
+    "action": "process_start",
+    "event_id": "EV-000266",
+    "host": "host-050",
+    "observed_ts": 27968,
+    "pid": 15086,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-035",
+    "action": "logon",
+    "event_id": "EV-000267",
+    "host": "host-042",
+    "observed_ts": 176763,
+    "pid": 1448,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-010",
+    "action": "process_start",
+    "event_id": "EV-000268",
+    "host": "host-056",
+    "observed_ts": 595814,
+    "pid": 49759,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-006",
+    "action": "logon",
+    "event_id": "EV-000269",
+    "host": "host-009",
+    "observed_ts": 160065,
+    "pid": 31223,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-038",
+    "action": "process_start",
+    "event_id": "EV-000270",
+    "host": "host-016",
+    "observed_ts": 593637,
+    "pid": 11822,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-035",
+    "action": "logon",
+    "event_id": "EV-000271",
+    "host": "host-022",
+    "observed_ts": 264966,
+    "pid": 8488,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-007",
+    "action": "logon_failed",
+    "event_id": "EV-000272",
+    "host": "host-035",
+    "observed_ts": 24308,
+    "pid": 31243,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-014",
+    "action": "process_start",
+    "event_id": "EV-000273",
+    "host": "host-010",
+    "observed_ts": 328197,
+    "pid": 20522,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-037",
+    "action": "logon_failed",
+    "event_id": "EV-000274",
+    "host": "host-058",
+    "observed_ts": 559926,
+    "pid": 43157,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-013",
+    "action": "process_start",
+    "event_id": "EV-000275",
+    "host": "host-054",
+    "observed_ts": 181703,
+    "pid": 37681,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-018",
+    "action": "file_write",
+    "event_id": "EV-000276",
+    "host": "host-038",
+    "observed_ts": 156556,
+    "pid": 39336,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-036",
+    "action": "net_connect",
+    "event_id": "EV-000277",
+    "host": "host-015",
+    "observed_ts": 123262,
+    "pid": 27615,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-027",
+    "action": "logon_failed",
+    "event_id": "EV-000278",
+    "host": "host-010",
+    "observed_ts": 333117,
+    "pid": 21315,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-003",
+    "action": "process_start",
+    "event_id": "EV-000279",
+    "host": "host-043",
+    "observed_ts": 413400,
+    "pid": 25156,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-004",
+    "action": "file_write",
+    "event_id": "EV-000280",
+    "host": "host-028",
+    "observed_ts": 312750,
+    "pid": 34073,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-024",
+    "action": "logon_failed",
+    "event_id": "EV-000281",
+    "host": "host-044",
+    "observed_ts": 255873,
+    "pid": 33059,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-006",
+    "action": "process_start",
+    "event_id": "EV-000282",
+    "host": "host-038",
+    "observed_ts": 404399,
+    "pid": 58216,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-017",
+    "action": "file_write",
+    "event_id": "EV-000283",
+    "host": "host-025",
+    "observed_ts": 290609,
+    "pid": 22667,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-026",
+    "action": "priv_escalate",
+    "event_id": "EV-000284",
+    "host": "host-027",
+    "observed_ts": 271404,
+    "pid": 29110,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-027",
+    "action": "net_connect",
+    "event_id": "EV-000285",
+    "host": "host-003",
+    "observed_ts": 10936,
+    "pid": 58380,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-008",
+    "action": "file_write",
+    "event_id": "EV-000286",
+    "host": "host-057",
+    "observed_ts": 431149,
+    "pid": 15090,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-020",
+    "action": "logon",
+    "event_id": "EV-000287",
+    "host": "host-005",
+    "observed_ts": 489102,
+    "pid": 47399,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-deploy",
+    "action": "file_write",
+    "event_id": "EV-000288",
+    "host": "host-038",
+    "observed_ts": 511184,
+    "pid": 17486,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-003",
+    "action": "net_connect",
+    "event_id": "EV-000289",
+    "host": "host-048",
+    "observed_ts": 345063,
+    "pid": 7502,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-008",
+    "action": "priv_escalate",
+    "event_id": "EV-000290",
+    "host": "host-029",
+    "observed_ts": 45949,
+    "pid": 29185,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-013",
+    "action": "logon",
+    "event_id": "EV-000291",
+    "host": "host-005",
+    "observed_ts": 457658,
+    "pid": 47361,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-032",
+    "action": "logon",
+    "event_id": "EV-000292",
+    "host": "host-053",
+    "observed_ts": 156459,
+    "pid": 59982,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-037",
+    "action": "logon_failed",
+    "event_id": "EV-000293",
+    "host": "host-007",
+    "observed_ts": 246145,
+    "pid": 13205,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-009",
+    "action": "file_write",
+    "event_id": "EV-000294",
+    "host": "host-032",
+    "observed_ts": 103139,
+    "pid": 24997,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-013",
+    "action": "logon_failed",
+    "event_id": "EV-000295",
+    "host": "host-035",
+    "observed_ts": 448712,
+    "pid": 19832,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-001",
+    "action": "process_start",
+    "event_id": "EV-000296",
+    "host": "host-060",
+    "observed_ts": 2649,
+    "pid": 17959,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-021",
+    "action": "logon",
+    "event_id": "EV-000297",
+    "host": "host-038",
+    "observed_ts": 200746,
+    "pid": 25431,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-017",
+    "action": "file_write",
+    "event_id": "EV-000298",
+    "host": "host-057",
+    "observed_ts": 83576,
+    "pid": 49253,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-036",
+    "action": "logon",
+    "event_id": "EV-000299",
+    "host": "host-030",
+    "observed_ts": 98732,
+    "pid": 28830,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-025",
+    "action": "process_start",
+    "event_id": "EV-000300",
+    "host": "host-048",
+    "observed_ts": 176777,
+    "pid": 13073,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-030",
+    "action": "net_connect",
+    "event_id": "EV-000301",
+    "host": "host-024",
+    "observed_ts": 215976,
+    "pid": 32741,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-024",
+    "action": "share_mount",
+    "event_id": "EV-000302",
+    "host": "host-049",
+    "observed_ts": 112226,
+    "pid": 32908,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-028",
+    "action": "file_write",
+    "event_id": "EV-000303",
+    "host": "host-022",
+    "observed_ts": 313248,
+    "pid": 40931,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-027",
+    "action": "logon",
+    "event_id": "EV-000304",
+    "host": "host-029",
+    "observed_ts": 512525,
+    "pid": 16371,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-007",
+    "action": "logon_failed",
+    "event_id": "EV-000305",
+    "host": "host-058",
+    "observed_ts": 121299,
+    "pid": 8300,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-036",
+    "action": "process_start",
+    "event_id": "EV-000306",
+    "host": "host-037",
+    "observed_ts": 272264,
+    "pid": 13568,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-009",
+    "action": "process_start",
+    "event_id": "EV-000307",
+    "host": "host-023",
+    "observed_ts": 510074,
+    "pid": 24009,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-005",
+    "action": "process_start",
+    "event_id": "EV-000308",
+    "host": "host-058",
+    "observed_ts": 63050,
+    "pid": 16023,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-009",
+    "action": "share_mount",
+    "event_id": "EV-000309",
+    "host": "host-040",
+    "observed_ts": 433384,
+    "pid": 23708,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-016",
+    "action": "logon_failed",
+    "event_id": "EV-000310",
+    "host": "host-057",
+    "observed_ts": 208233,
+    "pid": 9546,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-018",
+    "action": "process_start",
+    "event_id": "EV-000311",
+    "host": "host-050",
+    "observed_ts": 415897,
+    "pid": 27516,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-010",
+    "action": "file_write",
+    "event_id": "EV-000312",
+    "host": "host-031",
+    "observed_ts": 452022,
+    "pid": 16603,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-027",
+    "action": "priv_escalate",
+    "event_id": "EV-000313",
+    "host": "host-049",
+    "observed_ts": 270381,
+    "pid": 7307,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-039",
+    "action": "file_write",
+    "event_id": "EV-000314",
+    "host": "host-043",
+    "observed_ts": 425418,
+    "pid": 25072,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-028",
+    "action": "process_start",
+    "event_id": "EV-000315",
+    "host": "host-053",
+    "observed_ts": 379868,
+    "pid": 53296,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-022",
+    "action": "net_connect",
+    "event_id": "EV-000316",
+    "host": "host-001",
+    "observed_ts": 288652,
+    "pid": 46577,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-004",
+    "action": "logon",
+    "event_id": "EV-000317",
+    "host": "host-040",
+    "observed_ts": 305643,
+    "pid": 24424,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-018",
+    "action": "logon",
+    "event_id": "EV-000318",
+    "host": "host-039",
+    "observed_ts": 336698,
+    "pid": 42577,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-build",
+    "action": "logon",
+    "event_id": "EV-000319",
+    "host": "host-019",
+    "observed_ts": 256887,
+    "pid": 24649,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-003",
+    "action": "net_connect",
+    "event_id": "EV-000320",
+    "host": "host-019",
+    "observed_ts": 331821,
+    "pid": 45765,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-008",
+    "action": "process_start",
+    "event_id": "EV-000321",
+    "host": "host-007",
+    "observed_ts": 159915,
+    "pid": 55408,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-014",
+    "action": "logon_failed",
+    "event_id": "EV-000322",
+    "host": "host-022",
+    "observed_ts": 443915,
+    "pid": 33929,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-012",
+    "action": "logon_failed",
+    "event_id": "EV-000323",
+    "host": "host-025",
+    "observed_ts": 537231,
+    "pid": 4677,
+    "sensor": "netflow"
+  },
+  {
+    "account": "svc-index",
+    "action": "logon",
+    "event_id": "EV-000324",
+    "host": "host-049",
+    "observed_ts": 530793,
+    "pid": 38032,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-019",
+    "action": "net_connect",
+    "event_id": "EV-000325",
+    "host": "host-048",
+    "observed_ts": 214606,
+    "pid": 43568,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-004",
+    "action": "net_connect",
+    "event_id": "EV-000326",
+    "host": "host-016",
+    "observed_ts": 156019,
+    "pid": 1582,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-030",
+    "action": "net_connect",
+    "event_id": "EV-000327",
+    "host": "host-002",
+    "observed_ts": 261794,
+    "pid": 43858,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-030",
+    "action": "file_write",
+    "event_id": "EV-000328",
+    "host": "host-023",
+    "observed_ts": 458698,
+    "pid": 40655,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-006",
+    "action": "logon_failed",
+    "event_id": "EV-000329",
+    "host": "host-040",
+    "observed_ts": 476811,
+    "pid": 33506,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-023",
+    "action": "logon_failed",
+    "event_id": "EV-000330",
+    "host": "host-028",
+    "observed_ts": 68709,
+    "pid": 21205,
+    "sensor": "netflow"
+  },
+  {
+    "account": "svc-relay",
+    "action": "logon",
+    "event_id": "EV-000331",
+    "host": "host-047",
+    "observed_ts": 597338,
+    "pid": 22978,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-019",
+    "action": "log_cleared",
+    "event_id": "EV-000332",
+    "host": "host-031",
+    "observed_ts": 132061,
+    "pid": 51812,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-036",
+    "action": "logon",
+    "event_id": "EV-000333",
+    "host": "host-037",
+    "observed_ts": 191041,
+    "pid": 4347,
+    "sensor": "auth"
+  },
+  {
+    "account": "svc-index",
+    "action": "process_start",
+    "event_id": "EV-000334",
+    "host": "host-022",
+    "observed_ts": 507931,
+    "pid": 23580,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-004",
+    "action": "logon",
+    "event_id": "EV-000335",
+    "host": "host-051",
+    "observed_ts": 63368,
+    "pid": 24069,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-005",
+    "action": "logon",
+    "event_id": "EV-000336",
+    "host": "host-014",
+    "observed_ts": 353649,
+    "pid": 17673,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-017",
+    "action": "logon",
+    "event_id": "EV-000337",
+    "host": "host-043",
+    "observed_ts": 238682,
+    "pid": 12145,
+    "sensor": "auth"
+  },
+  {
+    "account": "svc-index",
+    "action": "logon_failed",
+    "event_id": "EV-000338",
+    "host": "host-009",
+    "observed_ts": 11925,
+    "pid": 7361,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-011",
+    "action": "logon",
+    "event_id": "EV-000339",
+    "host": "host-033",
+    "observed_ts": 254206,
+    "pid": 34743,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-relay",
+    "action": "logon_failed",
+    "event_id": "EV-000340",
+    "host": "host-051",
+    "observed_ts": 490472,
+    "pid": 3894,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-023",
+    "action": "file_write",
+    "event_id": "EV-000341",
+    "host": "host-041",
+    "observed_ts": 199257,
+    "pid": 4903,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-relay",
+    "action": "file_write",
+    "event_id": "EV-000342",
+    "host": "host-001",
+    "observed_ts": 397664,
+    "pid": 25915,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-005",
+    "action": "logon",
+    "event_id": "EV-000343",
+    "host": "host-049",
+    "observed_ts": 308425,
+    "pid": 11647,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-010",
+    "action": "logon",
+    "event_id": "EV-000344",
+    "host": "host-050",
+    "observed_ts": 325805,
+    "pid": 16783,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-008",
+    "action": "logon",
+    "event_id": "EV-000345",
+    "host": "host-024",
+    "observed_ts": 394599,
+    "pid": 15777,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-021",
+    "action": "logon",
+    "event_id": "EV-000346",
+    "host": "host-051",
+    "observed_ts": 358233,
+    "pid": 30774,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-backup",
+    "action": "logon_failed",
+    "event_id": "EV-000347",
+    "host": "host-032",
+    "observed_ts": 181587,
+    "pid": 43129,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-015",
+    "action": "logon",
+    "event_id": "EV-000348",
+    "host": "host-046",
+    "observed_ts": 130795,
+    "pid": 3965,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-022",
+    "action": "logon",
+    "event_id": "EV-000349",
+    "host": "host-016",
+    "observed_ts": 497024,
+    "pid": 22072,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-036",
+    "action": "logon",
+    "event_id": "EV-000350",
+    "host": "host-042",
+    "observed_ts": 10455,
+    "pid": 42552,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-040",
+    "action": "file_write",
+    "event_id": "EV-000351",
+    "host": "host-023",
+    "observed_ts": 212516,
+    "pid": 33251,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-009",
+    "action": "logon",
+    "event_id": "EV-000352",
+    "host": "host-028",
+    "observed_ts": 328827,
+    "pid": 29592,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-012",
+    "action": "logon",
+    "event_id": "EV-000353",
+    "host": "host-053",
+    "observed_ts": 314835,
+    "pid": 8878,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-035",
+    "action": "logon_failed",
+    "event_id": "EV-000354",
+    "host": "host-012",
+    "observed_ts": 272171,
+    "pid": 24959,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-035",
+    "action": "net_connect",
+    "event_id": "EV-000355",
+    "host": "host-051",
+    "observed_ts": 174674,
+    "pid": 58397,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-build",
+    "action": "net_connect",
+    "event_id": "EV-000356",
+    "host": "host-021",
+    "observed_ts": 105698,
+    "pid": 17816,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-012",
+    "action": "file_write",
+    "event_id": "EV-000357",
+    "host": "host-043",
+    "observed_ts": 13790,
+    "pid": 39566,
+    "sensor": "auth"
+  },
+  {
+    "account": "svc-relay",
+    "action": "process_start",
+    "event_id": "EV-000358",
+    "host": "host-012",
+    "observed_ts": 14194,
+    "pid": 33320,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-040",
+    "action": "net_connect",
+    "event_id": "EV-000359",
+    "host": "host-009",
+    "observed_ts": 515271,
+    "pid": 20496,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-028",
+    "action": "file_write",
+    "event_id": "EV-000360",
+    "host": "host-056",
+    "observed_ts": 321170,
+    "pid": 38981,
+    "sensor": "auth"
+  },
+  {
+    "account": "svc-report",
+    "action": "logon",
+    "event_id": "EV-000361",
+    "host": "host-037",
+    "observed_ts": 398095,
+    "pid": 1385,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-031",
+    "action": "net_connect",
+    "event_id": "EV-000362",
+    "host": "host-018",
+    "observed_ts": 466841,
+    "pid": 30672,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-035",
+    "action": "logon",
+    "event_id": "EV-000363",
+    "host": "host-022",
+    "observed_ts": 153884,
+    "pid": 44130,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-018",
+    "action": "process_start",
+    "event_id": "EV-000364",
+    "host": "host-053",
+    "observed_ts": 187056,
+    "pid": 2813,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-024",
+    "action": "share_mount",
+    "event_id": "EV-000365",
+    "host": "host-049",
+    "observed_ts": 60048,
+    "pid": 27648,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-010",
+    "action": "logon",
+    "event_id": "EV-000366",
+    "host": "host-019",
+    "observed_ts": 107399,
+    "pid": 57645,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-018",
+    "action": "process_start",
+    "event_id": "EV-000367",
+    "host": "host-006",
+    "observed_ts": 576843,
+    "pid": 41499,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-040",
+    "action": "logon_failed",
+    "event_id": "EV-000368",
+    "host": "host-002",
+    "observed_ts": 164156,
+    "pid": 43278,
+    "sensor": "netflow"
+  },
+  {
+    "account": "svc-backup",
+    "action": "file_write",
+    "event_id": "EV-000369",
+    "host": "host-018",
+    "observed_ts": 305557,
+    "pid": 58369,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-038",
+    "action": "logon",
+    "event_id": "EV-000370",
+    "host": "host-030",
+    "observed_ts": 50843,
+    "pid": 52758,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-004",
+    "action": "logon",
+    "event_id": "EV-000371",
+    "host": "host-032",
+    "observed_ts": 126519,
+    "pid": 58658,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-026",
+    "action": "net_connect",
+    "event_id": "EV-000372",
+    "host": "host-035",
+    "observed_ts": 272172,
+    "pid": 8114,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-deploy",
+    "action": "process_start",
+    "event_id": "EV-000373",
+    "host": "host-007",
+    "observed_ts": 318639,
+    "pid": 34752,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-029",
+    "action": "logon",
+    "event_id": "EV-000374",
+    "host": "host-041",
+    "observed_ts": 522414,
+    "pid": 39597,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-040",
+    "action": "logon",
+    "event_id": "EV-000375",
+    "host": "host-018",
+    "observed_ts": 42523,
+    "pid": 9082,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-030",
+    "action": "logon_failed",
+    "event_id": "EV-000376",
+    "host": "host-007",
+    "observed_ts": 263293,
+    "pid": 37058,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-009",
+    "action": "file_write",
+    "event_id": "EV-000377",
+    "host": "host-006",
+    "observed_ts": 370885,
+    "pid": 17610,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-003",
+    "action": "logon",
+    "event_id": "EV-000378",
+    "host": "host-036",
+    "observed_ts": 205973,
+    "pid": 25052,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-021",
+    "action": "logon",
+    "event_id": "EV-000379",
+    "host": "host-053",
+    "observed_ts": 419402,
+    "pid": 35964,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-006",
+    "action": "logon_failed",
+    "event_id": "EV-000380",
+    "host": "host-013",
+    "observed_ts": 98872,
+    "pid": 36942,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-032",
+    "action": "share_mount",
+    "event_id": "EV-000381",
+    "host": "host-031",
+    "observed_ts": 479889,
+    "pid": 15925,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-015",
+    "action": "logon_failed",
+    "event_id": "EV-000382",
+    "host": "host-055",
+    "observed_ts": 415743,
+    "pid": 36981,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-039",
+    "action": "share_mount",
+    "event_id": "EV-000383",
+    "host": "host-036",
+    "observed_ts": 44477,
+    "pid": 7758,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-030",
+    "action": "file_write",
+    "event_id": "EV-000384",
+    "host": "host-047",
+    "observed_ts": 145425,
+    "pid": 9120,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-036",
+    "action": "logon",
+    "event_id": "EV-000385",
+    "host": "host-010",
+    "observed_ts": 193581,
+    "pid": 29322,
+    "sensor": "auth"
+  },
+  {
+    "account": "svc-build",
+    "action": "process_start",
+    "event_id": "EV-000386",
+    "host": "host-049",
+    "observed_ts": 229485,
+    "pid": 7100,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-017",
+    "action": "logon",
+    "event_id": "EV-000387",
+    "host": "host-056",
+    "observed_ts": 574486,
+    "pid": 54463,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-backup",
+    "action": "process_start",
+    "event_id": "EV-000388",
+    "host": "host-023",
+    "observed_ts": 163877,
+    "pid": 57915,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-002",
+    "action": "logon",
+    "event_id": "EV-000389",
+    "host": "host-040",
+    "observed_ts": 121549,
+    "pid": 18198,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-036",
+    "action": "logon",
+    "event_id": "EV-000390",
+    "host": "host-048",
+    "observed_ts": 540649,
+    "pid": 43704,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-009",
+    "action": "file_write",
+    "event_id": "EV-000391",
+    "host": "host-050",
+    "observed_ts": 448153,
+    "pid": 52483,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-011",
+    "action": "logon",
+    "event_id": "EV-000392",
+    "host": "host-021",
+    "observed_ts": 362990,
+    "pid": 42922,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-008",
+    "action": "log_cleared",
+    "event_id": "EV-000393",
+    "host": "host-012",
+    "observed_ts": 207593,
+    "pid": 6822,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-026",
+    "action": "logon_failed",
+    "event_id": "EV-000394",
+    "host": "host-040",
+    "observed_ts": 136821,
+    "pid": 50111,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-009",
+    "action": "logon",
+    "event_id": "EV-000395",
+    "host": "host-015",
+    "observed_ts": 298833,
+    "pid": 48995,
+    "sensor": "auth"
+  },
+  {
+    "account": "svc-build",
+    "action": "process_start",
+    "event_id": "EV-000396",
+    "host": "host-056",
+    "observed_ts": 21343,
+    "pid": 51884,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-001",
+    "action": "logon",
+    "event_id": "EV-000397",
+    "host": "host-001",
+    "observed_ts": 258064,
+    "pid": 14446,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-006",
+    "action": "logon_failed",
+    "event_id": "EV-000398",
+    "host": "host-009",
+    "observed_ts": 171776,
+    "pid": 12734,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-026",
+    "action": "process_start",
+    "event_id": "EV-000399",
+    "host": "host-009",
+    "observed_ts": 390805,
+    "pid": 59778,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-001",
+    "action": "logon",
+    "event_id": "EV-000400",
+    "host": "host-009",
+    "observed_ts": 548598,
+    "pid": 29041,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-011",
+    "action": "net_connect",
+    "event_id": "EV-000401",
+    "host": "host-051",
+    "observed_ts": 526742,
+    "pid": 13992,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-039",
+    "action": "logon",
+    "event_id": "EV-000402",
+    "host": "host-025",
+    "observed_ts": 269029,
+    "pid": 58262,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-032",
+    "action": "priv_escalate",
+    "event_id": "EV-000403",
+    "host": "host-031",
+    "observed_ts": 14021,
+    "pid": 27860,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-012",
+    "action": "logon",
+    "event_id": "EV-000404",
+    "host": "host-043",
+    "observed_ts": 489707,
+    "pid": 5094,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-005",
+    "action": "process_start",
+    "event_id": "EV-000405",
+    "host": "host-030",
+    "observed_ts": 198930,
+    "pid": 52086,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-031",
+    "action": "net_connect",
+    "event_id": "EV-000406",
+    "host": "host-011",
+    "observed_ts": 474582,
+    "pid": 52331,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-022",
+    "action": "logon_failed",
+    "event_id": "EV-000407",
+    "host": "host-014",
+    "observed_ts": 43109,
+    "pid": 34888,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-015",
+    "action": "process_start",
+    "event_id": "EV-000408",
+    "host": "host-002",
+    "observed_ts": 562020,
+    "pid": 46505,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-039",
+    "action": "share_mount",
+    "event_id": "EV-000409",
+    "host": "host-018",
+    "observed_ts": 213890,
+    "pid": 9552,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-037",
+    "action": "file_write",
+    "event_id": "EV-000410",
+    "host": "host-011",
+    "observed_ts": 272613,
+    "pid": 55329,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-011",
+    "action": "logon",
+    "event_id": "EV-000411",
+    "host": "host-035",
+    "observed_ts": 421331,
+    "pid": 26699,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-034",
+    "action": "logon",
+    "event_id": "EV-000412",
+    "host": "host-027",
+    "observed_ts": 542279,
+    "pid": 20261,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-017",
+    "action": "share_mount",
+    "event_id": "EV-000413",
+    "host": "host-012",
+    "observed_ts": 536983,
+    "pid": 17736,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-031",
+    "action": "process_start",
+    "event_id": "EV-000414",
+    "host": "host-020",
+    "observed_ts": 152231,
+    "pid": 38690,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-001",
+    "action": "logon",
+    "event_id": "EV-000415",
+    "host": "host-049",
+    "observed_ts": 1646,
+    "pid": 49845,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-backup",
+    "action": "net_connect",
+    "event_id": "EV-000416",
+    "host": "host-037",
+    "observed_ts": 474935,
+    "pid": 19351,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-relay",
+    "action": "logon_failed",
+    "event_id": "EV-000417",
+    "host": "host-053",
+    "observed_ts": 375501,
+    "pid": 4343,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-022",
+    "action": "file_write",
+    "event_id": "EV-000418",
+    "host": "host-009",
+    "observed_ts": 378042,
+    "pid": 37176,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-008",
+    "action": "share_mount",
+    "event_id": "EV-000419",
+    "host": "host-058",
+    "observed_ts": 418127,
+    "pid": 45155,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-022",
+    "action": "logon",
+    "event_id": "EV-000420",
+    "host": "host-036",
+    "observed_ts": 303064,
+    "pid": 24158,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-007",
+    "action": "logon",
+    "event_id": "EV-000421",
+    "host": "host-024",
+    "observed_ts": 552679,
+    "pid": 26382,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-010",
+    "action": "logon",
+    "event_id": "EV-000422",
+    "host": "host-018",
+    "observed_ts": 285970,
+    "pid": 12304,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-037",
+    "action": "process_start",
+    "event_id": "EV-000423",
+    "host": "host-056",
+    "observed_ts": 248395,
+    "pid": 14794,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-026",
+    "action": "logon",
+    "event_id": "EV-000424",
+    "host": "host-036",
+    "observed_ts": 410162,
+    "pid": 50563,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-021",
+    "action": "file_write",
+    "event_id": "EV-000425",
+    "host": "host-047",
+    "observed_ts": 392113,
+    "pid": 17479,
+    "sensor": "netflow"
+  },
+  {
+    "account": "svc-report",
+    "action": "logon_failed",
+    "event_id": "EV-000426",
+    "host": "host-016",
+    "observed_ts": 221118,
+    "pid": 52574,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-007",
+    "action": "logon_failed",
+    "event_id": "EV-000427",
+    "host": "host-016",
+    "observed_ts": 256258,
+    "pid": 5627,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-022",
+    "action": "logon_failed",
+    "event_id": "EV-000428",
+    "host": "host-058",
+    "observed_ts": 507649,
+    "pid": 7604,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-014",
+    "action": "net_connect",
+    "event_id": "EV-000429",
+    "host": "host-004",
+    "observed_ts": 14375,
+    "pid": 7875,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-008",
+    "action": "process_start",
+    "event_id": "EV-000430",
+    "host": "host-041",
+    "observed_ts": 27306,
+    "pid": 42092,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-001",
+    "action": "file_write",
+    "event_id": "EV-000431",
+    "host": "host-048",
+    "observed_ts": 45830,
+    "pid": 40131,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-build",
+    "action": "logon",
+    "event_id": "EV-000432",
+    "host": "host-020",
+    "observed_ts": 84824,
+    "pid": 19529,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-020",
+    "action": "logon_failed",
+    "event_id": "EV-000433",
+    "host": "host-051",
+    "observed_ts": 192327,
+    "pid": 11210,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-008",
+    "action": "logon",
+    "event_id": "EV-000434",
+    "host": "host-044",
+    "observed_ts": 239114,
+    "pid": 50593,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-004",
+    "action": "logon",
+    "event_id": "EV-000435",
+    "host": "host-012",
+    "observed_ts": 2113,
+    "pid": 14188,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-020",
+    "action": "logon",
+    "event_id": "EV-000436",
+    "host": "host-006",
+    "observed_ts": 378166,
+    "pid": 12688,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-040",
+    "action": "logon",
+    "event_id": "EV-000437",
+    "host": "host-060",
+    "observed_ts": 320243,
+    "pid": 33132,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-021",
+    "action": "logon_failed",
+    "event_id": "EV-000438",
+    "host": "host-057",
+    "observed_ts": 490028,
+    "pid": 27908,
+    "sensor": "netflow"
+  },
+  {
+    "account": "svc-backup",
+    "action": "logon_failed",
+    "event_id": "EV-000439",
+    "host": "host-001",
+    "observed_ts": 115296,
+    "pid": 52285,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-040",
+    "action": "logon",
+    "event_id": "EV-000440",
+    "host": "host-012",
+    "observed_ts": 554134,
+    "pid": 9831,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-002",
+    "action": "process_start",
+    "event_id": "EV-000441",
+    "host": "host-024",
+    "observed_ts": 287885,
+    "pid": 16939,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-002",
+    "action": "process_start",
+    "event_id": "EV-000442",
+    "host": "host-013",
+    "observed_ts": 391397,
+    "pid": 19373,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-028",
+    "action": "process_start",
+    "event_id": "EV-000443",
+    "host": "host-055",
+    "observed_ts": 396822,
+    "pid": 13503,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-011",
+    "action": "file_write",
+    "event_id": "EV-000444",
+    "host": "host-024",
+    "observed_ts": 305129,
+    "pid": 53654,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-007",
+    "action": "logon",
+    "event_id": "EV-000445",
+    "host": "host-010",
+    "observed_ts": 77417,
+    "pid": 11409,
+    "sensor": "auth"
+  },
+  {
+    "account": "svc-build",
+    "action": "process_start",
+    "event_id": "EV-000446",
+    "host": "host-013",
+    "observed_ts": 55880,
+    "pid": 43521,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-031",
+    "action": "logon_failed",
+    "event_id": "EV-000447",
+    "host": "host-038",
+    "observed_ts": 193952,
+    "pid": 24812,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-007",
+    "action": "logon",
+    "event_id": "EV-000448",
+    "host": "host-044",
+    "observed_ts": 356071,
+    "pid": 3932,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-017",
+    "action": "logon",
+    "event_id": "EV-000449",
+    "host": "host-042",
+    "observed_ts": 418049,
+    "pid": 50493,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-024",
+    "action": "net_connect",
+    "event_id": "EV-000450",
+    "host": "host-004",
+    "observed_ts": 261129,
+    "pid": 41899,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-019",
+    "action": "logon",
+    "event_id": "EV-000451",
+    "host": "host-012",
+    "observed_ts": 49271,
+    "pid": 38009,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-036",
+    "action": "logon",
+    "event_id": "EV-000452",
+    "host": "host-005",
+    "observed_ts": 537081,
+    "pid": 12226,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-019",
+    "action": "process_start",
+    "event_id": "EV-000453",
+    "host": "host-013",
+    "observed_ts": 177804,
+    "pid": 44668,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-038",
+    "action": "process_start",
+    "event_id": "EV-000454",
+    "host": "host-022",
+    "observed_ts": 368151,
+    "pid": 8864,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-024",
+    "action": "logon_failed",
+    "event_id": "EV-000455",
+    "host": "host-022",
+    "observed_ts": 295234,
+    "pid": 46991,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-015",
+    "action": "process_start",
+    "event_id": "EV-000456",
+    "host": "host-018",
+    "observed_ts": 301260,
+    "pid": 39953,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-003",
+    "action": "logon_failed",
+    "event_id": "EV-000457",
+    "host": "host-038",
+    "observed_ts": 85265,
+    "pid": 33571,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-038",
+    "action": "process_start",
+    "event_id": "EV-000458",
+    "host": "host-029",
+    "observed_ts": 250107,
+    "pid": 52585,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-027",
+    "action": "log_cleared",
+    "event_id": "EV-000459",
+    "host": "host-012",
+    "observed_ts": 222359,
+    "pid": 47325,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-028",
+    "action": "process_start",
+    "event_id": "EV-000460",
+    "host": "host-043",
+    "observed_ts": 74696,
+    "pid": 45413,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-026",
+    "action": "log_cleared",
+    "event_id": "EV-000461",
+    "host": "host-025",
+    "observed_ts": 173692,
+    "pid": 23011,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-006",
+    "action": "net_connect",
+    "event_id": "EV-000462",
+    "host": "host-024",
+    "observed_ts": 61278,
+    "pid": 37086,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-deploy",
+    "action": "net_connect",
+    "event_id": "EV-000463",
+    "host": "host-034",
+    "observed_ts": 419678,
+    "pid": 37661,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-005",
+    "action": "log_cleared",
+    "event_id": "EV-000464",
+    "host": "host-032",
+    "observed_ts": 343101,
+    "pid": 51495,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-039",
+    "action": "logon",
+    "event_id": "EV-000465",
+    "host": "host-005",
+    "observed_ts": 69400,
+    "pid": 31243,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-012",
+    "action": "net_connect",
+    "event_id": "EV-000466",
+    "host": "host-028",
+    "observed_ts": 282062,
+    "pid": 50935,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-025",
+    "action": "file_write",
+    "event_id": "EV-000467",
+    "host": "host-042",
+    "observed_ts": 54648,
+    "pid": 33446,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-019",
+    "action": "file_write",
+    "event_id": "EV-000468",
+    "host": "host-045",
+    "observed_ts": 71568,
+    "pid": 31750,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-020",
+    "action": "logon",
+    "event_id": "EV-000469",
+    "host": "host-049",
+    "observed_ts": 110199,
+    "pid": 48159,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-006",
+    "action": "logon",
+    "event_id": "EV-000470",
+    "host": "host-049",
+    "observed_ts": 503230,
+    "pid": 58003,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-013",
+    "action": "logon",
+    "event_id": "EV-000471",
+    "host": "host-029",
+    "observed_ts": 522308,
+    "pid": 57103,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-036",
+    "action": "net_connect",
+    "event_id": "EV-000472",
+    "host": "host-026",
+    "observed_ts": 348196,
+    "pid": 12846,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-014",
+    "action": "process_start",
+    "event_id": "EV-000473",
+    "host": "host-002",
+    "observed_ts": 126844,
+    "pid": 11622,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-001",
+    "action": "process_start",
+    "event_id": "EV-000474",
+    "host": "host-021",
+    "observed_ts": 558578,
+    "pid": 42934,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-008",
+    "action": "file_write",
+    "event_id": "EV-000475",
+    "host": "host-051",
+    "observed_ts": 331406,
+    "pid": 27536,
+    "sensor": "netflow"
+  },
+  {
+    "account": "svc-report",
+    "action": "net_connect",
+    "event_id": "EV-000476",
+    "host": "host-022",
+    "observed_ts": 570119,
+    "pid": 36702,
+    "sensor": "auth"
+  },
+  {
+    "account": "svc-build",
+    "action": "logon",
+    "event_id": "EV-000477",
+    "host": "host-016",
+    "observed_ts": 143198,
+    "pid": 13596,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-deploy",
+    "action": "process_start",
+    "event_id": "EV-000478",
+    "host": "host-014",
+    "observed_ts": 319479,
+    "pid": 38099,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-014",
+    "action": "process_start",
+    "event_id": "EV-000479",
+    "host": "host-019",
+    "observed_ts": 135029,
+    "pid": 30167,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-033",
+    "action": "net_connect",
+    "event_id": "EV-000480",
+    "host": "host-049",
+    "observed_ts": 413921,
+    "pid": 215,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-relay",
+    "action": "log_cleared",
+    "event_id": "EV-000481",
+    "host": "host-018",
+    "observed_ts": 431131,
+    "pid": 57606,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-009",
+    "action": "file_write",
+    "event_id": "EV-000482",
+    "host": "host-050",
+    "observed_ts": 68351,
+    "pid": 4344,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-006",
+    "action": "file_write",
+    "event_id": "EV-000483",
+    "host": "host-021",
+    "observed_ts": 409172,
+    "pid": 7148,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-020",
+    "action": "process_start",
+    "event_id": "EV-000484",
+    "host": "host-009",
+    "observed_ts": 247110,
+    "pid": 53304,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-019",
+    "action": "logon_failed",
+    "event_id": "EV-000485",
+    "host": "host-026",
+    "observed_ts": 450875,
+    "pid": 32567,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-039",
+    "action": "net_connect",
+    "event_id": "EV-000486",
+    "host": "host-027",
+    "observed_ts": 589892,
+    "pid": 26184,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-025",
+    "action": "process_start",
+    "event_id": "EV-000487",
+    "host": "host-019",
+    "observed_ts": 1664,
+    "pid": 41911,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-009",
+    "action": "process_start",
+    "event_id": "EV-000488",
+    "host": "host-004",
+    "observed_ts": 267337,
+    "pid": 6043,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-010",
+    "action": "logon",
+    "event_id": "EV-000489",
+    "host": "host-033",
+    "observed_ts": 272833,
+    "pid": 35203,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-017",
+    "action": "file_write",
+    "event_id": "EV-000490",
+    "host": "host-019",
+    "observed_ts": 226605,
+    "pid": 33908,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-build",
+    "action": "logon",
+    "event_id": "EV-000491",
+    "host": "host-017",
+    "observed_ts": 457880,
+    "pid": 39858,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-032",
+    "action": "share_mount",
+    "event_id": "EV-000492",
+    "host": "host-045",
+    "observed_ts": 118871,
+    "pid": 23840,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-009",
+    "action": "logon",
+    "event_id": "EV-000493",
+    "host": "host-049",
+    "observed_ts": 601710,
+    "pid": 20035,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-001",
+    "action": "net_connect",
+    "event_id": "EV-000494",
+    "host": "host-030",
+    "observed_ts": 496150,
+    "pid": 26046,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-015",
+    "action": "logon",
+    "event_id": "EV-000495",
+    "host": "host-043",
+    "observed_ts": 2870,
+    "pid": 23988,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-007",
+    "action": "process_start",
+    "event_id": "EV-000496",
+    "host": "host-004",
+    "observed_ts": 402219,
+    "pid": 48477,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-018",
+    "action": "logon",
+    "event_id": "EV-000497",
+    "host": "host-022",
+    "observed_ts": 224862,
+    "pid": 18389,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-017",
+    "action": "logon",
+    "event_id": "EV-000498",
+    "host": "host-039",
+    "observed_ts": 274036,
+    "pid": 22886,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-024",
+    "action": "logon",
+    "event_id": "EV-000499",
+    "host": "host-015",
+    "observed_ts": 30313,
+    "pid": 49702,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-029",
+    "action": "process_start",
+    "event_id": "EV-000500",
+    "host": "host-003",
+    "observed_ts": 333417,
+    "pid": 5270,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-009",
+    "action": "process_start",
+    "event_id": "EV-000501",
+    "host": "host-060",
+    "observed_ts": 265314,
+    "pid": 31440,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-025",
+    "action": "process_start",
+    "event_id": "EV-000502",
+    "host": "host-011",
+    "observed_ts": 187533,
+    "pid": 27638,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-010",
+    "action": "process_start",
+    "event_id": "EV-000503",
+    "host": "host-035",
+    "observed_ts": 150709,
+    "pid": 43616,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-index",
+    "action": "file_write",
+    "event_id": "EV-000504",
+    "host": "host-045",
+    "observed_ts": 273205,
+    "pid": 41891,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-019",
+    "action": "net_connect",
+    "event_id": "EV-000505",
+    "host": "host-055",
+    "observed_ts": 574946,
+    "pid": 14660,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-003",
+    "action": "process_start",
+    "event_id": "EV-000506",
+    "host": "host-014",
+    "observed_ts": 70387,
+    "pid": 23447,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-037",
+    "action": "process_start",
+    "event_id": "EV-000507",
+    "host": "host-021",
+    "observed_ts": 19036,
+    "pid": 7239,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-009",
+    "action": "logon_failed",
+    "event_id": "EV-000508",
+    "host": "host-017",
+    "observed_ts": 35375,
+    "pid": 54834,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-030",
+    "action": "logon_failed",
+    "event_id": "EV-000509",
+    "host": "host-020",
+    "observed_ts": 308994,
+    "pid": 4309,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-038",
+    "action": "process_start",
+    "event_id": "EV-000510",
+    "host": "host-039",
+    "observed_ts": 54739,
+    "pid": 30459,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-001",
+    "action": "logon_failed",
+    "event_id": "EV-000511",
+    "host": "host-055",
+    "observed_ts": 231225,
+    "pid": 1155,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-004",
+    "action": "share_mount",
+    "event_id": "EV-000512",
+    "host": "host-001",
+    "observed_ts": 223349,
+    "pid": 41220,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-001",
+    "action": "net_connect",
+    "event_id": "EV-000513",
+    "host": "host-001",
+    "observed_ts": 241531,
+    "pid": 13820,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-026",
+    "action": "logon",
+    "event_id": "EV-000514",
+    "host": "host-037",
+    "observed_ts": 274814,
+    "pid": 35577,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-037",
+    "action": "logon",
+    "event_id": "EV-000515",
+    "host": "host-016",
+    "observed_ts": 209481,
+    "pid": 56655,
+    "sensor": "netflow"
+  },
+  {
+    "account": "svc-deploy",
+    "action": "file_write",
+    "event_id": "EV-000516",
+    "host": "host-047",
+    "observed_ts": 534751,
+    "pid": 10190,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-010",
+    "action": "process_start",
+    "event_id": "EV-000517",
+    "host": "host-057",
+    "observed_ts": 33601,
+    "pid": 19772,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-003",
+    "action": "net_connect",
+    "event_id": "EV-000518",
+    "host": "host-008",
+    "observed_ts": 579618,
+    "pid": 44911,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-017",
+    "action": "net_connect",
+    "event_id": "EV-000519",
+    "host": "host-043",
+    "observed_ts": 12520,
+    "pid": 6596,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-034",
+    "action": "logon",
+    "event_id": "EV-000520",
+    "host": "host-002",
+    "observed_ts": 589884,
+    "pid": 1104,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-021",
+    "action": "share_mount",
+    "event_id": "EV-000521",
+    "host": "host-025",
+    "observed_ts": 272747,
+    "pid": 27307,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-001",
+    "action": "logon",
+    "event_id": "EV-000522",
+    "host": "host-050",
+    "observed_ts": 118749,
+    "pid": 25014,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-007",
+    "action": "logon",
+    "event_id": "EV-000523",
+    "host": "host-033",
+    "observed_ts": 203402,
+    "pid": 15554,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-007",
+    "action": "process_start",
+    "event_id": "EV-000524",
+    "host": "host-044",
+    "observed_ts": 60865,
+    "pid": 54800,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-005",
+    "action": "process_start",
+    "event_id": "EV-000525",
+    "host": "host-043",
+    "observed_ts": 386037,
+    "pid": 12155,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-034",
+    "action": "priv_escalate",
+    "event_id": "EV-000526",
+    "host": "host-056",
+    "observed_ts": 589888,
+    "pid": 58232,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-001",
+    "action": "logon",
+    "event_id": "EV-000527",
+    "host": "host-006",
+    "observed_ts": 297391,
+    "pid": 52508,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-023",
+    "action": "process_start",
+    "event_id": "EV-000528",
+    "host": "host-035",
+    "observed_ts": 555314,
+    "pid": 21118,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-011",
+    "action": "logon",
+    "event_id": "EV-000529",
+    "host": "host-058",
+    "observed_ts": 294534,
+    "pid": 56908,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-028",
+    "action": "logon",
+    "event_id": "EV-000530",
+    "host": "host-055",
+    "observed_ts": 54000,
+    "pid": 38227,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-023",
+    "action": "net_connect",
+    "event_id": "EV-000531",
+    "host": "host-010",
+    "observed_ts": 232916,
+    "pid": 22017,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-relay",
+    "action": "logon",
+    "event_id": "EV-000532",
+    "host": "host-057",
+    "observed_ts": 65120,
+    "pid": 32640,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-027",
+    "action": "logon",
+    "event_id": "EV-000533",
+    "host": "host-019",
+    "observed_ts": 392372,
+    "pid": 9888,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-020",
+    "action": "process_start",
+    "event_id": "EV-000534",
+    "host": "host-012",
+    "observed_ts": 154224,
+    "pid": 31109,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-027",
+    "action": "logon",
+    "event_id": "EV-000535",
+    "host": "host-009",
+    "observed_ts": 139648,
+    "pid": 5699,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-013",
+    "action": "logon",
+    "event_id": "EV-000536",
+    "host": "host-044",
+    "observed_ts": 255230,
+    "pid": 15629,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-031",
+    "action": "process_start",
+    "event_id": "EV-000537",
+    "host": "host-003",
+    "observed_ts": 195751,
+    "pid": 58322,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-003",
+    "action": "logon",
+    "event_id": "EV-000538",
+    "host": "host-013",
+    "observed_ts": 338324,
+    "pid": 9931,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-023",
+    "action": "net_connect",
+    "event_id": "EV-000539",
+    "host": "host-005",
+    "observed_ts": 350043,
+    "pid": 20666,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-020",
+    "action": "logon_failed",
+    "event_id": "EV-000540",
+    "host": "host-043",
+    "observed_ts": 336899,
+    "pid": 57613,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-006",
+    "action": "process_start",
+    "event_id": "EV-000541",
+    "host": "host-049",
+    "observed_ts": 438690,
+    "pid": 47659,
+    "sensor": "auth"
+  },
+  {
+    "account": "svc-build",
+    "action": "file_write",
+    "event_id": "EV-000542",
+    "host": "host-007",
+    "observed_ts": 513844,
+    "pid": 48529,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-032",
+    "action": "log_cleared",
+    "event_id": "EV-000543",
+    "host": "host-008",
+    "observed_ts": 591042,
+    "pid": 56525,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-relay",
+    "action": "logon",
+    "event_id": "EV-000544",
+    "host": "host-005",
+    "observed_ts": 578904,
+    "pid": 26133,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-003",
+    "action": "share_mount",
+    "event_id": "EV-000545",
+    "host": "host-014",
+    "observed_ts": 274492,
+    "pid": 25541,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-005",
+    "action": "net_connect",
+    "event_id": "EV-000546",
+    "host": "host-027",
+    "observed_ts": 336794,
+    "pid": 20272,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-038",
+    "action": "logon",
+    "event_id": "EV-000547",
+    "host": "host-016",
+    "observed_ts": 286610,
+    "pid": 31026,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-relay",
+    "action": "logon",
+    "event_id": "EV-000548",
+    "host": "host-042",
+    "observed_ts": 377565,
+    "pid": 40418,
+    "sensor": "auth"
+  },
+  {
+    "account": "svc-build",
+    "action": "logon_failed",
+    "event_id": "EV-000549",
+    "host": "host-009",
+    "observed_ts": 903,
+    "pid": 58442,
+    "sensor": "netflow"
+  },
+  {
+    "account": "svc-backup",
+    "action": "logon",
+    "event_id": "EV-000550",
+    "host": "host-055",
+    "observed_ts": 178966,
+    "pid": 32642,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-013",
+    "action": "file_write",
+    "event_id": "EV-000551",
+    "host": "host-041",
+    "observed_ts": 222504,
+    "pid": 41045,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-027",
+    "action": "net_connect",
+    "event_id": "EV-000552",
+    "host": "host-049",
+    "observed_ts": 478340,
+    "pid": 27554,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-039",
+    "action": "process_start",
+    "event_id": "EV-000553",
+    "host": "host-052",
+    "observed_ts": 205695,
+    "pid": 46530,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-001",
+    "action": "file_write",
+    "event_id": "EV-000554",
+    "host": "host-031",
+    "observed_ts": 459259,
+    "pid": 6104,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-037",
+    "action": "logon",
+    "event_id": "EV-000555",
+    "host": "host-035",
+    "observed_ts": 264467,
+    "pid": 24119,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-002",
+    "action": "logon",
+    "event_id": "EV-000556",
+    "host": "host-027",
+    "observed_ts": 273231,
+    "pid": 8252,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-037",
+    "action": "file_write",
+    "event_id": "EV-000557",
+    "host": "host-035",
+    "observed_ts": 49145,
+    "pid": 51579,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-010",
+    "action": "process_start",
+    "event_id": "EV-000558",
+    "host": "host-030",
+    "observed_ts": 86544,
+    "pid": 57500,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-020",
+    "action": "logon",
+    "event_id": "EV-000559",
+    "host": "host-052",
+    "observed_ts": 241273,
+    "pid": 38328,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-007",
+    "action": "process_start",
+    "event_id": "EV-000560",
+    "host": "host-007",
+    "observed_ts": 460890,
+    "pid": 44749,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-025",
+    "action": "logon_failed",
+    "event_id": "EV-000561",
+    "host": "host-059",
+    "observed_ts": 385611,
+    "pid": 32820,
+    "sensor": "auth"
+  },
+  {
+    "account": "svc-index",
+    "action": "logon_failed",
+    "event_id": "EV-000562",
+    "host": "host-019",
+    "observed_ts": 83192,
+    "pid": 50649,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-029",
+    "action": "logon",
+    "event_id": "EV-000563",
+    "host": "host-034",
+    "observed_ts": 372447,
+    "pid": 55438,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-016",
+    "action": "logon",
+    "event_id": "EV-000564",
+    "host": "host-029",
+    "observed_ts": 192645,
+    "pid": 35618,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-012",
+    "action": "logon",
+    "event_id": "EV-000565",
+    "host": "host-024",
+    "observed_ts": 417178,
+    "pid": 49961,
+    "sensor": "netflow"
+  },
+  {
+    "account": "svc-relay",
+    "action": "logon",
+    "event_id": "EV-000566",
+    "host": "host-055",
+    "observed_ts": 136647,
+    "pid": 7874,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-035",
+    "action": "logon",
+    "event_id": "EV-000567",
+    "host": "host-009",
+    "observed_ts": 51800,
+    "pid": 4562,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-009",
+    "action": "file_write",
+    "event_id": "EV-000568",
+    "host": "host-011",
+    "observed_ts": 545898,
+    "pid": 30274,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-034",
+    "action": "file_write",
+    "event_id": "EV-000569",
+    "host": "host-015",
+    "observed_ts": 582630,
+    "pid": 58264,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-report",
+    "action": "logon_failed",
+    "event_id": "EV-000570",
+    "host": "host-006",
+    "observed_ts": 227824,
+    "pid": 28182,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-relay",
+    "action": "priv_escalate",
+    "event_id": "EV-000571",
+    "host": "host-024",
+    "observed_ts": 34364,
+    "pid": 33149,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-035",
+    "action": "logon",
+    "event_id": "EV-000572",
+    "host": "host-017",
+    "observed_ts": 35777,
+    "pid": 48950,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-013",
+    "action": "logon",
+    "event_id": "EV-000573",
+    "host": "host-019",
+    "observed_ts": 471616,
+    "pid": 3452,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-004",
+    "action": "file_write",
+    "event_id": "EV-000574",
+    "host": "host-017",
+    "observed_ts": 283152,
+    "pid": 17084,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-026",
+    "action": "logon",
+    "event_id": "EV-000575",
+    "host": "host-027",
+    "observed_ts": 228732,
+    "pid": 28607,
+    "sensor": "netflow"
+  },
+  {
+    "account": "svc-build",
+    "action": "process_start",
+    "event_id": "EV-000576",
+    "host": "host-044",
+    "observed_ts": 612,
+    "pid": 56347,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-036",
+    "action": "process_start",
+    "event_id": "EV-000577",
+    "host": "host-040",
+    "observed_ts": 339004,
+    "pid": 34253,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-016",
+    "action": "process_start",
+    "event_id": "EV-000578",
+    "host": "host-004",
+    "observed_ts": 401598,
+    "pid": 23867,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-033",
+    "action": "logon",
+    "event_id": "EV-000579",
+    "host": "host-056",
+    "observed_ts": 142189,
+    "pid": 18411,
+    "sensor": "netflow"
+  },
+  {
+    "account": "svc-backup",
+    "action": "process_start",
+    "event_id": "EV-000580",
+    "host": "host-040",
+    "observed_ts": 365068,
+    "pid": 14608,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-028",
+    "action": "net_connect",
+    "event_id": "EV-000581",
+    "host": "host-005",
+    "observed_ts": 303272,
+    "pid": 57257,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-028",
+    "action": "file_write",
+    "event_id": "EV-000582",
+    "host": "host-047",
+    "observed_ts": 57775,
+    "pid": 38354,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-038",
+    "action": "process_start",
+    "event_id": "EV-000583",
+    "host": "host-017",
+    "observed_ts": 366493,
+    "pid": 41151,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-017",
+    "action": "file_write",
+    "event_id": "EV-000584",
+    "host": "host-050",
+    "observed_ts": 51070,
+    "pid": 29783,
+    "sensor": "auth"
+  },
+  {
+    "account": "user-033",
+    "action": "process_start",
+    "event_id": "EV-000585",
+    "host": "host-030",
+    "observed_ts": 223069,
+    "pid": 32001,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-backup",
+    "action": "share_mount",
+    "event_id": "EV-000586",
+    "host": "host-052",
+    "observed_ts": 378485,
+    "pid": 53422,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-022",
+    "action": "net_connect",
+    "event_id": "EV-000587",
+    "host": "host-042",
+    "observed_ts": 462212,
+    "pid": 43506,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-021",
+    "action": "net_connect",
+    "event_id": "EV-000588",
+    "host": "host-026",
+    "observed_ts": 449846,
+    "pid": 21921,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-015",
+    "action": "logon_failed",
+    "event_id": "EV-000589",
+    "host": "host-015",
+    "observed_ts": 337348,
+    "pid": 59893,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-008",
+    "action": "logon",
+    "event_id": "EV-000590",
+    "host": "host-023",
+    "observed_ts": 338282,
+    "pid": 57275,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-005",
+    "action": "process_start",
+    "event_id": "EV-000591",
+    "host": "host-053",
+    "observed_ts": 501645,
+    "pid": 16937,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-040",
+    "action": "logon_failed",
+    "event_id": "EV-000592",
+    "host": "host-027",
+    "observed_ts": 247089,
+    "pid": 43371,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-020",
+    "action": "net_connect",
+    "event_id": "EV-000593",
+    "host": "host-043",
+    "observed_ts": 236535,
+    "pid": 52675,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-024",
+    "action": "process_start",
+    "event_id": "EV-000594",
+    "host": "host-041",
+    "observed_ts": 394263,
+    "pid": 27969,
+    "sensor": "edr"
+  },
+  {
+    "account": "user-028",
+    "action": "logon_failed",
+    "event_id": "EV-000595",
+    "host": "host-051",
+    "observed_ts": 181298,
+    "pid": 59832,
+    "sensor": "netflow"
+  },
+  {
+    "account": "user-029",
+    "action": "process_start",
+    "event_id": "EV-000596",
+    "host": "host-011",
+    "observed_ts": 434941,
+    "pid": 42595,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-backup",
+    "action": "file_write",
+    "event_id": "EV-000597",
+    "host": "host-045",
+    "observed_ts": 468845,
+    "pid": 14909,
+    "sensor": "syslog"
+  },
+  {
+    "account": "user-034",
+    "action": "logon",
+    "event_id": "EV-000598",
+    "host": "host-036",
+    "observed_ts": 55983,
+    "pid": 30273,
+    "sensor": "edr"
+  },
+  {
+    "account": "svc-report",
+    "action": "logon_failed",
+    "event_id": "EV-000599",
+    "host": "host-019",
+    "observed_ts": 366656,
+    "pid": 38162,
+    "sensor": "syslog"
+  },
+  {
+    "account": "svc-backup",
+    "action": "file_write",
+    "event_id": "EV-000600",
+    "host": "host-015",
+    "observed_ts": 205157,
+    "pid": 18032,
+    "sensor": "auth"
+  }
+]

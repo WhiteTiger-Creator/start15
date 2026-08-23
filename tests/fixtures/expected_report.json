@@ -1,0 +1,49 @@
+{
+  "alternate": {
+    "chains_digest": "13e38fabf8f3f23ae6ced4808d5915faa73048f5c48773e221fc823720f161ac",
+    "queue_digest": "bedc893d87dc865c6ebf8db4c3e30bb8e68db9dd58c35825320d6530f2e02fab",
+    "summary": {
+      "account_count": 46,
+      "chain_candidate_count": 736,
+      "effective_chain_window": 7200,
+      "effective_max_chain_hosts": 12,
+      "effective_pivot_min_hosts": 3,
+      "effective_session_gap": 1800,
+      "effective_severity_floor": 40,
+      "event_count": 8801,
+      "host_count": 60,
+      "incident_chain_count": 290,
+      "max_severity": 50,
+      "queued_count": 1854,
+      "schema_version": "incident-triage-v1",
+      "session_count": 8715,
+      "truncated_chain_count": 197
+    }
+  },
+  "broken_engine_sha256": "6a27820ecfb3e3fb0e9871462c8cf86bca695407e1ea9a64db3b456738b1a342",
+  "primary": {
+    "chains_digest": "44171071802bc48734611776bb308ec6e8bbfaf99055d147bd9766d1f8e70bd1",
+    "queue_digest": "e5100b013178306d958ddc8d966e88e34495dd1f9c6a8c0b471dfa79eaba95fd",
+    "summary": {
+      "account_count": 46,
+      "chain_candidate_count": 742,
+      "effective_chain_window": 7200,
+      "effective_max_chain_hosts": 12,
+      "effective_pivot_min_hosts": 3,
+      "effective_session_gap": 1800,
+      "effective_severity_floor": 40,
+      "event_count": 8801,
+      "host_count": 60,
+      "incident_chain_count": 220,
+      "max_severity": 50,
+      "queued_count": 1907,
+      "schema_version": "incident-triage-v1",
+      "session_count": 8704,
+      "truncated_chain_count": 204
+    }
+  },
+  "recovered_event_count": 8801,
+  "recovered_timeline_digest": "75d6dafb545f75c155086cf85b16da6dbc8630acdcb72f467c62847c23997e56",
+  "rule_sources_digest": "1ff39a111f0f377f24e77d28a3f53cd1654722244531e01948b220fb3196c1f0",
+  "shipped_truncated_digest": "442753e6eee83f7d6916c996f1da1b613764f283e5d45aff9d3fbaf9f08df0db"
+}

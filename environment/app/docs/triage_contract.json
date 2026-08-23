@@ -1,0 +1,120 @@
+{
+  "cli": {
+    "fixed_paths": [
+      "/app/data/triage_policy.json"
+    ],
+    "input": "--input selects the event timeline only; default /app/data/event_timeline.json",
+    "output_dir": "--output-dir selects the output directory; default /app/output"
+  },
+  "contract_version": "incident-triage-v1",
+  "description": "Output contract for the incident-correlation engine. Shapes, paths, field lists and sort orders only; no derivation rule lives here.",
+  "outputs": {
+    "incident_chains": {
+      "container": "array",
+      "element_fields": [
+        "chain_id",
+        "account",
+        "hosts",
+        "host_count",
+        "first_ts",
+        "last_ts",
+        "event_count",
+        "severity",
+        "actions"
+      ],
+      "path": "/app/output/incident_chains.json",
+      "serialisation": "JSON array, two-space indent, trailing newline",
+      "sort": "descending by severity, then ascending by first_ts, then chain_id; hosts in first-seen order; actions ascending"
+    },
+    "summary": {
+      "container": "object",
+      "field_types": {
+        "account_count": "integer",
+        "chain_candidate_count": "integer",
+        "effective_chain_window": "integer",
+        "effective_max_chain_hosts": "integer",
+        "effective_pivot_min_hosts": "integer",
+        "effective_session_gap": "integer",
+        "effective_severity_floor": "integer",
+        "event_count": "integer",
+        "host_count": "integer",
+        "incident_chain_count": "integer",
+        "max_severity": "integer",
+        "queued_count": "integer",
+        "schema_version": "string",
+        "session_count": "integer",
+        "truncated_chain_count": "integer"
+      },
+      "path": "/app/output/summary.json",
+      "required_fields": [
+        "schema_version",
+        "event_count",
+        "account_count",
+        "host_count",
+        "session_count",
+        "chain_candidate_count",
+        "incident_chain_count",
+        "truncated_chain_count",
+        "queued_count",
+        "max_severity",
+        "effective_session_gap",
+        "effective_pivot_min_hosts",
+        "effective_severity_floor",
+        "effective_chain_window",
+        "effective_max_chain_hosts"
+      ],
+      "serialisation": "JSON object, two-space indent, trailing newline"
+    },
+    "triage_queue": {
+      "container": "jsonl",
+      "element_fields": [
+        "chain_id",
+        "account",
+        "host",
+        "severity",
+        "reason"
+      ],
+      "path": "/app/output/triage_queue.jsonl",
+      "reasons": [
+        "below_floor",
+        "chain_truncated"
+      ],
+      "serialisation": "one compact JSON object per line, trailing newline",
+      "sort": "descending by severity, then ascending by chain_id then host"
+    }
+  },
+  "reconciled_inputs": {
+    "event_timeline": {
+      "container": "array",
+      "path": "/app/data/event_timeline.json",
+      "record_fields": [
+        "event_id",
+        "host",
+        "account",
+        "action",
+        "sensor",
+        "observed_ts",
+        "corrected_ts",
+        "pid"
+      ],
+      "serialisation": "JSON array, two-space indent, trailing newline",
+      "sort": "ascending by corrected_ts, then event_id"
+    }
+  },
+  "recovery_sources": {
+    "sensor_registry": {
+      "container": "array",
+      "note": "applied during the timeline recovery, not re-read at correlation time",
+      "path": "/app/data/sensor_registry.json",
+      "record_fields": [
+        "sensor",
+        "clock_offset_sec"
+      ]
+    }
+  },
+  "runtime_budget_seconds": 90,
+  "units": {
+    "severity": "integer points fixed per action by the response board",
+    "timestamps": "integer seconds on the reference clock"
+  }
+}

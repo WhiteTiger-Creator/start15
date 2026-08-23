@@ -1,0 +1,103 @@
+artifacts = ["/app"]
+name = "intrusion-timeline-correlator"
+
+[metadata]
+author_name = "Jonathan"
+author_email = "jtolbert0175@gmail.com"
+difficulty_explanation = '''
+Reconstructing this review is the work of an incident-response or detection engineer picking up a
+stalled intrusion investigation, and it is a dependent chain rather than a single repair. All of the
+data is synthetic: the hosts, accounts, sensors and the shift log were generated for this task and
+describe no real estate, system or person. The collector left /app/data/event_timeline.json holding a
+truncated prefix of the event stream, so the first step is to rebuild it by replaying the collector
+journal onto the pre-truncation snapshot under the board's final recovery decision -- an amendment
+overwriting a field in place, a retraction taking an event out while the collector keeps it as it
+then stood, and a restore returning exactly that held state so an amendment posted while the event
+was out is lost -- and then carrying every recorded stamp onto the reference clock. Every grouping
+downstream is wrong if that rebuild is wrong, because the engine draws its boundaries on the
+corrected stamps. Only then can the correlation dialect be reconstructed, and the shift log is
+written the way a response board actually writes: it records where the board departed from the
+intuitive reading and never restates what a session, a pivot or a severity means. Three February
+drafts were reversed in the May review and one March interim was revised, so every rule must be
+traced to its FINAL dated decision: a sensor's clock offset is ADDED to the observed stamp rather
+than subtracted, every session and chain boundary is measured on the CORRECTED stamp rather than the
+recorded one, a chain carries the severity of its single worst action rather than the sum of its
+actions, and a run reaching past the host cap is cut rather than reported whole. Those four interact
+tightly: the sign of the clock correction moves the corrected stamps, which moves where the sliding
+chain window closes, which changes how many hosts a run touches, which decides whether the run is a
+candidate at all and whether it is then cut. Getting the correction backwards does not produce a
+slightly different report; it produces a different set of incidents. The summing interim is the
+sharpest trap, because summing pushes almost every candidate over the severity floor while the
+governed worst-action rule admits only the runs that actually contain a privilege escalation or a
+cleared log.
+'''
+solution_explanation = '''
+solution/solve.sh drives the two dependent steps inside the environment container. Step one runs
+solution/recover_timeline.go, which implements the board's final recovery decisions (#IR-5170,
+#IR-5174 and #IR-5178): it starts from /app/data/event_snapshot_pre_truncation.json, replays
+/app/data/collector_journal.json in ascending seq, applies an amendment in place, holds a retracted
+event aside as it then stood, restores exactly that held state, ignores a change naming an unknown
+event, adds each sensor's recorded clock_offset_sec from /app/data/sensor_registry.json to reach the
+corrected stamp, and writes the survivors over the truncated /app/data/event_timeline.json ascending
+by corrected stamp then event id. Step two copies solution/correlate_incidents_fixed.go over
+/app/workflow/correlate_incidents.go and runs it. The engine orders the timeline on corrected stamps
+(#IR-5182), counts a session per host and account whenever the gap exceeds the policy value, walks
+each account's events splitting a run wherever the next event lies beyond the sliding chain window
+(#IR-5190), keeps a run as a candidate only where it touches at least pivot_min_hosts distinct hosts,
+cuts a run reaching past max_chain_hosts and queues the hosts beyond the cut (#IR-5194), scores the
+chain at its single worst action under the board's severity table (#IR-5186, #IR-5188), queues a
+chain below the floor rather than reporting it, and emits summary.json, incident_chains.json and
+triage_queue.jsonl in the contracted orders (#IR-5196).
+'''
+verification_explanation = '''
+The separate verifier (tests/Dockerfile builds an isolated image the agent cannot see) collects the
+agent's whole /app as the declared artifact and runs tests/test_outputs.py against it. Step one is
+graded directly: the rebuilt timeline must match the sealed digest and event count, carry only the
+eight declared fields with no collector bookkeeping surviving, hold a corrected stamp consistent with
+its sensor's recorded offset, and leave the snapshot, journal and registry byte-identical. The
+verifier re-derives the misreadings of the recovery rule from those same sources -- a plain
+concatenation, a replay in file order rather than by sequence, one where a restore re-reads the
+snapshot instead of the held state, and one where the clock offset is subtracted -- and requires each
+to differ from the governed result. Step two recompiles the agent's submitted
+/app/workflow/correlate_incidents.go from source with go build rather than trusting any delivered
+binary, runs it under an unprivileged uid (65534 via setpriv, a scrubbed environment, inputs staged
+into a candidate-writable work area) on both the recovered timeline and a held-out alternate
+timeline, and compares summary.json in full plus SHA-256 digests of incident_chains.json and
+triage_queue.jsonl against sealed fixtures generated from the reference. Crafted micro-instances pin
+each reversed rule independently: one proves the offset is added rather than subtracted, one proves
+the chain window is measured on corrected stamps, one proves a chain takes its worst action's
+severity rather than the sum, and one proves a run past the host cap is cut with the excess hosts
+queued. The run is timed against the ninety-second budget the contract publishes. The frozen snapshot
+/app/workflow/.correlate_incidents.original.go is asserted present by hash and wrong by output.
+Confirmed locally in the real two-container flow: after solve.sh the verifier gives reward 1, a fresh
+environment with no solve.sh gives 0, and so does an environment where the engine is repaired but the
+timeline is never rebuilt.
+'''
+relevant_experience = '''
+Working knowledge of incident response as a discipline -- event timelines, clock skew across
+collectors, sessionisation, lateral-movement pivots and severity triage taken as read rather than
+looked up -- plus experience rebuilding a timeline by replaying a collector journal onto a snapshot,
+and reconstructing a correlation dialect from an authoritative but noisy shift log that records only
+the board's departures from the intuitive reading, tracing incrementally-revised rules to their final
+form and matching a strict output contract in Go.
+'''
+category = "Security"
+subcategory = "Forensics"
+tags = ["incident-response", "timeline-reconstruction", "clock-skew", "lateral-movement", "triage"]
+expert_time_estimate_hours = 4
+difficulty = "advanced"
+languages = ["go"]
+
+[environment]
+build_timeout_sec = 900
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 5400
+
+[verifier]
+timeout_sec = 1800
+environment_mode = "separate"
