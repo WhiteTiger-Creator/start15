@@ -44,8 +44,7 @@ type queueRow struct {
 	Reason   string `json:"reason"`
 }
 
-// #IR-5186: the severity the board fixed for each observed action. An action the
-// table does not name contributes nothing.
+// Weight carried by each observed action.
 var actionSeverity = map[string]int64{
 	"logon":          5,
 	"logon_failed":   8,
@@ -88,8 +87,7 @@ func main() {
 
 	var events []event
 	var pol policy
-	// #IR-5150: the triage policy is always read from its fixed absolute path;
-	// --input selects the timeline only.
+	// the policy lives at a fixed path; --input selects the timeline only
 	readJSON("/app/data/triage_policy.json", &pol)
 	readJSON(*input, &events)
 
@@ -99,8 +97,7 @@ func main() {
 	chainWindow := pol.Default["chain_window_sec"]
 	maxChainHosts := int(pol.Default["max_chain_hosts"])
 
-	// #IR-5182: every boundary in this procedure is drawn on the CORRECTED stamp,
-	// never on the stamp the sensor recorded.
+	// events in stamp order, ties broken on the id
 	sort.Slice(events, func(i, j int) bool {
 		if events[i].ObservedTS != events[j].ObservedTS {
 			return events[i].ObservedTS < events[j].ObservedTS
@@ -143,9 +140,7 @@ func main() {
 		group := byAccount[account]
 		start := 0
 		for start < len(group) {
-			// #IR-5190: a run closes when the next event lies further than
-			// chain_window_sec from the one before it, so the window slides with the
-			// activity rather than sitting in fixed buckets.
+			// where this run ends
 			end := start + 1
 			for end < len(group) &&
 				group[end].ObservedTS-group[end-1].ObservedTS <= chainWindow {
@@ -169,10 +164,8 @@ func main() {
 
 			kept := ordered
 			var dropped []string
-			// #IR-5194: a run reaching further than max_chain_hosts hosts is cut at
-			// that many, keeping the hosts first seen; the hosts beyond the cut are
-			// queued rather than reported as part of the chain.
-			if false {
+			// a run spread far past the host cap is cut back
+			if len(ordered) > 3*maxChainHosts {
 				kept = ordered[:maxChainHosts]
 				dropped = ordered[maxChainHosts:]
 				truncatedCount++
@@ -190,8 +183,7 @@ func main() {
 				if !keptSet[e.Host] {
 					continue
 				}
-				// #IR-5188: a chain carries the severity of its single worst action,
-				// not the sum of its actions.
+				// the chain's severity, accumulated over its events
 				severity += actionSeverity[e.Action]
 				actionSet[e.Action] = true
 				if count == 0 || e.CorrectedTS < first {
@@ -224,8 +216,7 @@ func main() {
 		}
 	}
 
-	// #IR-5196: chains are reported worst first, then earliest, then by chain id;
-	// the queue is worst first, then by chain id, then by host.
+	// emission order for the two artifacts
 	sort.Slice(chains, func(i, j int) bool {
 		if chains[i].Severity != chains[j].Severity {
 			return chains[i].Severity > chains[j].Severity
