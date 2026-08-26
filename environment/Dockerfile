@@ -12,11 +12,28 @@ ENV GOCACHE=/tmp/gocache \
 # dependency layers so a change to those never invalidates the WORKDIR layer.
 WORKDIR /app
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        tmux \
-        asciinema \
-    && rm -rf /var/lib/apt/lists/*
+# This build's only network step, and a transient mirror failure here voids a
+# whole grading trial. Two layers of retry: Acquire::Retries retries each
+# individual download, and the loop retries the whole transaction after clearing
+# the partial lists a failed update leaves behind. The timeouts are explicit so a
+# mirror that hangs rather than refuses cannot eat the build budget.
+RUN set -eu; \
+    delay=5; \
+    for attempt in 1 2 3 4; do \
+        if apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 \
+                -o Acquire::https::Timeout=20 update \
+            && apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 \
+                -o Acquire::https::Timeout=20 install -y --no-install-recommends \
+                tmux asciinema; then \
+            rm -rf /var/lib/apt/lists/*; \
+            exit 0; \
+        fi; \
+        echo "apt attempt ${attempt} failed, retrying in ${delay}s" >&2; \
+        rm -rf /var/lib/apt/lists/*; \
+        sleep "${delay}"; \
+        delay=$((delay * 2)); \
+    done; \
+    exit 1
 
 # /app/data/event_timeline.json ships TRUNCATED exactly as the collector left it;
 # the pre-truncation snapshot, the collector journal and the sensor registry
