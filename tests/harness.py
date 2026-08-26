@@ -102,7 +102,16 @@ def _build(script_path: Path) -> str:
         capture_output=True, text=True,
         env={**os.environ, "GOCACHE": "/tmp/gocache", "GO111MODULE": "off", "GOPATH": "/tmp/gopath"},
     )
-    assert result.returncode == 0, f"go build failed:\n{result.stderr}"
+    if result.returncode != 0:
+        # instruction.md states the engine stays in the one file that is compiled
+        # here; a submission that split itself across siblings fails with an
+        # undefined-symbol error that does not say why, so name the rule.
+        siblings = sorted(q.name for q in script_path.parent.glob("*.go")
+                          if q.name != script_path.name and not q.name.startswith("."))
+        hint = (f"\n\n{script_path.name} is compiled on its own, as instruction.md states. "
+                f"These sibling sources are not part of the build: {siblings}"
+                if siblings else "")
+        raise AssertionError(f"go build failed:\n{result.stderr}{hint}")
     os.chmod(binary, 0o755)
     _BIN_CACHE[key] = str(binary)
     return str(binary)

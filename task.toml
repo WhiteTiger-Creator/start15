@@ -85,7 +85,7 @@ category = "Security"
 subcategory = "Forensics"
 tags = ["incident-response", "timeline-reconstruction", "clock-skew", "lateral-movement", "triage"]
 expert_time_estimate_hours = 4
-difficulty = "advanced"
+difficulty = "core"
 languages = ["go"]
 
 [environment]
