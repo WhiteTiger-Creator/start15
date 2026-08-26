@@ -74,9 +74,20 @@ func setField(e *event, field string, value any) {
 		if s, ok := value.(string); ok {
 			e.Action = s
 		}
+	case "sensor":
+		// #IR-5170 amends "the named field" without restricting which, and the
+		// sensor decides which clock offset the corrected stamp is built from, so
+		// dropping this amendment would silently keep the old correction.
+		if s, ok := value.(string); ok {
+			e.Sensor = s
+		}
 	case "observed_ts":
 		if n, ok := asInt64(value); ok {
 			e.ObservedTS = n
+		}
+	case "pid":
+		if n, ok := asInt64(value); ok {
+			e.PID = int(n)
 		}
 	}
 }

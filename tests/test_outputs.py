@@ -323,6 +323,40 @@ def test_run_is_idempotent(primary_outputs):
     assert s2 == summary and _digest(c2) == _digest(chains) and _digest(q2) == _digest(queue)
 
 
+def test_artifacts_are_serialised_exactly_as_the_contract_states(primary_outputs):
+    """Serialisation is contracted, and the digests cannot see it.
+
+    _digest decodes before hashing, so an artifact with the right content and the
+    wrong layout matches every sealed fixture. The contract names two-space indent
+    with a trailing newline for the JSON artifacts and one compact object per line
+    for the queue, so those are read off the raw bytes here.
+    """
+    out_dir = primary_outputs[0]
+    for name in ("incident_chains.json", "summary.json"):
+        raw = (out_dir / name).read_text(encoding="utf-8")
+        assert raw.endswith("\n"), f"{name} has no trailing newline"
+        assert not raw.endswith("\n\n"), f"{name} ends with a blank line"
+        assert raw == json.dumps(json.loads(raw), indent=2) + "\n", (
+            f"{name} is not two-space-indented JSON with a trailing newline")
+
+    raw = (out_dir / "triage_queue.jsonl").read_text(encoding="utf-8")
+    assert raw.endswith("\n"), "triage_queue.jsonl has no trailing newline"
+    lines = raw.splitlines()
+    assert lines and all(line.strip() for line in lines), "the queue carries a blank line"
+    for number, line in enumerate(lines, start=1):
+        assert ": " not in line, f"queue line {number} is not compact"
+        assert json.dumps(json.loads(line), separators=(",", ":")) == line, (
+            f"queue line {number} is not the compact serialisation of its own content")
+
+
+def test_recovered_timeline_is_serialised_exactly_as_the_contract_states():
+    """The rebuilt timeline carries the layout the contract names, not just the content."""
+    raw = TIMELINE_PATH.read_text(encoding="utf-8")
+    assert raw.endswith("\n"), "the timeline has no trailing newline"
+    assert raw == json.dumps(json.loads(raw), indent=2) + "\n", (
+        "the rebuilt timeline is not two-space-indented JSON with a trailing newline")
+
+
 def test_no_argument_run_writes_to_the_documented_defaults(primary_outputs):
     """With no flags at all the program reads and writes its documented defaults.
 
