@@ -19,11 +19,11 @@ WORKDIR /app
 # mirror that hangs rather than refuses cannot eat the build budget.
 RUN set -eu; \
     delay=5; \
-    for attempt in 1 2 3 4; do \
-        if apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 \
-                -o Acquire::https::Timeout=20 update \
-            && apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 \
-                -o Acquire::https::Timeout=20 install -y --no-install-recommends \
+    for attempt in 1 2 3 4 5 6; do \
+        if apt-get -o Acquire::Retries=5 -o Acquire::http::Timeout=30 \
+                -o Acquire::https::Timeout=30 update \
+            && apt-get -o Acquire::Retries=5 -o Acquire::http::Timeout=30 \
+                -o Acquire::https::Timeout=30 install -y --no-install-recommends \
                 tmux asciinema; then \
             rm -rf /var/lib/apt/lists/*; \
             exit 0; \
@@ -31,7 +31,7 @@ RUN set -eu; \
         echo "apt attempt ${attempt} failed, retrying in ${delay}s" >&2; \
         rm -rf /var/lib/apt/lists/*; \
         sleep "${delay}"; \
-        delay=$((delay * 2)); \
+        if [ "${delay}" -lt 60 ]; then delay=$((delay * 2)); fi; \
     done; \
     exit 1
 

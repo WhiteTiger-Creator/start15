@@ -290,14 +290,49 @@ def test_events_beyond_the_cut_take_no_part_in_the_chain():
     events = [_ev(f"EV-{i:06d}", f"host-{i:03d}", "priv_escalate", i * 100)
               for i in range(1, 13)]
     events.append(_ev("EV-000013", "host-013", "log_cleared", 1300))
-    _, summary, chains, _ = _probe(events)
+    _, summary, chains, queue = _probe(events)
     assert summary["truncated_chain_count"] == 1
     assert [c["severity"] for c in chains] == [45]
+    # #IR-5194: the actions the chain reports come from the kept hosts too, and
+    # the queued row for the dropped host carries the cut-down chain severity
+    # rather than the severity of the action that got it dropped.
+    assert chains[0]["actions"] == ["priv_escalate"], chains[0]["actions"]
+    truncated = [r for r in queue if r["reason"] == "chain_truncated"]
+    assert [(r["host"], r["severity"]) for r in truncated] == [("host-013", 45)], truncated
+    # the summary counts what was read, not what survived the cut
+    assert summary["event_count"] == 13
+    assert summary["host_count"] == 13
 
 
 # --------------------------------------------------------------------------
 # Contract, budget, determinism and isolation
 # --------------------------------------------------------------------------
+def test_a_run_writes_nothing_outside_its_output_directory():
+    """instruction.md scopes an engine run to its --output-dir, and nothing checked it.
+
+    Every other run here reads the three artifacts by name, so a run that also
+    dropped a scratch file beside them, or in the directory it was started from,
+    satisfied all of them. This walks the whole work area afterwards.
+    """
+    _publish_inputs()
+    work = _candidate_dir()
+    out_dir = work / "output"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    os.chmod(out_dir, 0o777)
+    staged = work / "timeline.json"
+    shutil.copyfile(str(TIMELINE_PATH), str(staged))
+    os.chmod(staged, 0o644)
+
+    before = {str(q.relative_to(work)) for q in work.rglob("*")}
+    binary = _build(WORKFLOW_PATH)
+    result = _run_agent([binary, "--input", str(staged), "--output-dir", str(out_dir)], cwd=work)
+    assert result.returncode == 0, result.stderr
+    after = {str(q.relative_to(work)) for q in work.rglob("*")}
+    written = sorted(after - before)
+    assert written == ["output/incident_chains.json", "output/summary.json",
+                       "output/triage_queue.jsonl"], written
+
+
 def test_policy_path_actually_influences_the_output():
     """The policy is resolved from its fixed path, not inlined as constants."""
     saved = (DATA / "triage_policy.json").read_text(encoding="utf-8")
