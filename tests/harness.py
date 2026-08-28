@@ -75,7 +75,21 @@ def _load_json(path):
 
 
 def _load_jsonl(path):
-    return [json.loads(x) for x in Path(path).read_text(encoding="utf-8").splitlines() if x.strip()]
+    """Read a contracted JSONL artifact, taking every line as written.
+
+    Skipping blank lines here softened a contract that says one compact object
+    per line: a run that padded its output with empty lines read back the same
+    as a clean one and scored full marks. A blank line is a malformed line and
+    is read as one.
+    """
+    text = Path(path).read_text(encoding="utf-8")
+    if not text:
+        return []
+    assert text.endswith("\n"), f"{Path(path).name} has no trailing newline"
+    lines = text.split("\n")[:-1]
+    for number, line in enumerate(lines, start=1):
+        assert line.strip(), f"{Path(path).name} line {number} is blank"
+    return [json.loads(line) for line in lines]
 
 
 def _write_json(path, value):
@@ -118,8 +132,17 @@ def _build(script_path: Path) -> str:
 
 
 def _candidate_dir() -> Path:
-    d = _CWORK / f"run-{next(_run_ctr)}"
-    d.mkdir(parents=True, exist_ok=True)
+    """A fresh work area for one run, created where nothing can pre-empt it.
+
+    /candidate-work is world-writable, so a predictable name here was an opening:
+    a submission could plant the next `run-N` as a symlink to the sealed fixtures
+    and wait. The root-side mkdir(exist_ok=True) would succeed through the link
+    and the chmod would follow it, since os.chmod resolves symlinks and Linux has
+    no lchmod. mkdtemp closes both halves -- the name is unpredictable and the
+    directory is created fresh or not at all.
+    """
+    d = Path(tempfile.mkdtemp(prefix=f"run-{next(_run_ctr)}-", dir=str(_CWORK)))
+    assert not d.is_symlink(), d
     os.chmod(d, 0o777)
     return d
 

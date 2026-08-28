@@ -39,5 +39,12 @@ RUN set -eu; \
 # the pre-truncation snapshot, the collector journal and the sensor registry
 # beside it are the recovery sources. All values are synthetic.
 COPY app/ /app/
+
+# The default output directory the contract names. instruction.md tells the
+# solver it already exists when a run starts and that the engine may write
+# only inside the directory it is given, which was not true of the shipped
+# image: a no-argument run had to create it, and the graded run is
+# unprivileged. It is created here, writable, so the promise holds.
+RUN mkdir -p /app/output && chmod 1777 /app/output
 RUN cp /app/workflow/correlate_incidents.go /app/workflow/.correlate_incidents.original.go \
     && chmod a-w /app/workflow/.correlate_incidents.original.go
