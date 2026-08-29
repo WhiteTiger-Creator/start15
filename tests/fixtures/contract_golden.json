@@ -63,7 +63,18 @@
         "effective_chain_window",
         "effective_max_chain_hosts"
       ],
-      "serialisation": "JSON object, two-space indent, trailing newline"
+      "serialisation": "JSON object, two-space indent, trailing newline",
+      "field_notes": {
+        "event_count": "events in the timeline handed to --input",
+        "account_count": "distinct accounts those events name",
+        "host_count": "distinct hosts those events name",
+        "session_count": "sessions the events fall into once the governed gap is applied",
+        "chain_candidate_count": "candidate chains formed before the severity floor and the pivot are applied",
+        "incident_chain_count": "chains reported in incident_chains.json, so the candidates that cleared both",
+        "truncated_chain_count": "reported chains that ran past the host cap and were cut",
+        "queued_count": "rows in triage_queue.jsonl, both reasons together",
+        "max_severity": "the greatest severity among the REPORTED chains, so a candidate that fell below the floor does not raise it; 0 when nothing is reported"
+      }
     },
     "triage_queue": {
       "container": "jsonl",

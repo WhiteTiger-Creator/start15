@@ -116,7 +116,22 @@ func main() {
 	// while it was out is lost.
 	held := map[string]event{}
 
-	sort.Slice(journal, func(i, j int) bool { return journal[i].Seq < journal[j].Seq })
+	// A total key rather than a bare seq comparison: sort.Slice is not stable,
+	// so two entries sharing a seq would replay in whichever order the sort
+	// happened to leave them, and the rebuilt timeline would not be the same
+	// twice. The shipped journal has no duplicate seq; a conforming one might.
+	sort.Slice(journal, func(i, j int) bool {
+		if journal[i].Seq != journal[j].Seq {
+			return journal[i].Seq < journal[j].Seq
+		}
+		if journal[i].EventID != journal[j].EventID {
+			return journal[i].EventID < journal[j].EventID
+		}
+		if journal[i].Kind != journal[j].Kind {
+			return journal[i].Kind < journal[j].Kind
+		}
+		return journal[i].Field < journal[j].Field
+	})
 	for _, c := range journal {
 		switch c.Kind {
 		case "amend":
