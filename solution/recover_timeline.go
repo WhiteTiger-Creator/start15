@@ -11,6 +11,7 @@ import (
 	"os"
 	"sort"
 	"strconv"
+	"strings"
 )
 
 type event struct {
@@ -29,7 +30,11 @@ type change struct {
 	EventID string `json:"event_id"`
 	Kind    string `json:"kind"`
 	Field   string `json:"field"`
-	Value   any    `json:"value"`
+	// json.RawMessage rather than any: decoding into an interface gives every
+	// number as a float64, which cannot hold an integer past 2^53 exactly, so a
+	// timestamp amendment above that would be rounded before it was ever
+	// applied. The raw bytes are kept and parsed per field instead.
+	Value   json.RawMessage `json:"value"`
 }
 
 type sensorRow struct {
@@ -49,36 +54,49 @@ func readJSON(path string, into any) {
 	}
 }
 
-func asInt64(v any) (int64, bool) {
-	switch t := v.(type) {
-	case float64:
-		return int64(t), true
-	case string:
-		n, err := strconv.ParseInt(t, 10, 64)
-		return n, err == nil
+func asInt64(raw json.RawMessage) (int64, bool) {
+	// The contract carries timestamps as integer seconds, so the digits are read
+	// as an int64 straight from the JSON text. A quoted integer is accepted the
+	// same way; anything else is not a timestamp.
+	text := strings.TrimSpace(string(raw))
+	if len(text) >= 2 && text[0] == '"' && text[len(text)-1] == '"' {
+		var s string
+		if err := json.Unmarshal(raw, &s); err != nil {
+			return 0, false
+		}
+		text = strings.TrimSpace(s)
 	}
-	return 0, false
+	n, err := strconv.ParseInt(text, 10, 64)
+	return n, err == nil
 }
 
-func setField(e *event, field string, value any) {
+func asString(raw json.RawMessage) (string, bool) {
+	var s string
+	if err := json.Unmarshal(raw, &s); err != nil {
+		return "", false
+	}
+	return s, true
+}
+
+func setField(e *event, field string, value json.RawMessage) {
 	switch field {
 	case "account":
-		if s, ok := value.(string); ok {
+		if s, ok := asString(value); ok {
 			e.Account = s
 		}
 	case "host":
-		if s, ok := value.(string); ok {
+		if s, ok := asString(value); ok {
 			e.Host = s
 		}
 	case "action":
-		if s, ok := value.(string); ok {
+		if s, ok := asString(value); ok {
 			e.Action = s
 		}
 	case "sensor":
 		// #IR-5170 amends "the named field" without restricting which, and the
 		// sensor decides which clock offset the corrected stamp is built from, so
 		// dropping this amendment would silently keep the old correction.
-		if s, ok := value.(string); ok {
+		if s, ok := asString(value); ok {
 			e.Sensor = s
 		}
 	case "observed_ts":

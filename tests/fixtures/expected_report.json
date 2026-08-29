@@ -17,7 +17,7 @@
       "queued_count": 1854,
       "schema_version": "incident-triage-v1",
       "session_count": 8715,
-      "truncated_chain_count": 197
+      "truncated_chain_count": 109
     }
   },
   "broken_engine_sha256": "3fca4bcb3ebe05680196d197251dc8fbf9f272f05aa34e8e66f11d0ad82a2db2",
@@ -39,7 +39,7 @@
       "queued_count": 1907,
       "schema_version": "incident-triage-v1",
       "session_count": 8704,
-      "truncated_chain_count": 204
+      "truncated_chain_count": 81
     }
   },
   "recovered_event_count": 8801,

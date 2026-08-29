@@ -269,6 +269,65 @@ def test_run_past_the_host_cap_is_cut_and_the_excess_queued():
     assert sorted(truncated) == [f"host-{i:03d}" for i in range(13, 16)]
 
 
+def test_a_cut_chain_below_the_floor_is_not_a_truncated_chain():
+    """truncated_chain_count counts REPORTED chains that were cut, not every cut.
+
+    Thirteen hosts carry a logon, worth 5 each, so the run is cut at the cap and
+    then falls below the floor of 40 and is queued rather than reported. It is a
+    candidate and it was cut, but it never reaches incident_chains.json, so the
+    contract's "reported chains that ran past the host cap and were cut" does not
+    count it. Every other host-cap probe cuts a chain that IS reported, so none of
+    them could tell the two readings apart.
+    """
+    events = [_ev(f"EV-{i:06d}", f"host-{i:03d}", "logon", i * 100)
+              for i in range(1, 14)]
+    _, summary, chains, queue = _probe(events)
+    assert summary["chain_candidate_count"] == 1, "the run cleared the pivot"
+    assert chains == [], "a chain scoring 5 cannot clear the floor of 40"
+    assert summary["truncated_chain_count"] == 0, (
+        "a chain that was cut and then dropped below the floor was counted as a "
+        "truncated chain, though it is never reported")
+    assert {r["reason"] for r in queue} == {"chain_truncated", "below_floor"}
+
+
+def test_an_action_the_table_does_not_name_contributes_nothing():
+    """#IR-5186 fixes eight action severities and says an unnamed action is worth nothing.
+
+    The crafted probes all used named actions, so nothing pinned this. Three hosts
+    carry an action the table never names; the run clears the pivot and becomes a
+    candidate, scores zero and is queued below the floor rather than reported.
+    """
+    events = [_ev(f"EV-{i:06d}", f"host-{i:03d}", "quarantine_lifted", i * 100)
+              for i in range(1, 4)]
+    _, summary, chains, queue = _probe(events)
+    assert summary["chain_candidate_count"] == 1
+    assert chains == [], "an unnamed action gave the chain a severity"
+    assert [r["reason"] for r in queue] == ["below_floor"]
+    assert [r["severity"] for r in queue] == [0]
+
+
+def test_a_policy_that_omits_a_field_keeps_the_governed_baseline():
+    """#IR-5210 states the baselines a field the policy file omits falls back to.
+
+    The probes always supplied every field, so the fallback was never exercised.
+    Dropping pivot_min_hosts leaves the baseline of 3, which a two-host run does
+    not reach and a three-host run does.
+    """
+    sparse = {"default": {"chain_window_sec": 7200, "session_gap_sec": 1800,
+                          "severity_floor": 40, "max_chain_hosts": 12}}
+    two = [_ev(f"EV-{i:06d}", f"host-{i:03d}", "priv_escalate", i * 100)
+           for i in range(1, 3)]
+    _, summary, chains, _ = _probe(two, policy=sparse)
+    assert summary["effective_pivot_min_hosts"] == 3, "the baseline was not restored"
+    assert summary["chain_candidate_count"] == 0 and chains == []
+
+    three = [_ev(f"EV-{i:06d}", f"host-{i:03d}", "priv_escalate", i * 100)
+             for i in range(1, 4)]
+    _, summary, chains, _ = _probe(three, policy=sparse)
+    assert summary["chain_candidate_count"] == 1
+    assert [c["host_count"] for c in chains] == [3]
+
+
 def test_a_run_below_the_pivot_is_not_a_candidate():
     """Two hosts do not make a chain, however severe the actions on them."""
     events = [

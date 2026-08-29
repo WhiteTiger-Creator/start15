@@ -186,10 +186,11 @@ func main() {
 			// #IR-5194: a run reaching further than max_chain_hosts hosts is cut at
 			// that many, keeping the hosts first seen; the hosts beyond the cut are
 			// queued rather than reported as part of the chain.
+			wasCut := false
 			if maxChainHosts > 0 && len(ordered) > maxChainHosts {
 				kept = ordered[:maxChainHosts]
 				dropped = ordered[maxChainHosts:]
-				truncatedCount++
+				wasCut = true
 			}
 			keptSet := map[string]bool{}
 			for _, h := range kept {
@@ -231,6 +232,15 @@ func main() {
 			if severity < severityFloor {
 				queue = append(queue, queueRow{chainID, account, kept[0], severity, "below_floor"})
 				continue
+			}
+			// truncated_chain_count is a count of REPORTED chains that were cut, so
+			// it is taken here rather than at the cut: a candidate cut at the host
+			// cap and then dropped below the floor never reaches
+			// incident_chains.json and is not one of them. Counting at the cut made
+			// this the only summary field whose "reported" meant something different
+			// from incident_chain_count's and max_severity's.
+			if wasCut {
+				truncatedCount++
 			}
 			chains = append(chains, chainRow{
 				ChainID: chainID, Account: account, Hosts: kept, HostCount: len(kept),
