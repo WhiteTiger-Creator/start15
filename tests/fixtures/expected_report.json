@@ -22,7 +22,7 @@
   },
   "broken_engine_sha256": "3fca4bcb3ebe05680196d197251dc8fbf9f272f05aa34e8e66f11d0ad82a2db2",
   "primary": {
-    "chains_digest": "44171071802bc48734611776bb308ec6e8bbfaf99055d147bd9766d1f8e70bd1",
+    "chains_digest": "455459f3cf8ee0690f6165aed2906a983ca230babe5ee536c82ca0831d2af0f3",
     "queue_digest": "e5100b013178306d958ddc8d966e88e34495dd1f9c6a8c0b471dfa79eaba95fd",
     "summary": {
       "account_count": 46,
@@ -32,18 +32,18 @@
       "effective_pivot_min_hosts": 3,
       "effective_session_gap": 1800,
       "effective_severity_floor": 40,
-      "event_count": 8801,
+      "event_count": 8802,
       "host_count": 60,
       "incident_chain_count": 220,
       "max_severity": 50,
       "queued_count": 1907,
       "schema_version": "incident-triage-v1",
-      "session_count": 8704,
+      "session_count": 8705,
       "truncated_chain_count": 81
     }
   },
-  "recovered_event_count": 8801,
-  "recovered_timeline_digest": "75d6dafb545f75c155086cf85b16da6dbc8630acdcb72f467c62847c23997e56",
-  "rule_sources_digest": "fa652018b979510708aedbd74ebbd502fe292344f87f7c24b752f54b593b63f2",
+  "recovered_event_count": 8802,
+  "recovered_timeline_digest": "7ac37c3dbd3f65012a928329342bfc137891d6c9aa334d8761b23c2fe437a4cf",
+  "rule_sources_digest": "60a95032ae724fae87a5b37e828955088d5c722586aa40a4022d46cd0607beaf",
   "shipped_truncated_digest": "442753e6eee83f7d6916c996f1da1b613764f283e5d45aff9d3fbaf9f08df0db"
 }

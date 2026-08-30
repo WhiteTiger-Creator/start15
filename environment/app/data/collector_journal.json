@@ -31818,5 +31818,21 @@
     "posted_by": "collector",
     "seq": 2356,
     "value": 559848
+  },
+  {
+    "event_id": "EV-999999",
+    "field": "account",
+    "kind": "amend",
+    "posted_by": "collector",
+    "seq": 4171,
+    "value": "user-ghost"
+  },
+  {
+    "event_id": "EV-900001",
+    "field": "",
+    "kind": "restore",
+    "posted_by": "collector",
+    "seq": 4172,
+    "value": ""
   }
 ]

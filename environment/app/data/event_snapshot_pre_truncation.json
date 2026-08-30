@@ -81277,5 +81277,14 @@
     "observed_ts": 144695,
     "pid": 54078,
     "sensor": "netflow"
+  },
+  {
+    "account": "user-026",
+    "action": "process_start",
+    "event_id": "EV-900001",
+    "host": "host-059",
+    "observed_ts": 262493,
+    "pid": 40195,
+    "sensor": "tap-mirror"
   }
 ]

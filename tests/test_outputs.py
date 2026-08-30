@@ -58,6 +58,44 @@ def test_corrected_stamp_adds_the_sensor_offset():
         assert row["corrected_ts"] == row["observed_ts"] + offsets.get(row["sensor"], 0)
 
 
+def test_an_event_on_an_unlisted_sensor_keeps_its_observed_stamp():
+    """#IR-5174's fallback: a sensor the registry does not list corrects by nothing.
+
+    Nothing in the shipped sources exercised this, so a rebuild that dropped such
+    an event, or that failed on the missing offset, was never caught. EV-900001
+    is carried on a sensor the registry has no row for.
+    """
+    offsets = {r["sensor"]: r["clock_offset_sec"] for r in _load_json(DATA / "sensor_registry.json")}
+    rows = {r["event_id"]: r for r in _load_json(TIMELINE_PATH)}
+    probe = rows.get("EV-900001")
+    assert probe is not None, "the event on the unlisted sensor was dropped from the rebuild"
+    assert probe["sensor"] not in offsets, "the probe's sensor is meant to be unlisted"
+    assert probe["corrected_ts"] == probe["observed_ts"], (
+        "an unlisted sensor was corrected by something rather than left alone")
+
+
+def test_a_change_naming_an_event_the_snapshot_never_carried_is_ignored():
+    """#IR-5170's fallback, and the bare restore beside it.
+
+    The journal carries an amendment against EV-999999, which the snapshot never
+    held, and a restore of EV-900001, which was never retracted. Neither may
+    reach the rebuilt timeline: the first invents an event, the second would
+    re-read one that never left.
+    """
+    rows = {r["event_id"]: r for r in _load_json(TIMELINE_PATH)}
+    assert "EV-999999" not in rows, (
+        "a change naming an event the snapshot never carried created one")
+    journal = _load_json(JOURNAL_PATH)
+    assert any(c["event_id"] == "EV-999999" for c in journal), "the probe change is missing"
+    assert any(c["event_id"] == "EV-900001" and c["kind"] == "restore" for c in journal), \
+        "the bare restore is missing"
+    # the restore of an event that was never retracted left it exactly as it was
+    snapshot = {r["event_id"]: r for r in _load_json(SNAPSHOT_PATH)}
+    probe = rows["EV-900001"]
+    assert probe["account"] == snapshot["EV-900001"]["account"]
+    assert probe["observed_ts"] == snapshot["EV-900001"]["observed_ts"]
+
+
 def test_wrong_replays_differ_from_the_governed_timeline():
     """Four plausible misreadings of the rebuild each give a different timeline.
 
@@ -532,3 +570,4 @@ def test_shipped_contract_matches_the_golden_copy():
     """
     shipped = json.loads(SPEC_PATH.read_text(encoding="utf-8"))
     assert shipped == json.loads(GOLDEN_CONTRACT_PATH.read_text(encoding="utf-8"))
+
