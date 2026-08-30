@@ -31,6 +31,24 @@ def test_recovery_sources_are_intact():
     assert _digest(live) == FIXTURE["rule_sources_digest"]
 
 
+def test_recovery_sources_are_still_intact_after_the_graded_run(primary_outputs):
+    """Checked again once the engine has run, not only before it.
+
+    The digest above is taken at collection, so byte-identity across the graded
+    run rested on the candidate's file permissions rather than on a check.
+    Depending on primary_outputs orders this one after the run, and the rebuilt
+    timeline is included: the engine reads it and must not rewrite it.
+    """
+    live = {n: hashlib.sha256(Path(p).read_bytes()).hexdigest() for n, p in (
+        ("snapshot", SNAPSHOT_PATH), ("journal", JOURNAL_PATH),
+        ("registry", DATA / "sensor_registry.json"),
+        ("policy", DATA / "triage_policy.json"), ("log", LOG_PATH))}
+    assert _digest(live) == FIXTURE["rule_sources_digest"], (
+        "an input was rewritten while the graded run was in flight")
+    assert _digest(_load_json(TIMELINE_PATH)) == FIXTURE["recovered_timeline_digest"], (
+        "the engine rewrote the timeline it was handed")
+
+
 def test_timeline_was_recovered():
     """The rebuilt timeline matches the governed replay exactly."""
     recovered = _load_json(TIMELINE_PATH)
@@ -364,6 +382,36 @@ def test_a_policy_that_omits_a_field_keeps_the_governed_baseline():
     _, summary, chains, _ = _probe(three, policy=sparse)
     assert summary["chain_candidate_count"] == 1
     assert [c["host_count"] for c in chains] == [3]
+
+
+def test_a_session_breaks_on_the_gap_and_is_counted_per_host_and_account():
+    """#IR-5182: a gap longer than session_gap_sec opens a new session.
+
+    Nothing pinned session_count on its own; it rode on the two full-timeline
+    comparisons, so a run counting sessions per account, or per host, or on the
+    observed stamp, was caught only in bulk. Three events on one host for one
+    account with a gap of 7200 across the second boundary make two sessions, and
+    a second host under the same account makes a third.
+    """
+    gap = BASE_POLICY["default"]["session_gap_sec"]
+    events = [
+        _ev("EV-000001", "host-001", "logon", 100),
+        _ev("EV-000002", "host-001", "logon", 100 + gap),          # inside the gap
+        _ev("EV-000003", "host-001", "logon", 100 + gap + gap + 1),  # past it
+        _ev("EV-000004", "host-002", "logon", 100),
+    ]
+    _, summary, _, _ = _probe(events)
+    assert summary["session_count"] == 3, summary
+    assert summary["host_count"] == 2 and summary["account_count"] == 1
+
+    # the same events under two accounts split further, since a session belongs
+    # to one host AND one account
+    split = [
+        _ev("EV-000001", "host-001", "logon", 100, account="svc-a"),
+        _ev("EV-000002", "host-001", "logon", 200, account="svc-b"),
+    ]
+    _, summary, _, _ = _probe(split)
+    assert summary["session_count"] == 2, summary
 
 
 def test_a_run_below_the_pivot_is_not_a_candidate():
