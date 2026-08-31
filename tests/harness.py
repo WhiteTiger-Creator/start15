@@ -314,11 +314,26 @@ def _run_pipeline(script_path: Path = WORKFLOW_PATH, input_path: Path = TIMELINE
     out_dir = work / "output"
     out_dir.mkdir(parents=True, exist_ok=True)
     os.chmod(out_dir, 0o777)
-    staged = work / "timeline.json"
+
+    # The timeline the run is actually handed lives in its own directory, and that
+    # directory is not writable by the candidate: the output directory beside it
+    # is. Staging the input loose in a world-writable work area let a run rewrite
+    # the very file it had just read -- the byte-identity test watches the copy
+    # under /app/data, which such a run never touches, and the output check
+    # compares file names only.
+    in_dir = work / "input"
+    in_dir.mkdir(parents=True, exist_ok=True)
+    staged = in_dir / "timeline.json"
     shutil.copyfile(str(input_path), str(staged))
-    os.chmod(staged, 0o644)
+    os.chmod(staged, 0o444)
+    os.chmod(in_dir, 0o555)
+    before = hashlib.sha256(staged.read_bytes()).hexdigest()
+
     result = _run_agent([binary, "--input", str(staged), "--output-dir", str(out_dir)], cwd=work)
     assert result.returncode == 0, f"correlator failed:\n{result.stdout}\n{result.stderr}"
+    assert staged.is_file(), "the run removed the timeline it was given"
+    assert hashlib.sha256(staged.read_bytes()).hexdigest() == before, (
+        "the run rewrote the timeline it was handed through --input")
     return (out_dir,
             _load_json(out_dir / "summary.json"),
             _load_json(out_dir / "incident_chains.json"),

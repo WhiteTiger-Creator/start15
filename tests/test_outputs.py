@@ -478,6 +478,70 @@ def test_a_run_writes_nothing_outside_its_output_directory():
                        "output/triage_queue.jsonl"], written
 
 
+def test_a_changed_policy_value_changes_the_run_it_governs():
+    """Each policy field has to reach the calculation, not just the summary.
+
+    Every crafted world in this suite stages the shipped defaults, and the
+    influence test below only asks that the effective_* fields move and that the
+    summary differs -- which those fields alone satisfy. An engine could read the
+    policy to fill them and use five hardcoded values everywhere else and pass.
+    Each case here changes ONE value and requires the sessions, candidates,
+    chains or queue it governs to move with it.
+    """
+    def policy(**changed):
+        merged = dict(BASE_POLICY["default"])
+        merged.update(changed)
+        return {"default": merged}
+
+    # session_gap_sec: two events 1000s apart on one host and account
+    pair = [_ev("EV-000001", "host-001", "logon", 100),
+            _ev("EV-000002", "host-001", "logon", 1100)]
+    _, wide, _, _ = _probe(pair, policy=policy(session_gap_sec=1800))
+    _, narrow, _, _ = _probe(pair, policy=policy(session_gap_sec=500))
+    assert wide["session_count"] == 1, wide
+    assert narrow["session_count"] == 2, (
+        "session_gap_sec did not reach the session count")
+
+    # pivot_min_hosts: a three-host run is a candidate at 3 and not at 4
+    three = [_ev(f"EV-{i:06d}", f"host-{i:03d}", "priv_escalate", i * 100)
+             for i in range(1, 4)]
+    _, at_three, _, _ = _probe(three, policy=policy(pivot_min_hosts=3))
+    _, at_four, _, _ = _probe(three, policy=policy(pivot_min_hosts=4))
+    assert at_three["chain_candidate_count"] == 1
+    assert at_four["chain_candidate_count"] == 0, (
+        "pivot_min_hosts did not reach chain formation")
+
+    # severity_floor: a chain scoring 45 clears 40 and not 50
+    _, under, chains_under, _ = _probe(three, policy=policy(severity_floor=40))
+    _, over, chains_over, queue_over = _probe(three, policy=policy(severity_floor=50))
+    assert under["incident_chain_count"] == 1 and chains_under
+    assert over["incident_chain_count"] == 0 and chains_over == [], (
+        "severity_floor did not reach the reported set")
+    assert {row["reason"] for row in queue_over} == {"below_floor"}
+
+    # chain_window_sec: hosts 5000s apart form one run at 7200 and not at 1000
+    spread = [_ev(f"EV-{i:06d}", f"host-{i:03d}", "priv_escalate", i * 5000)
+              for i in range(1, 4)]
+    _, wide_window, _, _ = _probe(spread, policy=policy(chain_window_sec=7200))
+    _, tight_window, _, _ = _probe(spread, policy=policy(chain_window_sec=1000))
+    assert wide_window["chain_candidate_count"] == 1
+    assert tight_window["chain_candidate_count"] == 0, (
+        "chain_window_sec did not reach the run boundaries")
+
+    # max_chain_hosts: a five-host run is whole at 12 and cut at 3
+    five = [_ev(f"EV-{i:06d}", f"host-{i:03d}", "priv_escalate", i * 100)
+            for i in range(1, 6)]
+    _, uncut, chains_uncut, queue_uncut = _probe(five, policy=policy(max_chain_hosts=12))
+    _, cut, chains_cut, queue_cut = _probe(five, policy=policy(max_chain_hosts=3))
+    assert [c["host_count"] for c in chains_uncut] == [5]
+    assert uncut["truncated_chain_count"] == 0
+    assert [c["host_count"] for c in chains_cut] == [3], (
+        "max_chain_hosts did not reach the host cap")
+    assert cut["truncated_chain_count"] == 1
+    assert len([r for r in queue_cut if r["reason"] == "chain_truncated"]) == 2
+    assert not [r for r in queue_uncut if r["reason"] == "chain_truncated"]
+
+
 def test_policy_path_actually_influences_the_output():
     """The policy is resolved from its fixed path, not inlined as constants."""
     saved = (DATA / "triage_policy.json").read_text(encoding="utf-8")
