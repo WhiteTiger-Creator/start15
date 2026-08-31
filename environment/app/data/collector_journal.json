@@ -31834,5 +31834,45 @@
     "posted_by": "collector",
     "seq": 4172,
     "value": ""
+  },
+  {
+    "event_id": "EV-900001",
+    "field": "",
+    "kind": "retract",
+    "posted_by": "collector",
+    "seq": 4182,
+    "value": ""
+  },
+  {
+    "event_id": "EV-900001",
+    "field": "",
+    "kind": "retract",
+    "posted_by": "collector",
+    "seq": 4183,
+    "value": ""
+  },
+  {
+    "event_id": "EV-900001",
+    "field": "",
+    "kind": "restore",
+    "posted_by": "collector",
+    "seq": 4184,
+    "value": ""
+  },
+  {
+    "event_id": "EV-900001",
+    "field": "severity",
+    "kind": "amend",
+    "posted_by": "collector",
+    "seq": 4185,
+    "value": "high"
+  },
+  {
+    "event_id": "EV-900001",
+    "field": "event_id",
+    "kind": "amend",
+    "posted_by": "collector",
+    "seq": 4186,
+    "value": "EV-999998"
   }
 ]

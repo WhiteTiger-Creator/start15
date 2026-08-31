@@ -114,6 +114,48 @@ def test_a_change_naming_an_event_the_snapshot_never_carried_is_ignored():
     assert probe["observed_ts"] == snapshot["EV-900001"]["observed_ts"]
 
 
+def test_a_second_retraction_and_an_out_of_schema_amendment_do_nothing():
+    """#IR-5170's two quieter cases, which the replay has to leave alone.
+
+    Neither was written down until review raised them, and neither is exercised
+    by the shipped journal, so a replay that let a second retraction recapture
+    the held state, or that applied an amendment naming a field the record does
+    not declare, matched every fixture. The rebuilt timeline is read here rather
+    than a crafted run, because the recovery is an artifact and not a program.
+    """
+    rows = {row["event_id"]: row for row in _load_json(TIMELINE_PATH)}
+    journal = _load_json(JOURNAL_PATH)
+    snapshot = {row["event_id"]: row for row in _load_json(SNAPSHOT_PATH)}
+
+    declared = set(SPEC["reconciled_inputs"]["event_timeline"]["record_fields"])
+    retractions = [c["event_id"] for c in journal if c.get("kind") == "retract"]
+    repeated = {e for e in retractions if retractions.count(e) > 1}
+    assert repeated, (
+        "no event is retracted twice in the journal, so the rule this pins is not "
+        "reachable and would go untested")
+    # the event retracted twice and then restored comes back exactly as the
+    # snapshot held it: a replay that let the second retraction recapture or clear
+    # the held entry restores something else
+    for event_id in repeated:
+        assert event_id in rows, f"{event_id} was retracted twice and never restored"
+        for field in ("account", "host", "action", "sensor", "observed_ts", "pid"):
+            assert rows[event_id][field] == snapshot[event_id][field], (
+                f"{event_id} came back changed after a second retraction")
+    # the amendments naming a field the record does not declare, or the identity
+    # itself, changed nothing
+    ignored = [c for c in journal if c.get("kind") == "amend"
+               and c.get("field") not in declared]
+    assert ignored, "no out-of-schema amendment is present to test"
+    # the identity is never amended away: every surviving event id was one the
+    # snapshot carried, so no amendment renamed a record
+    assert set(rows) <= set(snapshot), (
+        "the rebuilt timeline carries an event id the snapshot never had, so an "
+        "amendment was allowed to rewrite the identity the replay is keyed on")
+    # and no record carries a field beyond the declared set
+    for row in rows.values():
+        assert set(row) == declared, row
+
+
 def test_wrong_replays_differ_from_the_governed_timeline():
     """Four plausible misreadings of the rebuild each give a different timeline.
 
@@ -682,4 +724,5 @@ def test_shipped_contract_matches_the_golden_copy():
     """
     shipped = json.loads(SPEC_PATH.read_text(encoding="utf-8"))
     assert shipped == json.loads(GOLDEN_CONTRACT_PATH.read_text(encoding="utf-8"))
+
 
