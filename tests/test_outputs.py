@@ -157,11 +157,13 @@ def test_a_second_retraction_and_an_out_of_schema_amendment_do_nothing():
 
 
 def test_wrong_replays_differ_from_the_governed_timeline():
-    """Four plausible misreadings of the rebuild each give a different timeline.
+    """Five plausible misreadings of the rebuild each give a different timeline.
 
-    Concatenating the sources, replaying in file order, letting a restore re-read
-    the snapshot, and subtracting the clock offset all diverge, so matching the
-    sealed digest is evidence the governed rules were applied.
+    Appending the sources instead of replaying them, replaying in file order
+    rather than by sequence, honouring the amendments but not the retractions,
+    letting a restore re-read the snapshot instead of the held state, and
+    subtracting the clock offset rather than adding it all diverge, so matching
+    the sealed digest is evidence the governed rules were applied.
     """
     expected = FIXTURE["recovered_timeline_digest"]
     assert FIXTURE["shipped_truncated_digest"] != expected
@@ -169,14 +171,23 @@ def test_wrong_replays_differ_from_the_governed_timeline():
     journal = _load_json(JOURNAL_PATH)
     offsets = {r["sensor"]: r["clock_offset_sec"] for r in _load_json(DATA / "sensor_registry.json")}
 
-    def replay(by_seq: bool, restore_from_snapshot: bool, sign: int):
+    def correct_and_digest(live):
+        rows = []
+        for r in live.values():
+            row = dict(r)
+            row["corrected_ts"] = row["observed_ts"] + offsets.get(row["sensor"], 0)
+            rows.append(row)
+        rows.sort(key=lambda r: (r["corrected_ts"], r["event_id"]))
+        return _digest(rows)
+
+    def replay(by_seq: bool, restore_from_snapshot: bool, sign: int, retract: bool = True):
         live = {k: dict(v) for k, v in snapshot.items()}
         held = {}
         for c in (sorted(journal, key=lambda x: x["seq"]) if by_seq else journal):
             eid, kind = c["event_id"], c["kind"]
             if kind == "amend" and eid in live:
                 live[eid][c["field"]] = c["value"]
-            elif kind == "retract" and eid in live:
+            elif kind == "retract" and retract and eid in live:
                 held[eid] = dict(live.pop(eid))
             elif kind == "restore":
                 if restore_from_snapshot:
@@ -192,9 +203,17 @@ def test_wrong_replays_differ_from_the_governed_timeline():
         rows.sort(key=lambda r: (r["corrected_ts"], r["event_id"]))
         return _digest(rows)
 
-    assert replay(False, False, 1) != expected     # file order
-    assert replay(True, True, 1) != expected       # restore re-reads the snapshot
-    assert replay(True, False, -1) != expected     # offset subtracted
+    # the sources appended rather than replayed: the snapshot kept whole and the
+    # journal treated as a second file that adds nothing but what it names anew
+    appended = {k: dict(v) for k, v in snapshot.items()}
+    assert correct_and_digest(appended) != expected, (
+        "the snapshot taken as it stands already matches the governed rebuild, so "
+        "the replay proves nothing")
+
+    assert replay(False, False, 1) != expected                  # file order
+    assert replay(True, True, 1) != expected                    # restore re-reads the snapshot
+    assert replay(True, False, -1) != expected                  # offset subtracted
+    assert replay(True, False, 1, retract=False) != expected    # retractions ignored
 
 
 # --------------------------------------------------------------------------
@@ -355,6 +374,31 @@ def test_chain_window_is_measured_on_the_corrected_stamp():
     assert [c["severity"] for c in chains] == [45]
 
 
+def test_the_engine_does_not_re_apply_the_sensor_offset():
+    """instruction.md says corrected_ts is consumed as recorded, and nothing checked it.
+
+    Every other crafted world here builds its rows with observed and corrected
+    stamps that already agree with the registry, so an engine that quietly added
+    the registry offset a second time passed all of them. These three rows carry
+    corrected stamps that are simply what they are, with a netflow row whose
+    registry offset is +512s. Against a sixty-second window the three sit
+    together and clear the pivot; re-derive the netflow stamp from the registry
+    and it lands 512s out, the run drops to two hosts and there is no candidate
+    at all.
+    """
+    policy = {"default": dict(BASE_POLICY["default"], chain_window_sec=60)}
+    events = [
+        _ev("EV-000001", "host-001", "priv_escalate", 1000, sensor="edr"),
+        _ev("EV-000002", "host-002", "logon", 1020, sensor="edr"),
+        _ev("EV-000003", "host-003", "logon", 1040, sensor="netflow"),
+    ]
+    _, summary, chains, _ = _probe(events, policy)
+    assert summary["chain_candidate_count"] == 1, (
+        "the three rows fall apart once the netflow stamp is corrected a second "
+        "time, so the engine is re-applying the registry offset")
+    assert [c["host_count"] for c in chains] == [3]
+
+
 def test_run_past_the_host_cap_is_cut_and_the_excess_queued():
     """A run reaching past the cap keeps the hosts first seen and queues the rest."""
     events = [_ev(f"EV-{i:06d}", f"host-{i:03d}", "priv_escalate", i * 100)
@@ -494,6 +538,27 @@ def test_events_beyond_the_cut_take_no_part_in_the_chain():
 # --------------------------------------------------------------------------
 # Contract, budget, determinism and isolation
 # --------------------------------------------------------------------------
+def test_the_engine_is_one_file_with_no_sibling_source():
+    """instruction.md names the case to reject: a helper split into a sibling source.
+
+    _build compiles /app/workflow/correlate_incidents.go on its own, so a split
+    submission fails to build and every artifact test collapses at once with a
+    compiler error. Nothing said why. This checks the rule the instruction
+    actually states, and reports the offending files by name.
+    """
+    engine = WORKFLOW_PATH.resolve()
+    # the go tool ignores sources whose name starts with "." or "_", so the frozen
+    # copy sitting beside the engine is not a sibling in the sense that matters
+    siblings = sorted(q.name for q in WORKFLOW_PATH.parent.glob("*.go")
+                      if q.resolve() != engine and not q.name.startswith((".", "_")))
+    assert siblings == [], (
+        "the engine is one package main in one file compiled on its own, so these "
+        f"sibling sources never reach the build: {siblings}")
+    stray = sorted(q.name for q in WORKFLOW_PATH.parent.glob("go.*"))
+    assert stray == [], f"the build takes the one file, not a module: {stray}"
+    _build(WORKFLOW_PATH)
+
+
 def test_a_run_writes_nothing_outside_its_output_directory():
     """instruction.md scopes an engine run to its --output-dir, and nothing checked it.
 
@@ -651,7 +716,9 @@ def test_artifacts_are_serialised_exactly_as_the_contract_states(primary_outputs
     lines = raw.splitlines()
     assert lines and all(line.strip() for line in lines), "the queue carries a blank line"
     for number, line in enumerate(lines, start=1):
-        assert ": " not in line, f"queue line {number} is not compact"
+        # comparing against the compact rendering of the line's own content is the
+        # whole check; a `": " not in line` shortcut used to sit above it and would
+        # have rejected a legitimately compact row whose string value held ": "
         assert json.dumps(json.loads(line), separators=(",", ":"),
                           ensure_ascii=False) == _as_contract_layout(line), (
             f"queue line {number} is not the compact serialisation of its own content")

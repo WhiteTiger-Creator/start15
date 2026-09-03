@@ -67,6 +67,7 @@
         "effective_chain_window",
         "effective_max_chain_hosts"
       ],
+      "field_completeness": "the object carries exactly the fields listed above and no others -- an extra field is a contract violation, not an addition",
       "serialisation": "JSON object, two-space indent, trailing newline",
       "field_derivations": "this contract fixes the shape only. What each counter means is settled in the shift log: #IR-5194 for truncated_chain_count, #IR-5190 for chain_candidate_count, #IR-5188 for max_severity and the reported set"
     },
