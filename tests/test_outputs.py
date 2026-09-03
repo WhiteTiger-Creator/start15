@@ -513,7 +513,10 @@ def test_a_run_writes_nothing_outside_its_output_directory():
     before = {str(q.relative_to(work)) for q in work.rglob("*")}
     binary = _build(WORKFLOW_PATH)
     result = _run_agent([binary, "--input", str(staged), "--output-dir", str(out_dir)], cwd=work)
-    assert result.returncode == 0, result.stderr
+    # the exit code is only a precondition; the verdict is the whole-tree diff below
+    assert result.returncode == 0, (
+        f"the run exited {result.returncode}\n"
+        f"stdout: {result.stdout[-2000:]}\nstderr: {result.stderr[-2000:]}")
     after = {str(q.relative_to(work)) for q in work.rglob("*")}
     written = sorted(after - before)
     assert written == ["output/incident_chains.json", "output/summary.json",
@@ -651,17 +654,30 @@ def test_no_argument_run_writes_to_the_documented_defaults(primary_outputs):
     """
     binary = _build(WORKFLOW_PATH)
     _publish_inputs()
+    # /app/output is shared state, so it is emptied rather than removed and put
+    # back as it was found; removing it outright left the suite order-dependent.
     default_out = Path("/app/output")
-    shutil.rmtree(default_out, ignore_errors=True)
     default_out.mkdir(parents=True, exist_ok=True)
+    before_mode = default_out.stat().st_mode & 0o777
+    for stale in sorted(default_out.iterdir()):
+        stale.unlink() if stale.is_file() or stale.is_symlink() else shutil.rmtree(stale)
     os.chmod(default_out, 0o777)
-    result = _run_agent([binary], cwd=_candidate_dir())
-    assert result.returncode == 0, result.stderr
-    assert sorted(q.name for q in default_out.iterdir()) == ['incident_chains.json', 'summary.json', 'triage_queue.jsonl']
-    _, summary, doc, queue = primary_outputs
-    assert _load_json(default_out / "summary.json") == summary
-    assert _digest(_load_json(default_out / "incident_chains.json")) == _digest(doc)
-    assert _digest(_load_jsonl(default_out / "triage_queue.jsonl")) == _digest(queue)
+    try:
+        result = _run_agent([binary], cwd=_candidate_dir())
+        assert result.returncode == 0, (
+            f"the no-argument run exited {result.returncode}\n"
+            f"stdout: {result.stdout[-2000:]}\nstderr: {result.stderr[-2000:]}")
+        assert sorted(q.name for q in default_out.iterdir()) == [
+            "incident_chains.json", "summary.json", "triage_queue.jsonl"]
+        _, summary, doc, queue = primary_outputs
+        assert _load_json(default_out / "summary.json") == summary
+        assert _digest(_load_json(default_out / "incident_chains.json")) == _digest(doc)
+        assert _digest(_load_jsonl(default_out / "triage_queue.jsonl")) == _digest(queue)
+    finally:
+        for stale in sorted(default_out.iterdir()):
+            stale.unlink() if stale.is_file() or stale.is_symlink() else shutil.rmtree(stale)
+        os.chmod(default_out, before_mode)
+
 
 
 def test_the_budget_is_enforced_by_killing_an_overrunning_run(primary_outputs):

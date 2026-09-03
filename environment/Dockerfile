@@ -2,8 +2,10 @@ FROM public.ecr.aws/docker/library/golang:1.24-bookworm@sha256:1a6d4452c65dea36a
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# The task is Go-only, so the canonical Go image carries the toolchain
-# rather than a Python base with golang-go bolted on.
+# The task is Go-only, so the canonical Go image carries the toolchain rather
+# than a Python base with golang-go bolted on. The image ships python3 but no
+# pip, ensurepip or venv, so setup that installs its own tooling into this
+# container dies here; those three and the cert bundle are added explicitly.
 ENV GOCACHE=/tmp/gocache \
     GOPATH=/tmp/gopath \
     GO111MODULE=off
@@ -24,7 +26,7 @@ RUN set -eu; \
                 -o Acquire::https::Timeout=30 update \
             && apt-get -o Acquire::Retries=5 -o Acquire::http::Timeout=30 \
                 -o Acquire::https::Timeout=30 install -y --no-install-recommends \
-                tmux asciinema; then \
+                tmux asciinema ca-certificates python3-pip python3-venv; then \
             rm -rf /var/lib/apt/lists/*; \
             exit 0; \
         fi; \

@@ -2,7 +2,7 @@
 
 How the incident-correlation engine is *meant* to behave -- the recovery of the truncated event timeline, the clock correction, the basis for every boundary, action severity, chain formation and the handling of an oversized chain -- was settled incrementally by the incident-response board, and those decisions live in the review entries below, not in any single summary. Several stages deliberately deviate from the intuitive reading, and which ones they are is settled in the entries themselves rather than here. The February draft proposals were revisited during the 2026-05 response review and several were reversed; where a draft or interim conflicts with a later decision, the later dated decision governs. `/app/docs/triage_contract.json` is the output contract only.
 
-- 2026-02-07: Response stand-up recorded a routine note against the estate asset inventory for window 1003. The triage backlog was cleared with no amendment raised.
+- 2026-02-07: The escalation desk noted a routine observation. The nightly integrity check over the journal completed clean. The thread was archived after review.
 
 > **Recovery draft proposal (2026-02-07 - #IR-5020)** Rosa: rebuild the truncated timeline by concatenating the pre-truncation snapshot with the collector journal and keeping the last row seen for each event id; a restored event is re-read from the snapshot *(Superseded -- reversed in the 2026-05 response review.)*
 
@@ -10,133 +10,133 @@ How the incident-correlation engine is *meant* to behave -- the recovery of the 
 
 > **Recovery draft proposal (2026-02-20 - #IR-5032)** Marek: session and window boundaries are drawn on the stamp the sensor recorded, since that is the figure the analyst sees in the console *(Superseded -- reversed in the 2026-05 response review.)*
 
-- 2026-02-09: Detection desk noted dropped batches from the estate asset inventory in window 1004. Raised with the platform owner; the triage parameters were not touched.
+- 2026-02-09: The SOC lead spot-checked a routine observation. A collector fell behind for a few minutes and caught up without gaps in the feed.
 
-- 2026-02-09: Response stand-up recorded a routine note against the estate asset inventory for window 1006. The triage backlog was cleared with no amendment raised.
+- 2026-02-09: The triage queue owner spot-checked a routine observation. The registry of sensors was reconciled against the inventory with no drift found. Nothing here bears on engine behaviour.
 
-- 2026-02-07: Analyst on duty logged a routine observation for the estate asset inventory during review window 1007. Alert-volume drift reviewed; no policy change requested.
+- 2026-02-07: A responder on shift reviewed a routine observation. A tabletop exercise was scheduled; no production system was touched.
 
-- 2026-02-20: Detection desk noted dropped batches from the syslog relay in window 1008. Raised with the platform owner; the triage parameters were not touched.
+- 2026-02-20: The collector owner raised and closed a routine observation. One sensor reported a clock step after an NTP resync; the offset table was unchanged. No action was carried forward.
 
-- 2026-02-13: Analyst on duty logged a routine observation for the EDR collector during review window 1009. Alert-volume drift reviewed; no policy change requested.
+- 2026-02-13: A shift handover spot-checked a routine observation. An analyst asked whether a session had already been closed; it had, in the prior window. The thread was archived after review.
 
-- 2026-02-15: Post-incident review of the estate asset inventory in window 1012 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-02-15: An on-call engineer signed off a routine observation. The case queue sat slightly above its running mean, entirely from low-severity items.
 
-- 2026-02-21: Detection desk noted dropped batches from the syslog relay in window 1014. Raised with the platform owner; the triage parameters were not touched.
+- 2026-02-21: An on-call engineer signed off a routine observation. Storage headroom on the collector was reported comfortable for the quarter.
 
-- 2026-02-20: Analyst on duty logged a routine observation for the syslog relay during review window 1017. Alert-volume drift reviewed; no policy change requested.
+- 2026-02-20: The detection-engineering desk signed off a routine observation. A noisy detection rule was tuned at source and stopped firing on maintenance traffic. Filed for the record.
 
-- 2026-02-06: Analyst on duty logged a routine observation for the estate asset inventory during review window 1018. Alert-volume drift reviewed; no policy change requested.
+- 2026-02-06: A weekly detection review noted a routine observation. Two alerts deduplicated to one case after the correlation pass ran.
 
-- 2026-02-09: Analyst on duty logged a routine observation for the estate asset inventory during review window 1020. Alert-volume drift reviewed; no policy change requested.
+- 2026-02-09: The sensor platform team carried forward a routine observation. One sensor reported a clock step after an NTP resync; the offset table was unchanged. No action was carried forward.
 
-- 2026-02-22: Post-incident review of the estate asset inventory in window 1021 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-02-22: The triage queue owner recorded a routine observation. One sensor reported a clock step after an NTP resync; the offset table was unchanged. Recorded without further action.
 
-- 2026-02-23: Response stand-up recorded a routine note against the estate asset inventory for window 1022. The triage backlog was cleared with no amendment raised.
+- 2026-02-23: The collector owner reviewed a routine observation. An enrichment lookup timed out once and succeeded on retry.
 
-- 2026-02-09: Post-incident review of the EDR collector in window 1023 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-02-09: The triage queue owner reviewed a routine observation. The case queue sat slightly above its running mean, entirely from low-severity items. No action was carried forward.
 
-- 2026-02-04: Response stand-up recorded a routine note against the auth log shipper for window 1026. The triage backlog was cleared with no amendment raised.
+- 2026-02-04: The escalation desk recorded a routine observation. The on-call handover recorded nothing outstanding for the next shift. Logged for trend purposes only.
 
-- 2026-02-19: Analyst on duty logged a routine observation for the syslog relay during review window 1028. Alert-volume drift reviewed; no policy change requested.
+- 2026-02-19: A weekly detection review raised and closed a routine observation. A responder asked for the previous window's export and was pointed at the archive. The thread was archived after review.
 
-- 2026-02-15: Response stand-up recorded a routine note against the EDR collector for window 1030. The triage backlog was cleared with no amendment raised.
+- 2026-02-15: The sensor platform team minuted a routine observation. The registry of sensors was reconciled against the inventory with no drift found. The thread was archived after review.
 
-- 2026-02-09: Post-incident review of the syslog relay in window 1033 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-02-09: The duty analyst filed a routine observation. The registry of sensors was reconciled against the inventory with no drift found. Nothing here bears on engine behaviour.
 
-- 2026-02-13: Response stand-up recorded a routine note against the auth log shipper for window 1035. The triage backlog was cleared with no amendment raised.
+- 2026-02-13: A responder on shift recorded a routine observation. The on-call handover recorded nothing outstanding for the next shift. Referred to the dated decisions and closed.
 
-- 2026-02-12: Post-incident review of the auth log shipper in window 1037 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-02-12: The triage queue owner reviewed a routine observation. The nightly integrity check over the journal completed clean.
 
-- 2026-02-02: Detection desk noted dropped batches from the auth log shipper in window 1039. Raised with the platform owner; the triage parameters were not touched.
+- 2026-02-02: The triage queue owner reviewed a routine observation. The on-call handover recorded nothing outstanding for the next shift.
 
-- 2026-02-10: Post-incident review of the estate asset inventory in window 1041 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-02-10: A responder on shift signed off a routine observation. The nightly integrity check over the journal completed clean. Nothing here bears on engine behaviour.
 
-- 2026-03-19: Response stand-up recorded a routine note against the estate asset inventory for window 1043. The triage backlog was cleared with no amendment raised.
+- 2026-03-19: A weekly detection review opened a query on a routine observation. One sensor reported a clock step after an NTP resync; the offset table was unchanged.
 
 > **Interim decision (2026-03-06 - #IR-5044)** Priya: a chain carries the SUM of the severities of the actions observed along it *(Revised -- see the 2026-05 response review.)*
 
-- 2026-03-06: Response stand-up recorded a routine note against the EDR collector for window 1045. The triage backlog was cleared with no amendment raised.
+- 2026-03-06: The SOC lead logged a routine observation. The registry of sensors was reconciled against the inventory with no drift found. Noted and closed.
 
-- 2026-03-27: Response stand-up recorded a routine note against the estate asset inventory for window 1046. The triage backlog was cleared with no amendment raised.
+- 2026-03-27: The triage queue owner recorded a routine observation. An enrichment lookup timed out once and succeeded on retry. The thread was archived after review.
 
-- 2026-03-03: Analyst on duty logged a routine observation for the EDR collector during review window 1048. Alert-volume drift reviewed; no policy change requested.
+- 2026-03-03: An on-call engineer signed off a routine observation. A vendor advisory was reviewed and found not to affect this deployment. Filed for the record.
 
-- 2026-03-08: Analyst on duty logged a routine observation for the estate asset inventory during review window 1050. Alert-volume drift reviewed; no policy change requested.
+- 2026-03-08: The sensor platform team signed off a routine observation. An analyst asked whether a session had already been closed; it had, in the prior window. Filed for the record.
 
-- 2026-03-23: Response stand-up recorded a routine note against the auth log shipper for window 1053. The triage backlog was cleared with no amendment raised.
+- 2026-03-23: The triage queue owner carried forward a routine observation. A responder asked for the previous window's export and was pointed at the archive. No dissent was recorded.
 
-- 2026-03-14: Post-incident review of the auth log shipper in window 1056 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-03-14: The SOC lead filed a routine observation. One sensor's feed was replayed after a broker restart, producing no duplicates downstream. Logged for trend purposes only.
 
-- 2026-03-21: Analyst on duty logged a routine observation for the estate asset inventory during review window 1058. Alert-volume drift reviewed; no policy change requested.
+- 2026-03-21: The duty analyst spot-checked a routine observation. Storage headroom on the collector was reported comfortable for the quarter. No dissent was recorded.
 
-- 2026-03-17: Response stand-up recorded a routine note against the netflow tap for window 1061. The triage backlog was cleared with no amendment raised.
+- 2026-03-17: A weekly detection review logged a routine observation. A collector fell behind for a few minutes and caught up without gaps in the feed. Filed for the record.
 
-- 2026-03-17: Analyst on duty logged a routine observation for the auth log shipper during review window 1063. Alert-volume drift reviewed; no policy change requested.
+- 2026-03-17: An on-call engineer recorded a routine observation. An enrichment lookup timed out once and succeeded on retry. Referred to the dated decisions and closed.
 
-- 2026-03-25: Response stand-up recorded a routine note against the syslog relay for window 1066. The triage backlog was cleared with no amendment raised.
+- 2026-03-25: The detection-engineering desk logged a routine observation. One event arrived with a malformed field and was quarantined by the parser. The desk confirmed no case impact.
 
-- 2026-03-13: Post-incident review of the estate asset inventory in window 1069 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-03-13: The collector owner carried forward a routine observation. A collector fell behind for a few minutes and caught up without gaps in the feed. Closed with no parameter change.
 
-- 2026-03-16: Post-incident review of the EDR collector in window 1072 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-03-16: The sensor platform team spot-checked a routine observation. The evidence store was rotated on schedule with no loss of retained events. A second reviewer concurred.
 
-- 2026-03-10: Detection desk noted dropped batches from the netflow tap in window 1073. Raised with the platform owner; the triage parameters were not touched.
+- 2026-03-10: The sensor platform team opened a query on a routine observation. An account lockout was traced to a stale credential in a scheduled job, not an intrusion. Logged for trend purposes only.
 
-- 2026-03-25: Response stand-up recorded a routine note against the estate asset inventory for window 1075. The triage backlog was cleared with no amendment raised.
+- 2026-03-25: A weekly detection review spot-checked a routine observation. A vendor advisory was reviewed and found not to affect this deployment.
 
-- 2026-03-15: Response stand-up recorded a routine note against the estate asset inventory for window 1078. The triage backlog was cleared with no amendment raised.
+- 2026-03-15: The forensics reviewer reviewed a routine observation. One sensor's feed was replayed after a broker restart, producing no duplicates downstream. A second reviewer concurred.
 
-- 2026-03-01: Response stand-up recorded a routine note against the netflow tap for window 1079. The triage backlog was cleared with no amendment raised.
+- 2026-03-01: The duty analyst carried forward a routine observation. An account lockout was traced to a stale credential in a scheduled job, not an intrusion.
 
-- 2026-03-22: Detection desk noted dropped batches from the netflow tap in window 1081. Raised with the platform owner; the triage parameters were not touched.
+- 2026-03-22: The detection-engineering desk reviewed a routine observation. A noisy detection rule was tuned at source and stopped firing on maintenance traffic. No follow-up was requested.
 
-- 2026-03-24: Response stand-up recorded a routine note against the syslog relay for window 1083. The triage backlog was cleared with no amendment raised.
+- 2026-03-24: A shift handover opened a query on a routine observation. The nightly integrity check over the journal completed clean. Nothing here bears on engine behaviour.
 
-- 2026-03-07: Analyst on duty logged a routine observation for the syslog relay during review window 1085. Alert-volume drift reviewed; no policy change requested.
+- 2026-03-07: The collector owner signed off a routine observation. Two alerts deduplicated to one case after the correlation pass ran.
 
-- 2026-03-07: Post-incident review of the syslog relay in window 1088 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-03-07: The forensics reviewer reviewed a routine observation. An account lockout was traced to a stale credential in a scheduled job, not an intrusion. Noted and closed.
 
-- 2026-04-08: Post-incident review of the netflow tap in window 1090 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-04-08: The forensics reviewer spot-checked a routine observation. The on-call handover recorded nothing outstanding for the next shift.
 
-- 2026-04-18: Post-incident review of the netflow tap in window 1092 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-04-18: A shift handover reviewed a routine observation. One sensor's feed was replayed after a broker restart, producing no duplicates downstream. Filed for the record.
 
-- 2026-04-17: Response stand-up recorded a routine note against the estate asset inventory for window 1094. The triage backlog was cleared with no amendment raised.
+- 2026-04-17: The collector owner logged a routine observation. A tabletop exercise was scheduled; no production system was touched. Filed for the record.
 
-- 2026-04-03: Post-incident review of the auth log shipper in window 1095 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-04-03: The detection-engineering desk reviewed a routine observation. One event arrived with a malformed field and was quarantined by the parser. Logged for trend purposes only.
 
-- 2026-04-22: Detection desk noted dropped batches from the EDR collector in window 1098. Raised with the platform owner; the triage parameters were not touched.
+- 2026-04-22: The duty analyst raised and closed a routine observation. The case queue sat slightly above its running mean, entirely from low-severity items.
 
-- 2026-04-13: Analyst on duty logged a routine observation for the syslog relay during review window 1099. Alert-volume drift reviewed; no policy change requested.
+- 2026-04-13: The forensics reviewer spot-checked a routine observation. An enrichment lookup timed out once and succeeded on retry. Nothing here bears on engine behaviour.
 
-- 2026-04-01: Analyst on duty logged a routine observation for the estate asset inventory during review window 1100. Alert-volume drift reviewed; no policy change requested.
+- 2026-04-01: A weekly detection review minuted a routine observation. The case queue sat slightly above its running mean, entirely from low-severity items. No action was carried forward.
 
-- 2026-04-22: Detection desk noted dropped batches from the netflow tap in window 1101. Raised with the platform owner; the triage parameters were not touched.
+- 2026-04-22: The detection-engineering desk logged a routine observation. The on-call handover recorded nothing outstanding for the next shift.
 
-- 2026-04-06: Post-incident review of the estate asset inventory in window 1104 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-04-06: A responder on shift logged a routine observation. The evidence store was rotated on schedule with no loss of retained events. Logged for trend purposes only.
 
-- 2026-04-03: Post-incident review of the netflow tap in window 1106 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-04-03: The triage queue owner logged a routine observation. A host dropped off the inventory during a rebuild and returned the same evening.
 
-- 2026-04-17: Response stand-up recorded a routine note against the estate asset inventory for window 1109. The triage backlog was cleared with no amendment raised.
+- 2026-04-17: A responder on shift opened a query on a routine observation. A vendor advisory was reviewed and found not to affect this deployment. Filed for the record.
 
-- 2026-04-27: Post-incident review of the estate asset inventory in window 1110 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-04-27: The sensor platform team raised and closed a routine observation. One event arrived with a malformed field and was quarantined by the parser.
 
-- 2026-04-24: Response stand-up recorded a routine note against the EDR collector for window 1111. The triage backlog was cleared with no amendment raised.
+- 2026-04-24: A responder on shift raised and closed a routine observation. The on-call handover recorded nothing outstanding for the next shift.
 
-- 2026-04-14: Detection desk noted dropped batches from the netflow tap in window 1113. Raised with the platform owner; the triage parameters were not touched.
+- 2026-04-14: The triage queue owner noted a routine observation. A firewall change window overlapped the collection window and was noted for context. Filed for the record.
 
-- 2026-04-17: Post-incident review of the auth log shipper in window 1114 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-04-17: The detection-engineering desk minuted a routine observation. The nightly integrity check over the journal completed clean.
 
-- 2026-04-04: Post-incident review of the syslog relay in window 1117 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-04-04: The duty analyst carried forward a routine observation. The evidence store was rotated on schedule with no loss of retained events.
 
-- 2026-04-23: Detection desk noted dropped batches from the EDR collector in window 1120. Raised with the platform owner; the triage parameters were not touched.
+- 2026-04-23: A responder on shift spot-checked a routine observation. The nightly integrity check over the journal completed clean.
 
-- 2026-04-13: Post-incident review of the syslog relay in window 1122 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-04-13: An on-call engineer carried forward a routine observation. A noisy detection rule was tuned at source and stopped firing on maintenance traffic. The thread was archived after review.
 
-- 2026-04-15: Analyst on duty logged a routine observation for the netflow tap during review window 1123. Alert-volume drift reviewed; no policy change requested.
+- 2026-04-15: The collector owner logged a routine observation. Two alerts deduplicated to one case after the correlation pass ran. Noted and closed.
 
-- 2026-04-11: Analyst on duty logged a routine observation for the auth log shipper during review window 1125. Alert-volume drift reviewed; no policy change requested.
+- 2026-04-11: The forensics reviewer recorded a routine observation. A host dropped off the inventory during a rebuild and returned the same evening. No dissent was recorded.
 
-- 2026-05-02: Detection desk noted dropped batches from the estate asset inventory in window 1127. Raised with the platform owner; the triage parameters were not touched.
+- 2026-05-02: The SOC lead raised and closed a routine observation. An enrichment lookup timed out once and succeeded on retry. Recorded without further action.
 
 > **Governance decision (2026-05-05 - #IR-5150)** Priya: Input paths, final. The triage policy is always read from its fixed absolute path under /app/data; `--input` selects the event timeline only. Both `--input` and `--output-dir` keep their documented defaults.
 
@@ -162,88 +162,88 @@ How the incident-correlation engine is *meant* to behave -- the recovery of the 
 
 > **Governance decision (2026-05-30 - #IR-5198)** Lena: Run summary, final. The counters are aggregates of what the run itself read and emitted. `event_count`, `account_count` and `host_count` are the events in the timeline handed to `--input` and the distinct accounts and hosts they name. `session_count` is the sessions those events fall into once the #IR-5182 gap is applied. `chain_candidate_count` is the runs that became candidates under #IR-5190, so the severity floor has not been applied to it yet, while `incident_chain_count` is what `incident_chains.json` reports and `queued_count` the rows in `triage_queue.jsonl` with both reasons together. `max_severity` is the greatest severity among the REPORTED chains, so a candidate that fell below the floor does not raise it, and it is 0 when nothing is reported. The `effective_*` fields are the policy values in force, whether they came from the policy file or from the #IR-5210 baseline.
 
-- 2026-05-09: Post-incident review of the auth log shipper in window 1130 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-05-09: The SOC lead recorded a routine observation. The evidence store was rotated on schedule with no loss of retained events.
 
-- 2026-05-18: Response stand-up recorded a routine note against the estate asset inventory for window 1132. The triage backlog was cleared with no amendment raised.
+- 2026-05-18: The detection-engineering desk minuted a routine observation. The case queue sat slightly above its running mean, entirely from low-severity items. The desk confirmed no case impact.
 
-- 2026-05-07: Detection desk noted dropped batches from the auth log shipper in window 1135. Raised with the platform owner; the triage parameters were not touched.
+- 2026-05-07: The duty analyst spot-checked a routine observation. The nightly integrity check over the journal completed clean.
 
-- 2026-05-02: Response stand-up recorded a routine note against the EDR collector for window 1136. The triage backlog was cleared with no amendment raised.
+- 2026-05-02: The duty analyst recorded a routine observation. A responder asked for the previous window's export and was pointed at the archive. Nothing here bears on engine behaviour.
 
-- 2026-05-17: Response stand-up recorded a routine note against the syslog relay for window 1138. The triage backlog was cleared with no amendment raised.
+- 2026-05-17: The SOC lead minuted a routine observation. A collector fell behind for a few minutes and caught up without gaps in the feed.
 
-- 2026-05-02: Analyst on duty logged a routine observation for the EDR collector during review window 1139. Alert-volume drift reviewed; no policy change requested.
+- 2026-05-02: The duty analyst spot-checked a routine observation. A vendor advisory was reviewed and found not to affect this deployment. Logged for trend purposes only.
 
-- 2026-05-27: Post-incident review of the auth log shipper in window 1140 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-05-27: The SOC lead filed a routine observation. The nightly integrity check over the journal completed clean.
 
-- 2026-05-25: Analyst on duty logged a routine observation for the netflow tap during review window 1143. Alert-volume drift reviewed; no policy change requested.
+- 2026-05-25: An on-call engineer raised and closed a routine observation. A collector fell behind for a few minutes and caught up without gaps in the feed.
 
-- 2026-05-19: Detection desk noted dropped batches from the EDR collector in window 1145. Raised with the platform owner; the triage parameters were not touched.
+- 2026-05-19: The sensor platform team spot-checked a routine observation. An account lockout was traced to a stale credential in a scheduled job, not an intrusion.
 
-- 2026-05-14: Analyst on duty logged a routine observation for the netflow tap during review window 1148. Alert-volume drift reviewed; no policy change requested.
+- 2026-05-14: The duty analyst noted a routine observation. A host dropped off the inventory during a rebuild and returned the same evening. No follow-up was requested.
 
-- 2026-05-06: Analyst on duty logged a routine observation for the auth log shipper during review window 1149. Alert-volume drift reviewed; no policy change requested.
+- 2026-05-06: A responder on shift noted a routine observation. One sensor's feed was replayed after a broker restart, producing no duplicates downstream.
 
-- 2026-05-20: Detection desk noted dropped batches from the syslog relay in window 1152. Raised with the platform owner; the triage parameters were not touched.
+- 2026-05-20: A shift handover logged a routine observation. The registry of sensors was reconciled against the inventory with no drift found.
 
-- 2026-05-07: Analyst on duty logged a routine observation for the EDR collector during review window 1154. Alert-volume drift reviewed; no policy change requested.
+- 2026-05-07: A shift handover minuted a routine observation. Two alerts deduplicated to one case after the correlation pass ran. Closed with no parameter change.
 
-- 2026-05-11: Post-incident review of the syslog relay in window 1155 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-05-11: The triage queue owner reviewed a routine observation. A responder asked for the previous window's export and was pointed at the archive.
 
-- 2026-05-09: Post-incident review of the syslog relay in window 1156 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-05-09: A responder on shift signed off a routine observation. One sensor reported a clock step after an NTP resync; the offset table was unchanged. Closed with no parameter change.
 
-- 2026-05-06: Detection desk noted dropped batches from the auth log shipper in window 1158. Raised with the platform owner; the triage parameters were not touched.
+- 2026-05-06: A responder on shift opened a query on a routine observation. The evidence store was rotated on schedule with no loss of retained events.
 
-- 2026-05-11: Post-incident review of the netflow tap in window 1160 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-05-11: The sensor platform team noted a routine observation. Two alerts deduplicated to one case after the correlation pass ran. Recorded without further action.
 
-- 2026-05-11: Post-incident review of the estate asset inventory in window 1161 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-05-11: The detection-engineering desk raised and closed a routine observation. An account lockout was traced to a stale credential in a scheduled job, not an intrusion. No dissent was recorded.
 
-- 2026-05-19: Analyst on duty logged a routine observation for the estate asset inventory during review window 1164. Alert-volume drift reviewed; no policy change requested.
+- 2026-05-19: A responder on shift recorded a routine observation. A noisy detection rule was tuned at source and stopped firing on maintenance traffic. Noted and closed.
 
-- 2026-06-21: Detection desk noted dropped batches from the syslog relay in window 1167. Raised with the platform owner; the triage parameters were not touched.
+- 2026-06-21: The triage queue owner noted a routine observation. An account lockout was traced to a stale credential in a scheduled job, not an intrusion. The thread was archived after review.
 
 > **Governance decision (2026-06-04 - #IR-5210)** Priya: Triage policy baseline, read from /app/data/triage_policy.json at that fixed absolute path. Any field the policy file omits keeps its baseline: session_gap_sec = 1800; pivot_min_hosts = 3; severity_floor = 40; chain_window_sec = 7200; max_chain_hosts = 12.
 
-- 2026-06-21: Post-incident review of the estate asset inventory in window 1169 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-06-21: The sensor platform team carried forward a routine observation. An enrichment lookup timed out once and succeeded on retry.
 
-- 2026-06-03: Response stand-up recorded a routine note against the estate asset inventory for window 1171. The triage backlog was cleared with no amendment raised.
+- 2026-06-03: The SOC lead filed a routine observation. The evidence store was rotated on schedule with no loss of retained events. No dissent was recorded.
 
-- 2026-06-02: Detection desk noted dropped batches from the estate asset inventory in window 1174. Raised with the platform owner; the triage parameters were not touched.
+- 2026-06-02: The collector owner logged a routine observation. The case queue sat slightly above its running mean, entirely from low-severity items. Referred to the dated decisions and closed.
 
-- 2026-06-18: Analyst on duty logged a routine observation for the syslog relay during review window 1175. Alert-volume drift reviewed; no policy change requested.
+- 2026-06-18: The sensor platform team signed off a routine observation. The registry of sensors was reconciled against the inventory with no drift found.
 
-- 2026-06-17: Detection desk noted dropped batches from the auth log shipper in window 1177. Raised with the platform owner; the triage parameters were not touched.
+- 2026-06-17: The triage queue owner opened a query on a routine observation. Two alerts deduplicated to one case after the correlation pass ran. Filed for the record.
 
-- 2026-06-02: Response stand-up recorded a routine note against the auth log shipper for window 1180. The triage backlog was cleared with no amendment raised.
+- 2026-06-02: An on-call engineer recorded a routine observation. One sensor's feed was replayed after a broker restart, producing no duplicates downstream. Referred to the dated decisions and closed.
 
-- 2026-06-24: Response stand-up recorded a routine note against the estate asset inventory for window 1181. The triage backlog was cleared with no amendment raised.
+- 2026-06-24: A shift handover minuted a routine observation. An enrichment lookup timed out once and succeeded on retry.
 
-- 2026-06-02: Analyst on duty logged a routine observation for the auth log shipper during review window 1182. Alert-volume drift reviewed; no policy change requested.
+- 2026-06-02: A weekly detection review reviewed a routine observation. The on-call handover recorded nothing outstanding for the next shift. Logged for trend purposes only.
 
-- 2026-06-12: Post-incident review of the syslog relay in window 1184 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-06-12: The collector owner recorded a routine observation. Two alerts deduplicated to one case after the correlation pass ran. A second reviewer concurred.
 
-- 2026-06-18: Post-incident review of the EDR collector in window 1187 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-06-18: The forensics reviewer signed off a routine observation. A firewall change window overlapped the collection window and was noted for context. No action was carried forward.
 
-- 2026-06-23: Analyst on duty logged a routine observation for the netflow tap during review window 1189. Alert-volume drift reviewed; no policy change requested.
+- 2026-06-23: A weekly detection review noted a routine observation. A collector fell behind for a few minutes and caught up without gaps in the feed. Nothing here bears on engine behaviour.
 
-- 2026-06-13: Response stand-up recorded a routine note against the syslog relay for window 1191. The triage backlog was cleared with no amendment raised.
+- 2026-06-13: A shift handover minuted a routine observation. Two alerts deduplicated to one case after the correlation pass ran.
 
-- 2026-06-13: Response stand-up recorded a routine note against the estate asset inventory for window 1194. The triage backlog was cleared with no amendment raised.
+- 2026-06-13: The collector owner noted a routine observation. The case queue sat slightly above its running mean, entirely from low-severity items. The desk confirmed no case impact.
 
-- 2026-06-02: Analyst on duty logged a routine observation for the EDR collector during review window 1196. Alert-volume drift reviewed; no policy change requested.
+- 2026-06-02: The SOC lead logged a routine observation. The on-call handover recorded nothing outstanding for the next shift. The thread was archived after review.
 
-- 2026-06-10: Detection desk noted dropped batches from the auth log shipper in window 1198. Raised with the platform owner; the triage parameters were not touched.
+- 2026-06-10: An on-call engineer filed a routine observation. A responder asked for the previous window's export and was pointed at the archive. The desk confirmed no case impact.
 
-- 2026-06-21: Response stand-up recorded a routine note against the netflow tap for window 1199. The triage backlog was cleared with no amendment raised.
+- 2026-06-21: A weekly detection review logged a routine observation. One sensor's feed was replayed after a broker restart, producing no duplicates downstream.
 
-- 2026-06-08: Response stand-up recorded a routine note against the auth log shipper for window 1202. The triage backlog was cleared with no amendment raised.
+- 2026-06-08: The forensics reviewer reviewed a routine observation. Storage headroom on the collector was reported comfortable for the quarter. No dissent was recorded.
 
-- 2026-06-21: Detection desk noted dropped batches from the syslog relay in window 1205. Raised with the platform owner; the triage parameters were not touched.
+- 2026-06-21: The SOC lead logged a routine observation. An account lockout was traced to a stale credential in a scheduled job, not an intrusion.
 
-- 2026-06-06: Post-incident review of the estate asset inventory in window 1207 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-06-06: An on-call engineer filed a routine observation. Storage headroom on the collector was reported comfortable for the quarter. Referred to the dated decisions and closed.
 
-- 2026-06-03: Detection desk noted dropped batches from the EDR collector in window 1210. Raised with the platform owner; the triage parameters were not touched.
+- 2026-06-03: The detection-engineering desk spot-checked a routine observation. Two alerts deduplicated to one case after the correlation pass ran. Nothing here bears on engine behaviour.
 
-- 2026-06-26: Post-incident review of the estate asset inventory in window 1212 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-06-26: The SOC lead raised and closed a routine observation. The case queue sat slightly above its running mean, entirely from low-severity items. Noted and closed.
 
-- 2026-06-08: Post-incident review of the EDR collector in window 1214 closed with no action; the standing thresholds were reconfirmed as they are.
+- 2026-06-08: The detection-engineering desk noted a routine observation. An analyst asked whether a session had already been closed; it had, in the prior window. The thread was archived after review.
