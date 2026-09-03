@@ -612,6 +612,23 @@ def test_run_is_idempotent(primary_outputs):
     assert s2 == summary and _digest(c2) == _digest(chains) and _digest(q2) == _digest(queue)
 
 
+def _as_contract_layout(raw: str) -> str:
+    """The text with encoder-specific escaping normalised away.
+
+    The contract fixes the LAYOUT -- two-space indent, trailing newline -- not
+    the escape style, and the two encoders disagree on escaping: Go's
+    json.Marshal writes `<`, `>` and `&` as \\u003c, \\u003e and \\u0026 and
+    emits non-ASCII as literal UTF-8, while Python's json.dumps does the
+    opposite on both counts. Comparing raw bytes against Python's rendering
+    therefore failed a correct Go engine the moment any of those characters
+    reached the data. Normalising both sides leaves the indent and the newline
+    pinned exactly, which is what the contract actually states.
+    """
+    for escaped, literal in (("\\u003c", "<"), ("\\u003e", ">"), ("\\u0026", "&")):
+        raw = raw.replace(escaped, literal)
+    return raw
+
+
 def test_artifacts_are_serialised_exactly_as_the_contract_states(primary_outputs):
     """Serialisation is contracted, and the digests cannot see it.
 
@@ -625,7 +642,8 @@ def test_artifacts_are_serialised_exactly_as_the_contract_states(primary_outputs
         raw = (out_dir / name).read_text(encoding="utf-8")
         assert raw.endswith("\n"), f"{name} has no trailing newline"
         assert not raw.endswith("\n\n"), f"{name} ends with a blank line"
-        assert raw == json.dumps(json.loads(raw), indent=2) + "\n", (
+        assert _as_contract_layout(raw) == json.dumps(
+            json.loads(raw), indent=2, ensure_ascii=False) + "\n", (
             f"{name} is not two-space-indented JSON with a trailing newline")
 
     raw = (out_dir / "triage_queue.jsonl").read_text(encoding="utf-8")
@@ -634,7 +652,8 @@ def test_artifacts_are_serialised_exactly_as_the_contract_states(primary_outputs
     assert lines and all(line.strip() for line in lines), "the queue carries a blank line"
     for number, line in enumerate(lines, start=1):
         assert ": " not in line, f"queue line {number} is not compact"
-        assert json.dumps(json.loads(line), separators=(",", ":")) == line, (
+        assert json.dumps(json.loads(line), separators=(",", ":"),
+                          ensure_ascii=False) == _as_contract_layout(line), (
             f"queue line {number} is not the compact serialisation of its own content")
 
 
@@ -642,7 +661,8 @@ def test_recovered_timeline_is_serialised_exactly_as_the_contract_states():
     """The rebuilt timeline carries the layout the contract names, not just the content."""
     raw = TIMELINE_PATH.read_text(encoding="utf-8")
     assert raw.endswith("\n"), "the timeline has no trailing newline"
-    assert raw == json.dumps(json.loads(raw), indent=2) + "\n", (
+    assert _as_contract_layout(raw) == json.dumps(
+        json.loads(raw), indent=2, ensure_ascii=False) + "\n", (
         "the rebuilt timeline is not two-space-indented JSON with a trailing newline")
 
 
