@@ -7,6 +7,19 @@ Shared machinery lives in harness.py.
 from harness import *  # noqa: F401,F403
 
 
+# What the agent's own run left at the default output path, read at import time.
+# test_no_argument_run_writes_to_the_documented_defaults empties that directory
+# before it starts, so by the time any test body runs the evidence is gone --
+# which is how a submission that rebuilt the timeline and repaired the source
+# without ever running the engine still earned full marks. Reading it here, once,
+# is independent of test order.
+DELIVERED_OUTPUT_DIR = Path("/app/output")
+DELIVERED_OUTPUT = (
+    {q.name: q.read_bytes() for q in sorted(DELIVERED_OUTPUT_DIR.iterdir()) if q.is_file()}
+    if DELIVERED_OUTPUT_DIR.is_dir() else {}
+)
+
+
 @pytest.fixture(scope="session")
 def primary_outputs():
     return _run_pipeline()
@@ -554,8 +567,11 @@ def test_the_engine_is_one_file_with_no_sibling_source():
     assert siblings == [], (
         "the engine is one package main in one file compiled on its own, so these "
         f"sibling sources never reach the build: {siblings}")
-    stray = sorted(q.name for q in WORKFLOW_PATH.parent.glob("go.*"))
-    assert stray == [], f"the build takes the one file, not a module: {stray}"
+    # No ban on a go.mod or go.sum sitting here: _build copies the source to a
+    # temporary directory and compiles it there, so nothing in /app/workflow can
+    # join the build in the first place, and instruction.md forbids only a sibling
+    # SOURCE joining it. Failing a file that changes nothing would reject work the
+    # instruction does not forbid.
     _build(WORKFLOW_PATH)
 
 
@@ -731,6 +747,31 @@ def test_recovered_timeline_is_serialised_exactly_as_the_contract_states():
     assert _as_contract_layout(raw) == json.dumps(
         json.loads(raw), indent=2, ensure_ascii=False) + "\n", (
         "the rebuilt timeline is not two-space-indented JSON with a trailing newline")
+
+
+def test_the_delivered_run_left_its_three_artifacts_at_the_default_path(primary_outputs):
+    """instruction.md says the artifacts are left in place where the run wrote them.
+
+    Nothing looked at what the agent's own run left at /app/output. Every other
+    check here drives the engine itself, so a submission that rebuilt the timeline
+    and repaired the source without ever running it earned full marks, and the one
+    test that touches the default path empties it before it starts. DELIVERED_OUTPUT
+    is read at import, before any of that, so this grades the run the agent made.
+    """
+    assert sorted(DELIVERED_OUTPUT) == [
+        "incident_chains.json", "summary.json", "triage_queue.jsonl"], (
+        "the engine was never run, or its artifacts were cleared away afterwards; "
+        f"{DELIVERED_OUTPUT_DIR} held {sorted(DELIVERED_OUTPUT)}")
+
+    _, summary, chains, queue = primary_outputs
+    delivered_summary = json.loads(DELIVERED_OUTPUT["summary.json"].decode("utf-8"))
+    assert delivered_summary == summary, (
+        "the artifacts left at the default path are not what this engine produces")
+    assert _digest(json.loads(
+        DELIVERED_OUTPUT["incident_chains.json"].decode("utf-8"))) == _digest(chains)
+    delivered_queue = [json.loads(line) for line
+                       in DELIVERED_OUTPUT["triage_queue.jsonl"].decode("utf-8").split("\n")[:-1]]
+    assert _digest(delivered_queue) == _digest(queue)
 
 
 def test_no_argument_run_writes_to_the_documented_defaults(primary_outputs):
