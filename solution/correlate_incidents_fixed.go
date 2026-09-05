@@ -112,6 +112,9 @@ func main() {
 	severityFloor := policyValue(pol, "severity_floor", 40)
 	chainWindow := policyValue(pol, "chain_window_sec", 7200)
 	maxChainHosts := int(policyValue(pol, "max_chain_hosts", 12))
+	// #IR-5216: the addendum to the baseline decision. A policy that omits the
+	// field keeps 900 seconds, not the zero a missing Go map key would give.
+	repeatSuppress := policyValue(pol, "repeat_suppress_sec", 900)
 
 	// #IR-5182: every boundary in this procedure is drawn on the CORRECTED stamp,
 	// never on the stamp the sensor recorded.
@@ -151,10 +154,15 @@ func main() {
 
 	chains := make([]chainRow, 0)
 	queue := make([]queueRow, 0)
-	candidateCount, truncatedCount := 0, 0
+	candidateCount, truncatedCount, supersededCount := 0, 0, 0
 
 	for _, account := range accounts {
 		group := byAccount[account]
+		// #IR-5214: the last corrected stamp of the chain most recently REPORTED
+		// for this account. A candidate queued below the floor or suppressed is
+		// not a report and never moves it, so suppression measures against the
+		// last chain that actually reached incident_chains.json.
+		lastReportedEnd, haveReported := int64(0), false
 		start := 0
 		for start < len(group) {
 			// #IR-5190: a run closes when the next event lies further than
@@ -229,8 +237,19 @@ func main() {
 			for _, h := range dropped {
 				queue = append(queue, queueRow{chainID, account, h, severity, "chain_truncated"})
 			}
+			// The floor is applied FIRST: a candidate queued below it was never
+			// reported, so it starts no suppression of its own.
 			if severity < severityFloor {
 				queue = append(queue, queueRow{chainID, account, kept[0], severity, "below_floor"})
+				continue
+			}
+			// #IR-5214: a candidate opening within repeat_suppress_sec of the end
+			// of the account's last reported chain is queued instead of reported.
+			// haveReported stays false until a chain actually reports, so the first
+			// candidate of an account is never suppressed however early it opens.
+			if haveReported && first-lastReportedEnd <= repeatSuppress {
+				queue = append(queue, queueRow{chainID, account, kept[0], severity, "superseded"})
+				supersededCount++
 				continue
 			}
 			// truncated_chain_count is a count of REPORTED chains that were cut, so
@@ -247,6 +266,9 @@ func main() {
 				FirstTS: first, LastTS: last, EventCount: count,
 				Severity: severity, Actions: actions,
 			})
+			// only a chain that reports moves the mark the next one is measured
+			// against; a suppressed candidate above is not a report
+			lastReportedEnd, haveReported = last, true
 		}
 	}
 
@@ -291,6 +313,8 @@ func main() {
 		"chain_candidate_count":     candidateCount,
 		"incident_chain_count":      len(chains),
 		"truncated_chain_count":     truncatedCount,
+		"superseded_chain_count":    supersededCount,
+		"effective_repeat_suppress": repeatSuppress,
 		"queued_count":              len(queue),
 		"max_severity":              maxSeverity,
 		"effective_session_gap":     sessionGap,

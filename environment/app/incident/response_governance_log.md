@@ -56,6 +56,8 @@ How the incident-correlation engine is *meant* to behave -- the recovery of the 
 
 > **Interim decision (2026-03-06 - #IR-5044)** Priya: a chain carries the SUM of the severities of the actions observed along it.
 
+> **Interim decision (2026-03-11 - #IR-5050)** Priya: every candidate clearing the severity floor is reported on its own account, however close it sits to the one before it. The desk would rather see a repeat twice than miss it once.
+
 - 2026-03-06: The SOC lead logged a routine observation. The registry of sensors was reconciled against the inventory with no drift found. Noted and closed.
 
 - 2026-03-27: The triage queue owner recorded a routine observation. An enrichment lookup timed out once and succeeded on retry. The thread was archived after review.
@@ -203,6 +205,10 @@ How the incident-correlation engine is *meant* to behave -- the recovery of the 
 - 2026-06-21: The triage queue owner noted a routine observation. An account lockout was traced to a stale credential in a scheduled job, not an intrusion. The thread was archived after review.
 
 > **Governance decision (2026-06-04 - #IR-5210)** Priya: Triage policy baseline, read from /app/data/triage_policy.json at that fixed absolute path. Any field the policy file omits keeps its baseline: session_gap_sec = 1800; pivot_min_hosts = 3; severity_floor = 40; chain_window_sec = 7200; max_chain_hosts = 12.
+
+> **Governance decision (2026-06-04 - #IR-5214)** Priya: Repeat suppression, final. A candidate that clears the floor is reported only where it stands clear of the account's previous report: where its first corrected stamp falls within the policy's `repeat_suppress_sec` of the LAST corrected stamp of the chain most recently reported for that account, it is queued as `superseded` instead, one row naming its first host in first-seen order and carrying its own severity. The desk is already reading the earlier chain and the repeat adds nothing to the page. Three things the review pinned. The floor is applied first, so a candidate queued as `below_floor` was never reported and starts no suppression of its own. Suppression does not chain either: a candidate queued as `superseded` is not itself a report, so the next candidate is measured against the last chain actually REPORTED and not against the one just suppressed. And a suppressed chain is not a reported chain anywhere else in the summary -- it raises no `max_severity`, and a candidate cut at the host cap and then suppressed is not one of the `truncated_chain_count`, on the same reading #IR-5194 already gives the floor.
+
+> **Governance decision (2026-06-06 - #IR-5216)** Priya: Triage policy baseline, addendum. `repeat_suppress_sec` keeps a baseline of 900 where the policy file omits it.
 
 - 2026-06-21: The sensor platform team carried forward a routine observation. An enrichment lookup timed out once and succeeded on retry.
 

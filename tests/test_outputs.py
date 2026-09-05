@@ -325,7 +325,10 @@ def test_both_queue_reasons_occur(primary_outputs):
 # --------------------------------------------------------------------------
 BASE_POLICY = {"default": {"session_gap_sec": 1800, "pivot_min_hosts": 3,
                            "severity_floor": 40, "chain_window_sec": 7200,
-                           "max_chain_hosts": 12}}
+                           "max_chain_hosts": 12,
+                           # wide enough that nothing is suppressed inside a probe
+                           # that is not about suppression
+                           "repeat_suppress_sec": 0}}
 
 
 def _ev(eid, host, action, corrected, sensor="edr", account="svc-probe", offset=0):
@@ -564,15 +567,22 @@ def test_the_engine_is_one_file_with_no_sibling_source():
     # copy sitting beside the engine is not a sibling in the sense that matters
     siblings = sorted(q.name for q in WORKFLOW_PATH.parent.glob("*.go")
                       if q.resolve() != engine and not q.name.startswith((".", "_")))
-    assert siblings == [], (
-        "the engine is one package main in one file compiled on its own, so these "
-        f"sibling sources never reach the build: {siblings}")
-    # No ban on a go.mod or go.sum sitting here: _build copies the source to a
-    # temporary directory and compiles it there, so nothing in /app/workflow can
-    # join the build in the first place, and instruction.md forbids only a sibling
-    # SOURCE joining it. Failing a file that changes nothing would reject work the
-    # instruction does not forbid.
-    _build(WORKFLOW_PATH)
+    # A sibling is NOT itself a breach. instruction.md forbids a sibling source
+    # JOINING the build, and _build copies the engine to a temporary directory
+    # and compiles it there, so nothing left in /app/workflow can join it. An
+    # agent that wrote its recovery step in Go and left the file behind has
+    # broken no rule, and failing it here would reject a correct submission for
+    # something with no effect on anything graded. What is checked is the rule
+    # itself: the engine compiles alone. The siblings are named in the failure
+    # only so a split submission says why it failed instead of dying on an
+    # undefined-symbol error that explains nothing.
+    try:
+        _build(WORKFLOW_PATH)
+    except AssertionError as exc:
+        raise AssertionError(
+            f"{WORKFLOW_PATH.name} does not compile on its own, as instruction.md "
+            f"requires. Other sources beside it, which never join this build: "
+            f"{siblings}\n\n{exc}") from exc
 
 
 def test_a_run_writes_nothing_outside_its_output_directory():
@@ -588,8 +598,7 @@ def test_a_run_writes_nothing_outside_its_output_directory():
     out_dir.mkdir(parents=True, exist_ok=True)
     os.chmod(out_dir, 0o777)
     staged = work / "timeline.json"
-    shutil.copyfile(str(TIMELINE_PATH), str(staged))
-    os.chmod(staged, 0o644)
+    _stage_input(TIMELINE_PATH, staged)
 
     before = {str(q.relative_to(work)) for q in work.rglob("*")}
     binary = _build(WORKFLOW_PATH)
@@ -602,6 +611,14 @@ def test_a_run_writes_nothing_outside_its_output_directory():
     written = sorted(after - before)
     assert written == ["output/incident_chains.json", "output/summary.json",
                        "output/triage_queue.jsonl"], written
+    # A run that wrote nothing anywhere would also write nothing outside its
+    # output directory, so the three files are read back and graded: the scope
+    # is only worth checking on a run that actually did the work.
+    assert _load_json(out_dir / "summary.json") == FIXTURE["primary"]["summary"]
+    assert _digest(_load_json(out_dir / "incident_chains.json")) == \
+        FIXTURE["primary"]["chains_digest"]
+    assert _digest(_load_jsonl(out_dir / "triage_queue.jsonl")) == \
+        FIXTURE["primary"]["queue_digest"]
 
 
 def test_a_changed_policy_value_changes_the_run_it_governs():
@@ -802,8 +819,15 @@ def test_no_argument_run_writes_to_the_documented_defaults(primary_outputs):
         assert _digest(_load_json(default_out / "incident_chains.json")) == _digest(doc)
         assert _digest(_load_jsonl(default_out / "triage_queue.jsonl")) == _digest(queue)
     finally:
+        # Put back what the agent's own run delivered, rather than leaving the
+        # directory empty: DELIVERED_OUTPUT is read once at import and a later
+        # test grades it, so emptying the default path here and walking away
+        # made this suite pass only on its first run in a given container.
         for stale in sorted(default_out.iterdir()):
             stale.unlink() if stale.is_file() or stale.is_symlink() else shutil.rmtree(stale)
+        for name, blob in DELIVERED_OUTPUT.items():
+            (default_out / name).write_bytes(blob)
+            os.chmod(default_out / name, 0o666)
         os.chmod(default_out, before_mode)
 
 
@@ -870,3 +894,122 @@ def test_shipped_contract_matches_the_golden_copy():
     assert shipped == json.loads(GOLDEN_CONTRACT_PATH.read_text(encoding="utf-8"))
 
 
+def _burst(prefix, base, *, account="svc-probe", action="log_cleared", hosts=3):
+    """A chain candidate: `hosts` distinct hosts one second apart from `base`."""
+    return [_ev(f"{prefix}-{i}", f"host-{i:03d}", action, base + i, account=account)
+            for i in range(1, hosts + 1)]
+
+
+def test_a_repeat_too_soon_after_a_report_is_queued_rather_than_reported():
+    """#IR-5214: the second chain adds nothing to a page already carrying the first.
+
+    The reversed interim #IR-5050 reported every candidate that cleared the floor,
+    so both of these would be incidents. Under the final rule the second opens
+    inside the suppression span of the first and is queued instead, carrying its
+    own severity and naming its own first host.
+    """
+    events = _burst("EV-A", 100) + _burst("EV-B", 10_000)
+    _, summary, chains, queue = _probe(
+        events, {"default": dict(BASE_POLICY["default"], repeat_suppress_sec=20_000,
+                                 chain_window_sec=10)})
+    assert [c["chain_id"] for c in chains] == ["svc-probe:EV-A-1"], chains
+    assert [(r["chain_id"], r["reason"], r["host"], r["severity"]) for r in queue] == [
+        ("svc-probe:EV-B-1", "superseded", "host-001", 50)], queue
+    assert summary["chain_candidate_count"] == 2
+    assert summary["incident_chain_count"] == 1
+    assert summary["superseded_chain_count"] == 1
+    assert summary["queued_count"] == 1
+
+
+def test_the_first_candidate_of_an_account_is_never_suppressed():
+    """There is nothing before it to be measured against, however early it opens."""
+    _, summary, chains, queue = _probe(
+        _burst("EV-A", 1), {"default": dict(BASE_POLICY["default"],
+                                            repeat_suppress_sec=1_000_000)})
+    assert [c["chain_id"] for c in chains] == ["svc-probe:EV-A-1"]
+    assert summary["superseded_chain_count"] == 0
+    assert queue == []
+
+
+def test_suppression_does_not_chain_from_a_suppressed_candidate():
+    """#IR-5214: the span is measured against the last chain actually REPORTED.
+
+    Three bursts. The second is suppressed by the first. The third stands clear
+    of the FIRST but not of the second, so a run that measured against the most
+    recent candidate rather than the most recent report would suppress it too.
+    """
+    events = (_burst("EV-A", 100) + _burst("EV-B", 1_100) + _burst("EV-C", 2_100))
+    _, summary, chains, queue = _probe(
+        events, {"default": dict(BASE_POLICY["default"], repeat_suppress_sec=1_500,
+                                 chain_window_sec=10)})
+    assert [c["chain_id"] for c in chains] == ["svc-probe:EV-A-1", "svc-probe:EV-C-1"], (
+        "the third candidate was measured against the suppressed second rather "
+        "than against the first, which is the last one actually reported")
+    assert [r["chain_id"] for r in queue] == ["svc-probe:EV-B-1"]
+    assert summary["superseded_chain_count"] == 1
+    assert summary["incident_chain_count"] == 2
+
+
+def test_a_candidate_below_the_floor_starts_no_suppression():
+    """The floor is applied first, so a queued candidate is not a report.
+
+    The first burst scores 20 and is queued below the floor; the second opens
+    well inside the suppression span but has nothing to be suppressed by, so it
+    reports.
+    """
+    events = _burst("EV-A", 100, action="share_mount") + _burst("EV-B", 1_100)
+    _, summary, chains, queue = _probe(
+        events, {"default": dict(BASE_POLICY["default"], repeat_suppress_sec=10_000,
+                                 chain_window_sec=10)})
+    assert [c["chain_id"] for c in chains] == ["svc-probe:EV-B-1"], (
+        "a candidate queued below the floor suppressed the one after it")
+    assert [(r["chain_id"], r["reason"]) for r in queue] == [
+        ("svc-probe:EV-A-1", "below_floor")]
+    assert summary["superseded_chain_count"] == 0
+
+
+def test_suppression_is_measured_per_account():
+    """One account's report never suppresses another account's candidate."""
+    events = _burst("EV-A", 100) + _burst("EV-B", 200, account="svc-other")
+    _, summary, chains, _ = _probe(
+        events, {"default": dict(BASE_POLICY["default"], repeat_suppress_sec=10_000,
+                                 chain_window_sec=10)})
+    assert sorted(c["chain_id"] for c in chains) == [
+        "svc-other:EV-B-1", "svc-probe:EV-A-1"], chains
+    assert summary["superseded_chain_count"] == 0
+
+
+def test_a_suppressed_chain_raises_no_max_severity_and_no_truncation():
+    """#IR-5214 reads suppression the way #IR-5194 already reads the floor.
+
+    The first burst is two hosts, so the cap does not touch it, and it reports at
+    20 under a floor of 10. The second reaches four hosts and is cut at the cap
+    AND carries a log_cleared at 50, but it is suppressed -- so it is neither a
+    truncated chain nor the run's worst severity.
+    """
+    events = (_burst("EV-A", 100, action="share_mount", hosts=2)
+              + _burst("EV-B", 1_100, hosts=4))
+    _, summary, chains, queue = _probe(
+        events, {"default": dict(BASE_POLICY["default"], severity_floor=10,
+                                 pivot_min_hosts=2, max_chain_hosts=2,
+                                 repeat_suppress_sec=10_000, chain_window_sec=10)})
+    assert [c["chain_id"] for c in chains] == ["svc-probe:EV-A-1"]
+    assert summary["max_severity"] == 20, (
+        "a suppressed chain raised the run's worst severity")
+    assert summary["truncated_chain_count"] == 0, (
+        "a candidate cut at the host cap and then suppressed was counted as a "
+        "truncated chain, though it was never reported")
+    reasons = sorted({r["reason"] for r in queue})
+    assert reasons == ["chain_truncated", "superseded"], reasons
+
+
+def test_the_suppression_span_falls_back_to_the_governed_baseline():
+    """#IR-5216: a policy that omits the field keeps 900 seconds, not zero."""
+    spare = {k: v for k, v in BASE_POLICY["default"].items()
+             if k != "repeat_suppress_sec"}
+    events = _burst("EV-A", 100) + _burst("EV-B", 800)
+    _, summary, chains, _ = _probe(events, {"default": dict(spare, chain_window_sec=10)})
+    assert summary["effective_repeat_suppress"] == 900
+    assert [c["chain_id"] for c in chains] == ["svc-probe:EV-A-1"], (
+        "the omitted span fell back to zero rather than to 900 seconds")
+    assert summary["superseded_chain_count"] == 1

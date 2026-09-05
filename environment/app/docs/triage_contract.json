@@ -22,22 +22,25 @@
         "severity",
         "actions"
       ],
+      "field_shapes": {
+        "actions": "the DISTINCT actions the chain's events carry, ascending -- an action two events share is listed once, not once per event",
+        "hosts": "the chain's hosts in the order they were first seen, each once"
+      },
       "path": "/app/output/incident_chains.json",
       "serialisation": "JSON array, two-space indent, trailing newline",
-      "sort": "descending by severity, then ascending by first_ts, then chain_id; hosts in first-seen order; actions ascending, each action appearing once",
-      "field_shapes": {
-        "hosts": "the chain's hosts in the order they were first seen, each once",
-        "actions": "the DISTINCT actions the chain's events carry, ascending -- an action two events share is listed once, not once per event"
-      }
+      "sort": "descending by severity, then ascending by first_ts, then chain_id; hosts in first-seen order; actions ascending, each action appearing once"
     },
     "summary": {
       "container": "object",
+      "field_completeness": "the object carries exactly the fields listed above and no others -- an extra field is a contract violation, not an addition",
+      "field_derivations": "this contract fixes the shape only. What each counter means is settled in the shift log: #IR-5194 for truncated_chain_count, #IR-5190 for chain_candidate_count, #IR-5188 for max_severity and the reported set",
       "field_types": {
         "account_count": "integer",
         "chain_candidate_count": "integer",
         "effective_chain_window": "integer",
         "effective_max_chain_hosts": "integer",
         "effective_pivot_min_hosts": "integer",
+        "effective_repeat_suppress": "integer",
         "effective_session_gap": "integer",
         "effective_severity_floor": "integer",
         "event_count": "integer",
@@ -47,6 +50,7 @@
         "queued_count": "integer",
         "schema_version": "string",
         "session_count": "integer",
+        "superseded_chain_count": "integer",
         "truncated_chain_count": "integer"
       },
       "path": "/app/output/summary.json",
@@ -65,11 +69,11 @@
         "effective_pivot_min_hosts",
         "effective_severity_floor",
         "effective_chain_window",
-        "effective_max_chain_hosts"
+        "effective_max_chain_hosts",
+        "superseded_chain_count",
+        "effective_repeat_suppress"
       ],
-      "field_completeness": "the object carries exactly the fields listed above and no others -- an extra field is a contract violation, not an addition",
-      "serialisation": "JSON object, two-space indent, trailing newline",
-      "field_derivations": "this contract fixes the shape only. What each counter means is settled in the shift log: #IR-5194 for truncated_chain_count, #IR-5190 for chain_candidate_count, #IR-5188 for max_severity and the reported set"
+      "serialisation": "JSON object, two-space indent, trailing newline"
     },
     "triage_queue": {
       "container": "jsonl",
@@ -83,7 +87,8 @@
       "path": "/app/output/triage_queue.jsonl",
       "reasons": [
         "below_floor",
-        "chain_truncated"
+        "chain_truncated",
+        "superseded"
       ],
       "serialisation": "one compact JSON object per line, trailing newline",
       "sort": "descending by severity, then ascending by chain_id then host"

@@ -11,6 +11,7 @@ import json
 import os
 import re
 import shutil
+import stat
 import signal
 import subprocess
 import sys
@@ -239,6 +240,30 @@ def _candidate_dir() -> Path:
     return d
 
 
+def _stage_input(src: Path, dst: Path) -> None:
+    """Copy `src` to `dst` as a regular file, never through a link.
+
+    The default input is /app/data/event_timeline.json, the one path under
+    /app/data the agent is told to rebuild, and staging runs as root.
+    shutil.copyfile follows the source link, so a symlink planted there would
+    have been read with root's privileges and laid down at 0644 inside the
+    candidate's own work area -- which is how the sealed fixtures under /tests
+    would have reached the graded program. O_NOFOLLOW refuses the link at the
+    final component and the fstat refuses anything that is not a regular file.
+    """
+    fd = os.open(str(src), os.O_RDONLY | os.O_NOFOLLOW)
+    try:
+        st = os.fstat(fd)
+        if not stat.S_ISREG(st.st_mode):
+            raise AssertionError(f"{src} is not a regular file")
+        with open(fd, "rb", closefd=False) as fh:
+            blob = fh.read()
+    finally:
+        os.close(fd)
+    dst.write_bytes(blob)
+    os.chmod(dst, 0o644)
+
+
 def _publish_inputs() -> None:
     """Open read access on the agent-produced inputs before privileges drop.
 
@@ -388,6 +413,7 @@ __all__ = [
     "_build",
     "_candidate_dir",
     "_publish_inputs",
+    "_stage_input",
     "_run_agent",
     "_run_pipeline",
 ]

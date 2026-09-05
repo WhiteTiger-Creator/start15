@@ -3,6 +3,7 @@
     "chain_window_sec": 7200,
     "max_chain_hosts": 12,
     "pivot_min_hosts": 3,
+    "repeat_suppress_sec": 14400,
     "session_gap_sec": 1800,
     "severity_floor": 40
   }

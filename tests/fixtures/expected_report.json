@@ -1,49 +1,53 @@
 {
   "alternate": {
-    "chains_digest": "13e38fabf8f3f23ae6ced4808d5915faa73048f5c48773e221fc823720f161ac",
-    "queue_digest": "bedc893d87dc865c6ebf8db4c3e30bb8e68db9dd58c35825320d6530f2e02fab",
+    "chains_digest": "91928f4c12967588800385e93daddd9f38bb6305ab7c8a851577defd3e70f028",
+    "queue_digest": "88c94e7dbcfd094dd1032a2c59ca10ec9405058fd99f2481973b2983e9630f04",
     "summary": {
       "account_count": 46,
       "chain_candidate_count": 736,
       "effective_chain_window": 7200,
       "effective_max_chain_hosts": 12,
       "effective_pivot_min_hosts": 3,
+      "effective_repeat_suppress": 14400,
       "effective_session_gap": 1800,
       "effective_severity_floor": 40,
       "event_count": 8801,
       "host_count": 60,
-      "incident_chain_count": 290,
+      "incident_chain_count": 238,
       "max_severity": 50,
-      "queued_count": 1854,
+      "queued_count": 1906,
       "schema_version": "incident-triage-v1",
       "session_count": 8715,
-      "truncated_chain_count": 109
+      "superseded_chain_count": 52,
+      "truncated_chain_count": 96
     }
   },
   "broken_engine_sha256": "3fca4bcb3ebe05680196d197251dc8fbf9f272f05aa34e8e66f11d0ad82a2db2",
   "primary": {
-    "chains_digest": "455459f3cf8ee0690f6165aed2906a983ca230babe5ee536c82ca0831d2af0f3",
-    "queue_digest": "e5100b013178306d958ddc8d966e88e34495dd1f9c6a8c0b471dfa79eaba95fd",
+    "chains_digest": "efc0103f0036ea752141b0e72114f4f214abf6de6511b1cc78537b0c930af56a",
+    "queue_digest": "9186038378ccae6a3f2f5bddfe576735e10e879da020d3bd38c37c12957f1cb3",
     "summary": {
       "account_count": 46,
       "chain_candidate_count": 742,
       "effective_chain_window": 7200,
       "effective_max_chain_hosts": 12,
       "effective_pivot_min_hosts": 3,
+      "effective_repeat_suppress": 14400,
       "effective_session_gap": 1800,
       "effective_severity_floor": 40,
       "event_count": 8802,
       "host_count": 60,
-      "incident_chain_count": 220,
+      "incident_chain_count": 185,
       "max_severity": 50,
-      "queued_count": 1907,
+      "queued_count": 1942,
       "schema_version": "incident-triage-v1",
       "session_count": 8705,
-      "truncated_chain_count": 81
+      "superseded_chain_count": 35,
+      "truncated_chain_count": 69
     }
   },
   "recovered_event_count": 8802,
   "recovered_timeline_digest": "7ac37c3dbd3f65012a928329342bfc137891d6c9aa334d8761b23c2fe437a4cf",
-  "rule_sources_digest": "0c17ac71fd0ec8e549987142810c1bc6f18406b0f2b0ecaabd6624a92c5c21cb",
+  "rule_sources_digest": "10d2e4401fc853ee7f58107545e7e3e61edfb6827dd1a0ef4793e8ac65686922",
   "shipped_truncated_digest": "442753e6eee83f7d6916c996f1da1b613764f283e5d45aff9d3fbaf9f08df0db"
 }
