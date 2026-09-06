@@ -96,6 +96,10 @@
   },
   "reconciled_inputs": {
     "event_timeline": {
+      "constraints": [
+        "observed_ts and corrected_ts are whole seconds in [0, 4102444800], the span the basin's records cover; a span, a gap or a window measured over any two of them therefore fits an ordinary 64-bit integer without wrapping",
+        "event_id is unique within a timeline"
+      ],
       "container": "array",
       "path": "/app/data/event_timeline.json",
       "record_fields": [

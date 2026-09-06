@@ -187,6 +187,30 @@ def _write_json(path, value):
     Path(path).write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def _stage_input(src: Path, dst: Path) -> None:
+    """Copy `src` to `dst` as a regular file, never through a link.
+
+    The default input is /app/data/event_timeline.json, the one path under
+    /app/data the agent is told to rebuild, and staging runs as root.
+    shutil.copyfile follows the source link, so a symlink planted there would
+    have been read with root's privileges and laid down at 0644 inside the
+    candidate's own work area -- which is how the sealed fixtures under /tests
+    would have reached the graded program. O_NOFOLLOW refuses the link at the
+    final component and the fstat refuses anything that is not a regular file.
+    """
+    fd = os.open(str(src), os.O_RDONLY | os.O_NOFOLLOW)
+    try:
+        st = os.fstat(fd)
+        if not stat.S_ISREG(st.st_mode):
+            raise AssertionError(f"{src} is not a regular file")
+        with open(fd, "rb", closefd=False) as fh:
+            blob = fh.read()
+    finally:
+        os.close(fd)
+    dst.write_bytes(blob)
+    os.chmod(dst, 0o644)
+
+
 def _build(script_path: Path) -> str:
     """Compile the submitted single-file planner, cached per source path.
 
@@ -200,7 +224,10 @@ def _build(script_path: Path) -> str:
     build_dir = tempfile.mkdtemp(prefix="gobuild_")
     os.chmod(build_dir, 0o755)
     src = Path(build_dir) / "main.go"
-    shutil.copyfile(script_path, src)
+    # the engine is the agent's own deliverable on an agent-writable path and
+    # this copy runs as root, so it is refused at the final component too
+    _stage_input(Path(script_path), src)
+    os.chmod(src, 0o644)
     binary = Path(build_dir) / "correlator"
     result = subprocess.run(
         ["go", "build", "-o", str(binary), str(src)],
@@ -238,30 +265,6 @@ def _candidate_dir() -> Path:
     assert not d.is_symlink(), d
     os.chmod(d, 0o777)
     return d
-
-
-def _stage_input(src: Path, dst: Path) -> None:
-    """Copy `src` to `dst` as a regular file, never through a link.
-
-    The default input is /app/data/event_timeline.json, the one path under
-    /app/data the agent is told to rebuild, and staging runs as root.
-    shutil.copyfile follows the source link, so a symlink planted there would
-    have been read with root's privileges and laid down at 0644 inside the
-    candidate's own work area -- which is how the sealed fixtures under /tests
-    would have reached the graded program. O_NOFOLLOW refuses the link at the
-    final component and the fstat refuses anything that is not a regular file.
-    """
-    fd = os.open(str(src), os.O_RDONLY | os.O_NOFOLLOW)
-    try:
-        st = os.fstat(fd)
-        if not stat.S_ISREG(st.st_mode):
-            raise AssertionError(f"{src} is not a regular file")
-        with open(fd, "rb", closefd=False) as fh:
-            blob = fh.read()
-    finally:
-        os.close(fd)
-    dst.write_bytes(blob)
-    os.chmod(dst, 0o644)
 
 
 def _publish_inputs() -> None:
@@ -349,7 +352,12 @@ def _run_pipeline(script_path: Path = WORKFLOW_PATH, input_path: Path = TIMELINE
     in_dir = work / "input"
     in_dir.mkdir(parents=True, exist_ok=True)
     staged = in_dir / "timeline.json"
-    shutil.copyfile(str(input_path), str(staged))
+    # _stage_input, not shutil.copyfile: the default input sits on the one path
+    # under /app/data the agent is told to rebuild, and this copy runs as ROOT.
+    # copyfile reads through the final symlink, so /app/data/event_timeline.json
+    # pointed at /tests/fixtures/expected_report.json would have laid the sealed
+    # fixture's bytes into the candidate's own readable work area.
+    _stage_input(input_path, staged)
     os.chmod(staged, 0o444)
     os.chmod(in_dir, 0o555)
     before = hashlib.sha256(staged.read_bytes()).hexdigest()

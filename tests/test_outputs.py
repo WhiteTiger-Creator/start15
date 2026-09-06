@@ -464,6 +464,46 @@ def test_an_action_the_table_does_not_name_contributes_nothing():
     assert [r["severity"] for r in queue] == [0]
 
 
+BASELINES = {"session_gap_sec": 1800, "pivot_min_hosts": 3, "severity_floor": 40,
+             "chain_window_sec": 7200, "max_chain_hosts": 12,
+             "repeat_suppress_sec": 900}
+_EFFECTIVE = {"session_gap_sec": "effective_session_gap",
+              "pivot_min_hosts": "effective_pivot_min_hosts",
+              "severity_floor": "effective_severity_floor",
+              "chain_window_sec": "effective_chain_window",
+              "max_chain_hosts": "effective_max_chain_hosts",
+              "repeat_suppress_sec": "effective_repeat_suppress"}
+
+
+def test_every_policy_field_falls_back_on_its_own():
+    """#IR-5210 and #IR-5216 name a baseline per field, and each is checked alone.
+
+    The probes here dropped one field at a time and only ever that one, so an
+    engine that fell back for pivot_min_hosts and repeat_suppress_sec and read
+    the other four straight out of the map -- getting Go's zero for an absent key
+    -- passed every run: the full-policy runs supply all six, and each sparse
+    probe supplies the five it is not about. One field is left out at a time
+    here, over the whole set, so no fallback can hide behind another.
+    """
+    events = [_ev(f"EV-{i:06d}", f"host-{i:03d}", "priv_escalate", i * 100)
+              for i in range(1, 4)]
+    for field, baseline in BASELINES.items():
+        sparse = {"default": {k: v for k, v in BASELINES.items() if k != field}}
+        _, summary, chains, queue = _probe(events, policy=sparse)
+        assert summary[_EFFECTIVE[field]] == baseline, (
+            f"{field} left out of the policy did not fall back to {baseline}: "
+            f"{summary[_EFFECTIVE[field]]}")
+        for other, expected in BASELINES.items():
+            assert summary[_EFFECTIVE[other]] == expected, (
+                f"leaving {field} out disturbed {other}")
+        # and the baselines are what the run USED, not just what it echoed: the
+        # three hosts clear a pivot of 3, priv_escalate at 45 clears a floor of
+        # 40, 100 seconds apart sits inside a window of 7200 and a gap of 1800,
+        # and three hosts are inside a cap of 12
+        assert [c["host_count"] for c in chains] == [3], (field, chains)
+        assert queue == [], (field, queue)
+
+
 def test_a_policy_that_omits_a_field_keeps_the_governed_baseline():
     """#IR-5210 states the baselines a field the policy file omits falls back to.
 
