@@ -260,6 +260,22 @@ def test_output_dir_contains_exactly_three_files(primary_outputs):
         "incident_chains.json", "summary.json", "triage_queue.jsonl"]
 
 
+def test_the_summary_carries_the_schema_version_the_contract_names():
+    """The contract gives schema_version a value, not only a type.
+
+    It was typed `string` and nothing said which string, so an engine emitting
+    "v1" satisfied every schema check here and failed only the sealed digest,
+    with nothing saying why. The contract now names the value and this grades it.
+    """
+    stated = SPEC["outputs"]["summary"]["schema_version_value"]
+    assert stated == SPEC["contract_version"], (
+        "the contract's own two statements of the version disagree")
+    _, summary, _, _ = _run_pipeline()
+    assert summary["schema_version"] == stated, (
+        f"the run reported schema_version {summary['schema_version']!r}, not the "
+        f"{stated!r} the contract names")
+
+
 def test_summary_schema_and_types(primary_outputs):
     """The summary carries exactly the contracted fields at the contracted types."""
     _, summary, _, _ = primary_outputs
@@ -640,17 +656,33 @@ def test_a_run_writes_nothing_outside_its_output_directory():
     staged = work / "timeline.json"
     _stage_input(TIMELINE_PATH, staged)
 
-    before = {str(q.relative_to(work)) for q in work.rglob("*")}
+    # Watching the per-run work area alone was not enough: the run is given
+    # HOME=/candidate-work and that directory is mode 1777, so an engine calling
+    # os.CreateTemp(os.Getenv("HOME"), ...) -- or dropping a scratch file in
+    # /tmp -- wrote outside its output directory and nothing here saw it. Every
+    # place the run can write is enumerated either side.
+    watched = [work, Path(CHILD_ENV["HOME"]), Path("/tmp"), Path("/var/tmp")]
+
+    def sweep():
+        seen = set()
+        for root in watched:
+            if root.exists():
+                seen.update(str(q) for q in root.rglob("*"))
+        return seen
+
+    before = sweep()
     binary = _build(WORKFLOW_PATH)
     result = _run_agent([binary, "--input", str(staged), "--output-dir", str(out_dir)], cwd=work)
-    # the exit code is only a precondition; the verdict is the whole-tree diff below
+    # the exit code is only a precondition; the verdict is the sweep below
     assert result.returncode == 0, (
         f"the run exited {result.returncode}\n"
         f"stdout: {result.stdout[-2000:]}\nstderr: {result.stderr[-2000:]}")
-    after = {str(q.relative_to(work)) for q in work.rglob("*")}
-    written = sorted(after - before)
-    assert written == ["output/incident_chains.json", "output/summary.json",
-                       "output/triage_queue.jsonl"], written
+    written = sorted(sweep() - before)
+    expected = sorted(str(out_dir / n) for n in (
+        "incident_chains.json", "summary.json", "triage_queue.jsonl"))
+    assert written == expected, (
+        f"the run wrote outside its output directory: "
+        f"{[q for q in written if q not in expected]}")
     # A run that wrote nothing anywhere would also write nothing outside its
     # output directory, so the three files are read back and graded: the scope
     # is only worth checking on a run that actually did the work.

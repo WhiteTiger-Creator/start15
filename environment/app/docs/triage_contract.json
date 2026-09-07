@@ -48,7 +48,7 @@
         "incident_chain_count": "integer",
         "max_severity": "integer",
         "queued_count": "integer",
-        "schema_version": "string",
+        "schema_version": "string, exactly the contract_version this document carries: incident-triage-v1",
         "session_count": "integer",
         "superseded_chain_count": "integer",
         "truncated_chain_count": "integer"
@@ -73,6 +73,7 @@
         "superseded_chain_count",
         "effective_repeat_suppress"
       ],
+      "schema_version_value": "incident-triage-v1",
       "serialisation": "JSON object, two-space indent, trailing newline"
     },
     "triage_queue": {
@@ -98,7 +99,8 @@
     "event_timeline": {
       "constraints": [
         "observed_ts and corrected_ts are whole seconds in [0, 4102444800], the span the basin's records cover; a span, a gap or a window measured over any two of them therefore fits an ordinary 64-bit integer without wrapping",
-        "event_id is unique within a timeline"
+        "event_id is unique within a timeline",
+        "host, account, sensor, action and event_id carry no character below U+0020 and none is empty, so a host and an account never run together into a name a different pair could also spell"
       ],
       "container": "array",
       "path": "/app/data/event_timeline.json",
