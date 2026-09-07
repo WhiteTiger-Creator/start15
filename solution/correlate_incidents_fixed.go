@@ -194,8 +194,18 @@ func main() {
 			// #IR-5194: a run reaching further than max_chain_hosts hosts is cut at
 			// that many, keeping the hosts first seen; the hosts beyond the cut are
 			// queued rather than reported as part of the chain.
+			//
+			// The cap applies at every value the policy can give it, nought
+			// included: #IR-5194 names no minimum and no reading under which nought
+			// means no cap, so guarding on maxChainHosts > 0 made a cap of nought
+			// the one value that let every host through -- the opposite of what it
+			// says. A candidate cut at nought keeps no host, carries no event and so
+			// no severity, and every host it touched is queued.
 			wasCut := false
-			if maxChainHosts > 0 && len(ordered) > maxChainHosts {
+			if maxChainHosts < 0 {
+				maxChainHosts = 0
+			}
+			if len(ordered) > maxChainHosts {
 				kept = ordered[:maxChainHosts]
 				dropped = ordered[maxChainHosts:]
 				wasCut = true
@@ -239,8 +249,14 @@ func main() {
 			}
 			// The floor is applied FIRST: a candidate queued below it was never
 			// reported, so it starts no suppression of its own.
+			// The host a queued row names is the chain's first kept host; a chain
+			// cut at nought kept none, so the row names no host at all.
+			leadHost := ""
+			if len(kept) > 0 {
+				leadHost = kept[0]
+			}
 			if severity < severityFloor {
-				queue = append(queue, queueRow{chainID, account, kept[0], severity, "below_floor"})
+				queue = append(queue, queueRow{chainID, account, leadHost, severity, "below_floor"})
 				continue
 			}
 			// #IR-5214: a candidate opening within repeat_suppress_sec of the end
@@ -248,7 +264,7 @@ func main() {
 			// haveReported stays false until a chain actually reports, so the first
 			// candidate of an account is never suppressed however early it opens.
 			if haveReported && first-lastReportedEnd <= repeatSuppress {
-				queue = append(queue, queueRow{chainID, account, kept[0], severity, "superseded"})
+				queue = append(queue, queueRow{chainID, account, leadHost, severity, "superseded"})
 				supersededCount++
 				continue
 			}

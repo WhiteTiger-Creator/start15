@@ -443,6 +443,118 @@ def test_run_past_the_host_cap_is_cut_and_the_excess_queued():
     assert sorted(truncated) == [f"host-{i:03d}" for i in range(13, 16)]
 
 
+def test_a_gap_exactly_the_chain_window_keeps_the_run_open():
+    """The window is inclusive, and nothing else here sits on the boundary.
+
+    #IR-5190 closes a run only where the next event is FURTHER than
+    chain_window_sec, so a gap of exactly the window keeps it open. Every other
+    probe puts its events comfortably inside or outside, which a strict
+    comparison reads the same way as an inclusive one, so this is the only place
+    the two part company: at the boundary a strict reading breaks the run in two,
+    leaves each half short of the pivot, and reports nothing at all.
+    """
+    window = 600
+    policy = {"default": dict(BASE_POLICY["default"], chain_window_sec=window,
+                              session_gap_sec=10 ** 6)}
+    events = [_ev("EV-1", "host-a", "log_cleared", 1000),
+              _ev("EV-2", "host-b", "log_cleared", 1000 + window),
+              _ev("EV-3", "host-c", "log_cleared", 1000 + 2 * window)]
+    _, summary, chains, _ = _probe(events, policy)
+    assert summary["chain_candidate_count"] == 1, (
+        "a gap of exactly chain_window_sec closed the run, so the window is being "
+        "read as strictly less than rather than at most")
+    assert [c["host_count"] for c in chains] == [3]
+    assert [(c["first_ts"], c["last_ts"]) for c in chains] == [(1000, 1000 + 2 * window)]
+
+    # and one second further apart really does close it, so the probe is not
+    # merely asserting that everything joins
+    events[2] = _ev("EV-3", "host-c", "log_cleared", 1000 + 2 * window + 1)
+    _, wider, wider_chains, _ = _probe(events, policy)
+    assert wider["chain_candidate_count"] == 0 and wider_chains == []
+
+
+def test_a_gap_exactly_the_session_gap_keeps_the_session_open():
+    """#IR-5182 breaks a session only where the gap is GREATER than the figure.
+
+    Sessions are counted per host and account, so the probe keeps one host and
+    moves the gap across the boundary underneath it.
+    """
+    gap = 300
+    policy = {"default": dict(BASE_POLICY["default"], session_gap_sec=gap)}
+    events = [_ev("EV-1", "host-a", "logon", 500),
+              _ev("EV-2", "host-a", "logon", 500 + gap),
+              _ev("EV-3", "host-a", "logon", 500 + 2 * gap)]
+    _, summary, _, _ = _probe(events, policy)
+    assert summary["session_count"] == 1, (
+        "a gap of exactly session_gap_sec broke the session, so the gap is being "
+        "read as at least rather than greater than")
+    events[2] = _ev("EV-3", "host-a", "logon", 500 + 2 * gap + 1)
+    _, broken, _, _ = _probe(events, policy)
+    assert broken["session_count"] == 2
+
+
+def test_a_repeat_exactly_the_suppression_span_later_is_still_suppressed():
+    """#IR-5214 suppresses a candidate opening WITHIN the span, equality included.
+
+    The second candidate opens exactly repeat_suppress_sec after the first chain
+    ended, which the minute counts as within it. A strict comparison reports the
+    second chain instead of queueing it, and no other suppression probe sits on
+    the boundary: the one beside this opens well inside the span and reads the
+    same either way.
+    """
+    span = 900
+    first = _burst("EV-A", 100)
+    first_end = first[-1]["corrected_ts"]
+    second = _burst("EV-B", first_end + span - 1)
+    assert second[0]["corrected_ts"] - first_end == span, "the probe is off its boundary"
+    policy = {"default": dict(BASE_POLICY["default"], repeat_suppress_sec=span,
+                              chain_window_sec=10, session_gap_sec=10 ** 6)}
+    _, summary, chains, queue = _probe(first + second, policy)
+    assert [c["chain_id"] for c in chains] == ["svc-probe:EV-A-1"], (
+        "the repeat opening exactly repeat_suppress_sec after the last reported "
+        "chain ended was reported, so the span is being read as strictly less than")
+    assert [(r["chain_id"], r["reason"]) for r in queue] == [
+        ("svc-probe:EV-B-1", "superseded")], queue
+    assert summary["superseded_chain_count"] == 1
+
+    # a second further out is outside the span and reports
+    later = _burst("EV-B", first_end + span)
+    _, outside, outside_chains, _ = _probe(first + later, policy)
+    assert len(outside_chains) == 2 and outside["superseded_chain_count"] == 0
+
+
+def test_a_host_cap_of_zero_is_a_cap_and_not_an_absent_cap():
+    """#IR-5194 applies at every value, nought included.
+
+    The minute names no minimum and no reading under which nought means no cap,
+    so a candidate cut at nought keeps no host: it carries no event and so no
+    severity, every host it touched is queued as chain_truncated, and it reaches
+    no floor above nought. Guarding the cut on a positive figure made nought the
+    one value that let every host through, which is the opposite of the rule.
+    """
+    policy = {"default": dict(BASE_POLICY["default"], max_chain_hosts=0,
+                              severity_floor=1)}
+    events = [_ev("EV-1", "host-a", "priv_escalate", 1000),
+              _ev("EV-2", "host-b", "priv_escalate", 1200),
+              _ev("EV-3", "host-c", "priv_escalate", 1400)]
+    _, summary, chains, queue = _probe(events, policy)
+    assert summary["effective_max_chain_hosts"] == 0
+    assert chains == [], (
+        "a cap of nought let the chain through, so it was read as no cap at all")
+    assert sorted((r["host"], r["reason"]) for r in queue) == [
+        ("", "below_floor"), ("host-a", "chain_truncated"),
+        ("host-b", "chain_truncated"), ("host-c", "chain_truncated")], queue
+    assert all(r["severity"] == 0 for r in queue), (
+        "a chain cut at nought carries no event, so it carries no severity")
+    # the chain kept no host, so the row the floor raises names none either
+    assert [r["host"] for r in queue if r["reason"] == "below_floor"] == [""]
+    assert summary["chain_candidate_count"] == 1
+    assert summary["incident_chain_count"] == 0
+    assert summary["truncated_chain_count"] == 0, (
+        "truncated_chain_count counts chains the run REPORTS, and this one is not "
+        "reported")
+
+
 def test_a_cut_chain_below_the_floor_is_not_a_truncated_chain():
     """truncated_chain_count counts REPORTED chains that were cut, not every cut.
 
@@ -641,6 +753,52 @@ def test_the_engine_is_one_file_with_no_sibling_source():
             f"{siblings}\n\n{exc}") from exc
 
 
+_ABSENT = object()
+
+
+def _writable_roots(work: Path) -> list:
+    """Every directory the unprivileged run could drop a file into.
+
+    Discovered rather than enumerated: the caller's work area and the HOME it is
+    handed, the agent tree under /app, every writable tmpfs the mount table
+    names, and every world-writable directory within two levels of the root.
+    /proc and /sys carry no candidate writes and are expensive to walk; /dev is
+    world-writable in an ordinary container, so taking the whole device tree as
+    one root would swallow /dev/shm into it and follow symlinks, and its tmpfs
+    mounts are named here and by the mount table instead.
+    """
+    roots = {work, Path(CHILD_ENV["HOME"]), Path("/tmp"), Path("/var/tmp"),
+             Path("/dev/shm"), Path("/run"), Path("/var/lock"), APP}
+    try:
+        for line in Path("/proc/mounts").read_text(encoding="utf-8").splitlines():
+            parts = line.split()
+            if len(parts) >= 3 and parts[2] in ("tmpfs", "ramfs"):
+                roots.add(Path(parts[1]))
+    except OSError:
+        pass
+    for depth_one in Path("/").iterdir():
+        if str(depth_one) in ("/proc", "/sys", "/dev") or depth_one.is_symlink() \
+                or not depth_one.is_dir():
+            continue
+        try:
+            entries = [depth_one] + [q for q in depth_one.iterdir()
+                                     if q.is_dir() and not q.is_symlink()]
+        except OSError:
+            continue
+        for entry in entries:
+            try:
+                if entry.stat().st_mode & stat.S_IWOTH:
+                    roots.add(entry)
+            except OSError:
+                continue
+    ordered = sorted(roots, key=lambda q: len(str(q)))
+    kept: list = []
+    for root in ordered:
+        if not any(str(root).startswith(str(k) + "/") for k in kept):
+            kept.append(root)
+    return kept
+
+
 def test_a_run_writes_nothing_outside_its_output_directory():
     """instruction.md scopes an engine run to its --output-dir, and nothing checked it.
 
@@ -656,28 +814,49 @@ def test_a_run_writes_nothing_outside_its_output_directory():
     staged = work / "timeline.json"
     _stage_input(TIMELINE_PATH, staged)
 
+    # Compiled BEFORE the snapshot is taken. _build makes a temporary directory
+    # under /tmp and fills the Go build cache there, so on a cold cache -- this
+    # test run on its own, or first in a reordered run -- every one of those
+    # paths landed in the difference and read as a write by the graded run.
+    binary = _build(WORKFLOW_PATH)
+
     # Watching the per-run work area alone was not enough: the run is given
     # HOME=/candidate-work and that directory is mode 1777, so an engine calling
     # os.CreateTemp(os.Getenv("HOME"), ...) -- or dropping a scratch file in
-    # /tmp -- wrote outside its output directory and nothing here saw it. Every
-    # place the run can write is enumerated either side.
-    watched = [work, Path(CHILD_ENV["HOME"]), Path("/tmp"), Path("/var/tmp")]
+    # /tmp -- wrote outside its output directory and nothing here saw it.
+    # Naming a few directories was not enough either: an ordinary container
+    # mounts a writable tmpfs at /dev/shm, which is under none of them. The set
+    # is discovered instead, and each file is recorded with its size and
+    # modification time, since an engine that rewrites the SAME scratch path on
+    # every run has already created it by the time this test snapshots and a set
+    # of paths differs by nothing.
+    watched = _writable_roots(work)
+    if Path("/dev/shm").is_dir():
+        assert any(Path("/dev/shm") == root or str(Path("/dev/shm")).startswith(
+            str(root) + "/") for root in watched), (
+            "the writable tmpfs at /dev/shm is watched by nothing here")
 
     def sweep():
-        seen = set()
+        seen = {}
         for root in watched:
-            if root.exists():
-                seen.update(str(q) for q in root.rglob("*"))
+            if not root.exists():
+                continue
+            for q in [root, *root.rglob("*")]:
+                try:
+                    st = q.stat()
+                except OSError:
+                    continue
+                seen[str(q)] = (st.st_mtime_ns, st.st_size) if not q.is_dir() else None
         return seen
 
     before = sweep()
-    binary = _build(WORKFLOW_PATH)
     result = _run_agent([binary, "--input", str(staged), "--output-dir", str(out_dir)], cwd=work)
     # the exit code is only a precondition; the verdict is the sweep below
     assert result.returncode == 0, (
         f"the run exited {result.returncode}\n"
         f"stdout: {result.stdout[-2000:]}\nstderr: {result.stderr[-2000:]}")
-    written = sorted(sweep() - before)
+    after = sweep()
+    written = sorted(q for q, v in after.items() if before.get(q, _ABSENT) != v)
     expected = sorted(str(out_dir / n) for n in (
         "incident_chains.json", "summary.json", "triage_queue.jsonl"))
     assert written == expected, (

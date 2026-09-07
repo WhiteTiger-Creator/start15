@@ -98,7 +98,7 @@
   "reconciled_inputs": {
     "event_timeline": {
       "constraints": [
-        "observed_ts and corrected_ts are whole seconds in [0, 4102444800], the span the basin's records cover; a span, a gap or a window measured over any two of them therefore fits an ordinary 64-bit integer without wrapping",
+        "observed_ts is a whole second in [0, 4102444800], the span the estate's records cover. corrected_ts is that stamp plus its sensor's signed clock_offset_sec and is not floored, so a sensor running ahead can carry an early event below zero; it is a whole second in [-86400, 4102531200]. A span, a gap or a window measured over any two of them therefore fits an ordinary 64-bit integer without wrapping",
         "event_id is unique within a timeline",
         "host, account, sensor, action and event_id carry no character below U+0020 and none is empty, so a host and an account never run together into a name a different pair could also spell"
       ],
