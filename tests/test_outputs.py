@@ -312,13 +312,27 @@ def test_queue_schema_and_ordering(primary_outputs):
         assert r["reason"] in QUEUE_REASONS
 
 
-def test_reported_chains_clear_the_floor_and_the_pivot(primary_outputs):
-    """Every reported chain meets both admission rules."""
+def test_reported_chains_clear_the_floor_and_sit_inside_the_cap(primary_outputs):
+    """Every reported chain meets the admission rules as the log orders them.
+
+    The pivot is a test on the UNCUT run: #IR-5190 makes a run a candidate where
+    it touches pivot_min_hosts distinct hosts, and #IR-5194 then cuts it at
+    max_chain_hosts without the pivot being re-applied. So a reported chain can
+    carry fewer hosts than the pivot -- a three-host run under a cap of two
+    reports two -- and at a cap of nought it reports none at all wherever the
+    floor is nought. Requiring host_count >= effective_pivot_min_hosts here read
+    the two rules in the wrong order and contradicted the nought case #IR-5194
+    spells out. What does hold is the cap: the cut leaves min(uncut, cap) hosts,
+    so a reported chain carries at least min(pivot, cap) of them and never more
+    than the cap.
+    """
     _, summary, chains, _ = primary_outputs
+    floor = min(summary["effective_pivot_min_hosts"],
+                summary["effective_max_chain_hosts"])
     for c in chains:
         assert c["severity"] >= summary["effective_severity_floor"]
-        assert c["host_count"] >= summary["effective_pivot_min_hosts"]
         assert c["host_count"] <= summary["effective_max_chain_hosts"]
+        assert c["host_count"] >= floor
 
 
 def test_summary_counts_track_the_artifacts(primary_outputs):
@@ -553,6 +567,70 @@ def test_a_host_cap_of_zero_is_a_cap_and_not_an_absent_cap():
     assert summary["truncated_chain_count"] == 0, (
         "truncated_chain_count counts chains the run REPORTS, and this one is not "
         "reported")
+
+
+def test_a_chain_cut_below_the_pivot_is_still_reported():
+    """The pivot is applied to the uncut run and is not re-applied after the cut.
+
+    #IR-5190 makes a run a candidate on the hosts it touches; #IR-5194 then cuts
+    it, and nothing in the log tests the pivot a second time. Three hosts under a
+    pivot of three and a cap of two therefore report a chain of two hosts, which
+    an engine that re-checked the pivot after the cut would drop, and which the
+    graded policy could never show because its cap of twelve sits well above its
+    pivot of three.
+    """
+    policy = {"default": dict(BASE_POLICY["default"], pivot_min_hosts=3,
+                              max_chain_hosts=2, severity_floor=40)}
+    events = [_ev("EV-1", "host-a", "log_cleared", 1000),
+              _ev("EV-2", "host-b", "log_cleared", 1200),
+              _ev("EV-3", "host-c", "log_cleared", 1400)]
+    _, summary, chains, queue = _probe(events, policy)
+    assert summary["chain_candidate_count"] == 1, (
+        "the uncut run touches three hosts, so it is a candidate")
+    assert [c["host_count"] for c in chains] == [2], (
+        "the chain was dropped for carrying fewer hosts than the pivot, though "
+        "the pivot is spent on the uncut run and the cap is what cuts it")
+    assert chains[0]["hosts"] == ["host-a", "host-b"]
+    assert chains[0]["severity"] == 50
+    assert summary["truncated_chain_count"] == 1
+    assert [(r["host"], r["severity"], r["reason"]) for r in queue] == [
+        ("host-c", 50, "chain_truncated")]
+
+
+def test_a_chain_cut_at_nought_reports_where_the_floor_is_nought():
+    """#IR-5194's own reading of the nought cap, on the side that reports.
+
+    The cap of nought is already pinned against a floor of one, where the chain
+    is queued; the minute also says that where a floor of nought lets it through
+    the chain IS reported, with no host, no action and a span of nought. Nothing
+    reached that half, and an engine that quietly dropped a chain holding no host
+    passed everything else here.
+    """
+    policy = {"default": dict(BASE_POLICY["default"], pivot_min_hosts=3,
+                              max_chain_hosts=0, severity_floor=0)}
+    events = [_ev("EV-1", "host-a", "log_cleared", 1000),
+              _ev("EV-2", "host-b", "log_cleared", 1200),
+              _ev("EV-3", "host-c", "log_cleared", 1400)]
+    _, summary, chains, queue = _probe(events, policy)
+    assert summary["chain_candidate_count"] == 1
+    assert len(chains) == 1, (
+        "a chain cut at nought was not reported, though a floor of nought lets "
+        "it through")
+    chain = chains[0]
+    assert chain["hosts"] == [] and chain["host_count"] == 0
+    assert chain["actions"] == []
+    assert chain["severity"] == 0
+    assert chain["event_count"] == 0
+    assert chain["first_ts"] == chain["last_ts"], "the span is not nought"
+    assert chain["chain_id"] == "svc-probe:EV-1", (
+        "#IR-5192 forms the identifier before the cap, so the cut cannot change it")
+    assert summary["incident_chain_count"] == 1
+    assert summary["max_severity"] == 0
+    assert summary["truncated_chain_count"] == 1, (
+        "the chain was cut and it is reported, so it is one of them")
+    assert sorted((r["host"], r["reason"]) for r in queue) == [
+        ("host-a", "chain_truncated"), ("host-b", "chain_truncated"),
+        ("host-c", "chain_truncated")]
 
 
 def test_a_cut_chain_below_the_floor_is_not_a_truncated_chain():
