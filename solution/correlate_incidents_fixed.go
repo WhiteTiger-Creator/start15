@@ -202,12 +202,18 @@ func main() {
 			// says. A candidate cut at nought keeps no host, carries no event and so
 			// no severity, and every host it touched is queued.
 			wasCut := false
-			if maxChainHosts < 0 {
-				maxChainHosts = 0
+			// The clamp is protective -- ordered[:negative] panics -- but it goes
+			// into a local rather than into the variable the summary reports.
+			// Writing it back to maxChainHosts meant effective_max_chain_hosts
+			// depended on whether the timeline happened to raise a candidate at
+			// all, so one policy file could be reported two different ways.
+			cutAt := maxChainHosts
+			if cutAt < 0 {
+				cutAt = 0
 			}
-			if len(ordered) > maxChainHosts {
-				kept = ordered[:maxChainHosts]
-				dropped = ordered[maxChainHosts:]
+			if len(ordered) > cutAt {
+				kept = ordered[:cutAt]
+				dropped = ordered[cutAt:]
 				wasCut = true
 			}
 			keptSet := map[string]bool{}

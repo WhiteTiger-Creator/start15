@@ -91,7 +91,7 @@
         "chain_truncated",
         "superseded"
       ],
-      "serialisation": "one compact JSON object per line, trailing newline",
+      "serialisation": "one compact JSON object per line, each line closed by a newline, so a queue carrying no rows is an empty file rather than a file holding a blank line",
       "sort": "descending by severity, then ascending by chain_id then host"
     }
   },

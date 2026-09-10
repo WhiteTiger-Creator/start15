@@ -45,9 +45,9 @@
     "corrected_ts": 230,
     "event_id": "EV-006777",
     "host": "host-036",
-    "observed_ts": -282,
+    "observed_ts": 230,
     "pid": 44822,
-    "sensor": "netflow"
+    "sensor": "edr"
   },
   {
     "account": "svc-deploy",
@@ -65,9 +65,9 @@
     "corrected_ts": 447,
     "event_id": "EV-003938",
     "host": "host-024",
-    "observed_ts": -65,
+    "observed_ts": 447,
     "pid": 41090,
-    "sensor": "netflow"
+    "sensor": "edr"
   },
   {
     "account": "user-020",

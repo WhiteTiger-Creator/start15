@@ -82,6 +82,40 @@ def test_recovered_timeline_is_ordered_on_corrected_stamps():
     assert keys == sorted(keys)
 
 
+def test_the_engine_runs_with_the_sensor_registry_withheld():
+    """instruction.md says the registry belongs to recovery, not to the engine.
+
+    The offset probe catches an engine that RE-APPLIES a registry offset, but an
+    engine that merely opens the file and ignores what it finds looked exactly
+    like one that never touched it: nothing here asked whether the file was read
+    at all, and a registry load left over from a combined recovery-and-engine
+    implementation is an ordinary thing to leave behind.
+
+    So the file is moved out of the way for one run, root-owned and unreadable in
+    its place, and the sealed artifacts still have to come out. An engine that
+    reads it -- or that reads it and shrugs at the error -- is told apart from one
+    that never asks for it, which is the separation the instruction states.
+    """
+    registry = DATA / "sensor_registry.json"
+    saved = registry.read_bytes()
+    stash = Path(tempfile.mkdtemp(prefix="withheld_"))
+    os.chmod(stash, 0o700)
+    try:
+        shutil.move(str(registry), str(stash / "sensor_registry.json"))
+        assert not registry.exists(), "the registry is still where the engine could read it"
+        out_dir, summary, chains, queue = _run_pipeline()
+        assert summary == FIXTURE["primary"]["summary"], (
+            "the run came out differently with the sensor registry withheld, so "
+            "the engine reads a file the instruction says belongs to recovery")
+        assert _digest(chains) == FIXTURE["primary"]["chains_digest"]
+        assert _digest(queue) == FIXTURE["primary"]["queue_digest"]
+    finally:
+        registry.write_bytes(saved)
+        os.chmod(registry, 0o644)
+        shutil.rmtree(stash, ignore_errors=True)
+    assert registry.read_bytes() == saved
+
+
 def test_corrected_stamp_adds_the_sensor_offset():
     """Every corrected stamp is the observed stamp plus its sensor's recorded offset."""
     offsets = {r["sensor"]: r["clock_offset_sec"] for r in _load_json(DATA / "sensor_registry.json")}
@@ -768,9 +802,14 @@ def test_a_run_below_the_pivot_is_not_a_candidate():
         _ev("EV-000001", "host-001", "log_cleared", 100),
         _ev("EV-000002", "host-002", "priv_escalate", 200),
     ]
-    _, summary, chains, queue = _probe(events)
+    out_dir, summary, chains, queue = _probe(events)
     assert summary["chain_candidate_count"] == 0
     assert chains == [] and queue == []
+    # The contract closes each queue row with a newline, so a queue with no rows
+    # is an empty file. A run that wrote a lone newline here would be offering a
+    # blank line where the contract asks for one compact object per line.
+    assert (out_dir / "triage_queue.jsonl").read_text(encoding="utf-8") == "", (
+        "a queue carrying no rows is an empty file, not a file holding a blank line")
 
 
 def test_events_beyond_the_cut_take_no_part_in_the_chain():
@@ -1056,6 +1095,41 @@ def _as_contract_layout(raw: str) -> str:
     return raw
 
 
+def _assert_contract_layout(out_dir: Path, where: str) -> None:
+    """The three artifacts in `out_dir` carry the layout the contract names.
+
+    Hoisted out of the primary-run test so the DEFAULT-path run is held to it as
+    well. The layout used to be read only off runs driven with explicit flags, so
+    an engine that told `len(os.Args) == 1` from a flagged invocation could write
+    the same values at /app/output in some other shape and pass -- the delivered
+    and no-argument checks both decode before comparing, and decoding is exactly
+    what cannot see an indent.
+    """
+    for name in ("incident_chains.json", "summary.json"):
+        raw = (out_dir / name).read_text(encoding="utf-8")
+        assert raw.endswith("\n"), f"{name} has no trailing newline"
+        assert not raw.endswith("\n\n"), f"{name} ends with a blank line"
+        assert _as_contract_layout(raw) == json.dumps(
+            json.loads(raw), indent=2, ensure_ascii=False) + "\n", (
+            f"{name} is not two-space-indented JSON with a trailing newline ({where})")
+
+    raw = (out_dir / "triage_queue.jsonl").read_text(encoding="utf-8")
+    lines = raw.splitlines()
+    # The contract closes each row with a newline, so a queue carrying no rows is
+    # an empty file rather than one holding a blank line.
+    assert raw.endswith("\n") or raw == "", (
+        f"triage_queue.jsonl has rows but no trailing newline ({where})")
+    assert all(line.strip() for line in lines), f"the queue carries a blank line ({where})"
+    for number, line in enumerate(lines, start=1):
+        # comparing against the compact rendering of the line's own content is the
+        # whole check; a `": " not in line` shortcut used to sit above it and would
+        # have rejected a legitimately compact row whose string value held ": "
+        assert json.dumps(json.loads(line), separators=(",", ":"),
+                          ensure_ascii=False) == _as_contract_layout(line), (
+            f"queue line {number} is not the compact serialisation of its own "
+            f"content ({where})")
+
+
 def test_artifacts_are_serialised_exactly_as_the_contract_states(primary_outputs):
     """Serialisation is contracted, and the digests cannot see it.
 
@@ -1064,26 +1138,7 @@ def test_artifacts_are_serialised_exactly_as_the_contract_states(primary_outputs
     with a trailing newline for the JSON artifacts and one compact object per line
     for the queue, so those are read off the raw bytes here.
     """
-    out_dir = primary_outputs[0]
-    for name in ("incident_chains.json", "summary.json"):
-        raw = (out_dir / name).read_text(encoding="utf-8")
-        assert raw.endswith("\n"), f"{name} has no trailing newline"
-        assert not raw.endswith("\n\n"), f"{name} ends with a blank line"
-        assert _as_contract_layout(raw) == json.dumps(
-            json.loads(raw), indent=2, ensure_ascii=False) + "\n", (
-            f"{name} is not two-space-indented JSON with a trailing newline")
-
-    raw = (out_dir / "triage_queue.jsonl").read_text(encoding="utf-8")
-    assert raw.endswith("\n"), "triage_queue.jsonl has no trailing newline"
-    lines = raw.splitlines()
-    assert lines and all(line.strip() for line in lines), "the queue carries a blank line"
-    for number, line in enumerate(lines, start=1):
-        # comparing against the compact rendering of the line's own content is the
-        # whole check; a `": " not in line` shortcut used to sit above it and would
-        # have rejected a legitimately compact row whose string value held ": "
-        assert json.dumps(json.loads(line), separators=(",", ":"),
-                          ensure_ascii=False) == _as_contract_layout(line), (
-            f"queue line {number} is not the compact serialisation of its own content")
+    _assert_contract_layout(primary_outputs[0], "a run given both flags")
 
 
 def test_recovered_timeline_is_serialised_exactly_as_the_contract_states():
@@ -1137,16 +1192,47 @@ def test_no_argument_run_writes_to_the_documented_defaults(primary_outputs):
         stale.unlink() if stale.is_file() or stale.is_symlink() else shutil.rmtree(stale)
     os.chmod(default_out, 0o777)
     try:
-        result = _run_agent([binary], cwd=_candidate_dir())
+        # The flagged runs are the only ones the layout and the write sweep used
+        # to see, so an engine could tell a no-argument invocation from those and
+        # behave differently on the path it is documented to use by default. Both
+        # checks are made here too, over the same run.
+        work = _candidate_dir()
+        watched = _writable_roots(work)
+
+        def sweep():
+            seen = {}
+            for root in watched:
+                if not root.exists():
+                    continue
+                for q in [root, *root.rglob("*")]:
+                    try:
+                        st = q.stat()
+                    except OSError:
+                        continue
+                    if st.st_uid != CANDIDATE_UID:
+                        continue
+                    seen[str(q)] = (st.st_mtime_ns, st.st_size) if not q.is_dir() else None
+            return seen
+
+        before = sweep()
+        result = _run_agent([binary], cwd=work)
         assert result.returncode == 0, (
             f"the no-argument run exited {result.returncode}\n"
             f"stdout: {result.stdout[-2000:]}\nstderr: {result.stderr[-2000:]}")
+        after = sweep()
+        written = sorted(q for q, v in after.items() if before.get(q, _ABSENT) != v)
+        expected = sorted(str(default_out / n) for n in (
+            "incident_chains.json", "summary.json", "triage_queue.jsonl"))
+        assert written == expected, (
+            "the no-argument run left something outside the directory it writes "
+            f"into by default: {[q for q in written if q not in expected]}")
         assert sorted(q.name for q in default_out.iterdir()) == [
             "incident_chains.json", "summary.json", "triage_queue.jsonl"]
         _, summary, doc, queue = primary_outputs
         assert _load_json(default_out / "summary.json") == summary
         assert _digest(_load_json(default_out / "incident_chains.json")) == _digest(doc)
         assert _digest(_load_jsonl(default_out / "triage_queue.jsonl")) == _digest(queue)
+        _assert_contract_layout(default_out, "a run given no flags at all")
     finally:
         # Put back what the agent's own run delivered, rather than leaving the
         # directory empty: DELIVERED_OUTPUT is read once at import and a later
