@@ -916,6 +916,54 @@ def _writable_roots(work: Path) -> list:
     return kept
 
 
+def test_the_engine_hands_the_work_to_no_other_program():
+    """instruction.md: the engine does its own work.
+
+    Compiling one file at a time keeps a sibling SOURCE out of the build, and
+    the test above took that for the whole of the constraint. It is not: a
+    wrapper of a few lines can shell out to an interpreter and let a script
+    beside it -- or one it carries as a string -- do the correlating, and every
+    behavioural assertion in this file would still pass. There is no way to
+    start a process in Go that does not go through one of these, and the run
+    with /app stripped below closes the same route from the other side.
+    """
+    source = WORKFLOW_PATH.read_text(encoding="utf-8")
+    banned_imports = {"os/exec", "plugin", "C"}
+    declared = set(_go_imports(source))
+    assert not declared & banned_imports, (
+        f"{WORKFLOW_PATH.name} imports {sorted(declared & banned_imports)}: the "
+        "engine is meant to do the work itself rather than start another program")
+    payload = _go_source_payload(source)
+    for call in ("os.StartProcess", "syscall.Exec", "syscall.ForkExec",
+                 "syscall.StartProcess", "syscall.Syscall", "syscall.RawSyscall"):
+        assert call not in payload, (
+            f"{WORKFLOW_PATH.name} reaches {call}, which starts another program")
+    # a linker directive lives in a comment, where neither scan above looks
+    assert "go:linkname" not in source, (
+        f"{WORKFLOW_PATH.name} links to an unexported entry point")
+
+
+def test_the_graded_run_needs_nothing_under_app_but_the_inputs_and_its_own_source(
+        primary_outputs):
+    """The one-file rule graded as behaviour rather than as build shape.
+
+    Everything under /app that is neither a declared input nor the engine itself
+    is moved aside, and the run has to come out the same without it. An engine
+    whose Go file is a wrapper over a helper it left beside itself passes every
+    other test in this file and fails here.
+    """
+    stash, moved = _hide_everything_else_under_app()
+    try:
+        _, summary, chains, queue = _run_pipeline()
+        assert summary == FIXTURE["primary"]["summary"], (
+            "the run came out differently once everything the submission left "
+            f"under /app was taken away: {sorted(str(q) for q in moved)}")
+        assert _digest(chains) == FIXTURE["primary"]["chains_digest"]
+        assert _digest(queue) == FIXTURE["primary"]["queue_digest"]
+    finally:
+        _restore_everything_under_app(stash, moved)
+
+
 def test_a_run_writes_nothing_outside_its_output_directory():
     """instruction.md scopes an engine run to its --output-dir, and nothing checked it.
 
@@ -962,6 +1010,13 @@ def test_a_run_writes_nothing_outside_its_output_directory():
                 try:
                     st = q.stat()
                 except OSError:
+                    continue
+                # Only what the candidate uid owns. Without this the sweep took
+                # any root-side write anywhere under the watched roots during
+                # this one run as the engine's, failing a correct engine for
+                # something it did not do; the no-argument twin of this test
+                # had the filter all along.
+                if st.st_uid != CANDIDATE_UID:
                     continue
                 seen[str(q)] = (st.st_mtime_ns, st.st_size) if not q.is_dir() else None
         return seen
