@@ -405,7 +405,14 @@ def _ev(eid, host, action, corrected, sensor="edr", account="svc-probe", offset=
 def _probe(events, policy=None):
     """Run the submitted engine over a crafted timeline and return its artifacts."""
     saved = (DATA / "triage_policy.json").read_text(encoding="utf-8")
-    staged = _CWORK / f"probe-{next(_run_ctr)}.json"
+    # A fresh root-owned directory rather than /candidate-work/probe-N.json:
+    # that name was predictable inside a world-writable directory, so a run
+    # could plant a symlink there and have root write the next probe's events
+    # through it. _write_json and os.chmod both follow a final-component link;
+    # mkdtemp gives a name nothing can pre-empt.
+    stage_dir = Path(tempfile.mkdtemp(prefix="probe_"))
+    os.chmod(stage_dir, 0o755)
+    staged = stage_dir / "timeline.json"
     try:
         _write_json(DATA / "triage_policy.json", policy or BASE_POLICY)
         _write_json(staged, events)
@@ -413,6 +420,7 @@ def _probe(events, policy=None):
         return _run_pipeline(input_path=staged)
     finally:
         (DATA / "triage_policy.json").write_text(saved, encoding="utf-8")
+        shutil.rmtree(stage_dir, ignore_errors=True)
 
 
 def test_chain_severity_is_the_worst_action_not_the_sum():
@@ -916,6 +924,32 @@ def _writable_roots(work: Path) -> list:
     return kept
 
 
+def test_the_engine_declares_no_option_beyond_the_two_it_documents():
+    """instruction.md: the triage policy is always read from its fixed path.
+
+    That rule was graded only in the positive direction -- change the policy in
+    place and the run moves -- which an engine offering a --policy of its own
+    passes without difficulty, since no run here ever supplies one. An engine
+    that declares only the two documented options refuses an unknown one
+    instead, which is what the flag package does for it.
+    """
+    binary = _build(WORKFLOW_PATH)
+    _publish_inputs()
+    for option in ("--policy", "--policy-path", "--registry", "--sensor-registry"):
+        work = _candidate_dir()
+        out_dir = work / "output"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        os.chmod(out_dir, 0o777)
+        elsewhere = work / "elsewhere.json"
+        elsewhere.write_text("{}\n", encoding="utf-8")
+        os.chmod(elsewhere, 0o644)
+        result = _run_agent(
+            [binary, option, str(elsewhere), "--output-dir", str(out_dir)], cwd=work)
+        assert result.returncode != 0, (
+            f"the engine accepted {option}, so an input the contract fixes at an "
+            "absolute path can be pointed somewhere else after all")
+
+
 def test_the_engine_hands_the_work_to_no_other_program():
     """instruction.md: the engine does its own work.
 
@@ -1008,7 +1042,11 @@ def test_a_run_writes_nothing_outside_its_output_directory():
                 continue
             for q in [root, *root.rglob("*")]:
                 try:
-                    st = q.stat()
+                    # lstat, not stat: a candidate-owned symlink whose target is
+                    # root-owned reported the TARGET's owner, and the uid test
+                    # below then discarded it -- so a link left behind anywhere
+                    # under the watched roots counted as nothing.
+                    st = q.lstat()
                 except OSError:
                     continue
                 # Only what the candidate uid owns. Without this the sweep took
@@ -1127,10 +1165,21 @@ def test_policy_path_actually_influences_the_output():
 
 
 def test_run_is_idempotent(primary_outputs):
-    """Re-running over the same timeline reproduces the same artifacts."""
-    _, summary, chains, queue = primary_outputs
-    _, s2, c2, q2 = _run_pipeline()
+    """Re-running over the same timeline reproduces the same artifacts.
+
+    Byte for byte, not merely value for value. Both comparisons below run on
+    decoded documents and _digest sorts keys before hashing, so an engine that
+    rendered summary.json with its fields in a different order on a later run
+    satisfied them while its artifacts differed as files -- which is not what
+    "identical across reruns" says.
+    """
+    first_dir, summary, chains, queue = primary_outputs
+    second_dir, s2, c2, q2 = _run_pipeline()
     assert s2 == summary and _digest(c2) == _digest(chains) and _digest(q2) == _digest(queue)
+    for name in ("summary.json", "incident_chains.json", "triage_queue.jsonl"):
+        assert (second_dir / name).read_bytes() == (first_dir / name).read_bytes(), (
+            f"{name} came out with the same values but different bytes on a "
+            "second run over the same timeline")
 
 
 def _as_contract_layout(raw: str) -> str:
@@ -1261,7 +1310,11 @@ def test_no_argument_run_writes_to_the_documented_defaults(primary_outputs):
                     continue
                 for q in [root, *root.rglob("*")]:
                     try:
-                        st = q.stat()
+                        # lstat, not stat: a candidate-owned symlink whose target
+                        # is root-owned reported the TARGET's owner, and the uid
+                        # test below then discarded it -- so a link left behind
+                        # anywhere under the watched roots counted as nothing.
+                        st = q.lstat()
                     except OSError:
                         continue
                     if st.st_uid != CANDIDATE_UID:
